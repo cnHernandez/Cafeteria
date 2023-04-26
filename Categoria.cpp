@@ -4,6 +4,8 @@
 #include <string>
 #include "Categoria.h"
 #include "Archivo_Categoria.h"
+#include "Producto.h"
+using namespace std;
 
 
 Categoria::Categoria()
@@ -40,9 +42,8 @@ void Categoria::cargar() {
 }
 void Categoria::mostrar()
 {
-
     cout << "------------------" << endl;
-    cout << "ID de categoria: " << id_categoria << endl;
+    cout << "ID de categoria: " << get_id() << endl;
     cout << "Nombre: " << _nombre << endl;
 
 }

@@ -66,32 +66,7 @@ Producto archivo_producto::leer_de_disco(int posicion)
 }
 
 void archivo_producto::listar(int cantidad)
-{
-/*
-    Producto prod;
-    for (int i = 0; i < cantidad_de_registros(); i++)
-    {
-        prod = leer_de_disco(i);
-        if (prod.getEstado())
-        {
-            Categoria cat;
-            Archivo_Categoria acat;
-            for (int y = 0; y < acat.cantidad_categorias(); y++)
-            {
-                cat = acat.leer_de_disco(y);
-                if (cat.get_id() == prod.getId_Categoria() && cat.getEstado())
-                {
-                    prod.Mostrar();
-                }
-            }
-
-        }
-
-    }
-    */
-
-
-    
+{ 
     for (int i = 0; i < cantidad; i++)
     {
         Producto producto;
@@ -110,7 +85,6 @@ void archivo_producto::listar(int cantidad)
 
         }
     }
-
 }
 
 int archivo_producto::get_cantidad_Activa(int cantidad)
@@ -237,32 +211,31 @@ void archivo_producto::listaXcategoria()
 {
 
     int cant = cantidad_de_registros();
-    Producto* prod = new Producto[cant];
-
-    obtener_productos(prod, cant);
-    Categoria Cat;
     Archivo_Categoria Categorias;
     Categorias.listar_categorias(cant);
-    int cat;
+    Producto* prod = new Producto[cant];
+    obtener_productos(prod, cant);
+    Categoria Cat;
+    int idcat;
     cout << "ingrese el ID# de la Categoria a listar: " << endl;
-    cin >> cat;
-    Cat = Categorias.leer_de_disco(cat - 1);
+    cin >> idcat;
+    Cat = Categorias.leer_de_disco(idcat - 1);
     while (Cat.getEstado() != true)
     {
         cout << "ID# de Categoria invalido: " << endl;
         cout << "ingrese el ID# de la Categoria a listar: " << endl;
-        cin >> cat;
-        Cat = Categorias.leer_de_disco(cat - 1);
+        cin >> idcat;
+        Cat = Categorias.leer_de_disco(idcat - 1);
 
     }
     system("cls");
 
-    cout << "Productos con ID# de Categoria: " << cat << endl << endl;
+    cout << "Productos con ID# de Categoria: " << idcat << endl << endl;
 
     for (int i = 0; i < cant; i++)
     {
 
-        if (cat == prod[i].getId_Categoria() && prod[i].getEstado())
+        if (idcat == prod[i].getId_Categoria() && prod[i].getEstado())
         {
             cout << "-----------------" << endl;
             prod[i].Mostrar();

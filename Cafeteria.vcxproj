@@ -131,21 +131,29 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="Archivo_Cliente.cpp" />
     <ClCompile Include="archivo_producto.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="Archivo_Venta.cpp" />
     <ClCompile Include="Cafeteria.cpp" />
     <ClCompile Include="Categoria.cpp" />
+    <ClCompile Include="Cliente.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Producto.cpp" />
+    <ClCompile Include="Venta.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Archivo_Categoria.h" />
+    <ClInclude Include="Archivo_Cliente.h" />
     <ClInclude Include="archivo_producto.h" />
+    <ClInclude Include="Archivo_Venta.h" />
     <ClInclude Include="Categoria.h" />
+    <ClInclude Include="Cliente.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Producto.h" />
+    <ClInclude Include="Venta.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

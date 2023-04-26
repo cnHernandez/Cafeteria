@@ -265,21 +265,6 @@ int Archivo_Categoria::buscarCategoria(int ID) {
 void Archivo_Categoria::listar_categorias(int cantidad)
 {
 
-    /*int cant_cat = cantidad_categorias();
-    Categoria* cat = new Categoria[cant_cat];
-
-    obtener_categorias(cat, cant_cat);
-
-    for (int i = 0; i < cant_cat; i++)
-    {
-        if (cat[i].getEstado())
-        {
-            cat[i].mostrar();
-        }
-
-    }
-    delete[] cat;*/
-
     for (int i = 0; i < cantidad; i++)
     {
         Categoria categoria;
@@ -371,5 +356,7 @@ bool Archivo_Categoria::Existe(int op)
     return false;
 
 }
+
+
 
 
