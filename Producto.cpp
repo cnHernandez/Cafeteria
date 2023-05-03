@@ -106,9 +106,8 @@ void Producto::CargarCategoria()
 
 void Producto::Mostrar()
 {
-    Categoria cat;
     std::cout << "-Nombre del Producto: " << getNombre() << std::endl;
     std::cout << "#ID del Producto: " << getId_Producto() << std::endl;
-   // std::cout << "#ID de la Categoria: " << get_id()<< std::endl;
+   std::cout << "#ID de la Categoria: " << getId_Categoria()<< std::endl;
     std::cout << "-Precio del Producto: " << getPrecio() << std::endl;
 }

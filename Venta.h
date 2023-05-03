@@ -3,6 +3,7 @@
 #include <string>
 #include "Cliente.h"
 #include "Producto.h"
+#include "Fecha.h"
 using namespace std;
 class Venta
 {
@@ -13,6 +14,7 @@ private:
 	float precio;
 	float total;
 	bool estado;
+	Fecha fecha;
 	Cliente cliente;
 
 public:
@@ -25,6 +27,7 @@ public:
 	void setPrecio(float);
 	void setTotal(float);
 	void setEstado(bool);
+	void setFecha(Fecha);
 
 	int getId();
 	Cliente getIdCliente();
@@ -33,6 +36,7 @@ public:
 	float getPrecio();
 	float getTotal();
 	bool getEstado();
+	Fecha getFecha();
 	void cargar();
 	void mostrar();
 	

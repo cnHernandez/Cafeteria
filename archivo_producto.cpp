@@ -2,6 +2,7 @@
 #include "Producto.h"
 #include "Archivo_Categoria.h"
 #include "Categoria.h"
+#include "Menu.h"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -75,7 +76,7 @@ void archivo_producto::listar(int cantidad)
         {
         Archivo_Categoria acat;
         Categoria cat;
-        cat=acat.leer_de_disco(producto.getId_Categoria());
+        cat=acat.leer_de_disco(producto.getId_Categoria()-1);
         if(cat.getEstado())
         {
 
@@ -219,6 +220,13 @@ void archivo_producto::listaXcategoria()
     int idcat;
     cout << "ingrese el ID# de la Categoria a listar: " << endl;
     cin >> idcat;
+   
+    while (idcat <= 0 || idcat > cant)
+    {
+		cout << "ID# de Categoria invalido: " << endl;
+		cout << "ingrese el ID# de la Categoria a listar: " << endl;
+		cin >> idcat;
+	}
     Cat = Categorias.leer_de_disco(idcat - 1);
     while (Cat.getEstado() != true)
     {
@@ -228,20 +236,36 @@ void archivo_producto::listaXcategoria()
         Cat = Categorias.leer_de_disco(idcat - 1);
 
     }
+    
     system("cls");
 
     cout << "Productos con ID# de Categoria: " << idcat << endl << endl;
-
+    int cont = 0;
     for (int i = 0; i < cant; i++)
     {
-
         if (idcat == prod[i].getId_Categoria() && prod[i].getEstado())
         {
-            cout << "-----------------" << endl;
-            prod[i].Mostrar();
+                cont++;
+				cout << "-----------------" << endl;
+				prod[i].Mostrar();
+			    cout << "-----------------" << endl;
         }
-
     }
+        Menu menu;
+        char desicion;
+        if (cont == 0)
+        { 
+			cout << "No hay productos con ID# de Categoria: " << idcat << endl;
+            cout << "¿Desea cargar uno? (S/N)" << endl;
+            cin >> desicion;
+            if (desicion == 'S')
+            {
+                menu.menu_productos();
+            }
+            else {
+                return;
+            }
+		}
     cout << endl;
 
     delete[] prod;

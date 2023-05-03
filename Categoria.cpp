@@ -5,6 +5,7 @@
 #include "Categoria.h"
 #include "Archivo_Categoria.h"
 #include "Producto.h"
+#include "Archivo_Producto.h"
 using namespace std;
 
 
@@ -42,6 +43,7 @@ void Categoria::cargar() {
 }
 void Categoria::mostrar()
 {
+   
     cout << "------------------" << endl;
     cout << "ID de categoria: " << get_id() << endl;
     cout << "Nombre: " << _nombre << endl;

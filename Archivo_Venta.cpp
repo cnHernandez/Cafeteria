@@ -119,6 +119,12 @@ void Archivo_Venta::listar_x_cliente()
 	int idCliente;
 	cout << "ingrese el ID# del cliente a listar: " << endl;
 	cin >> idCliente;
+	while (idCliente <= 0 || idCliente > cant)
+	{
+		cout << "ID# de cliente invalido: " << endl;
+		cout << "ingrese el ID# del cliente a listar: " << endl;
+		cin >> idCliente;
+	}
 	cliente=Clientes.leer_clientes(idCliente - 1);
 	while(cliente.getEstado()!= true)
 	{
