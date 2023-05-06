@@ -1,8 +1,12 @@
 #include "Archivo_Cliente.h"
 #include "Cliente.h"
+#include "Fecha.h"
+#include "Producto.h"
+#include "Venta.h"
 #include <iostream>
 #include <string>
 #include <fstream>
+
 
 
 using namespace std;
@@ -91,5 +95,54 @@ void Archivo_Cliente::listar_clientes(int cantidad) {
 			cli.Mostrar();
 		}
 	}
+}
+
+void Archivo_Cliente::modificar_cliente() {
+	int op;
+	Cliente cliente;
+	int cant = cantidad_clientes();
+	listar_clientes(cant);
+	std::cout << std::endl;
+	std::cout << "Ingrese de ID del cliente que desea modificar" << std::endl;
+	std::cout << std::endl;
+	std::cin >> op;
+
+	cliente = leer_clientes(op - 1);
+
+	while (op<0 || op>cant || cliente.getEstado() == false)
+	{
+		std::cout << "ingrese una opcion correcta" << std::endl;
+		std::cin >> op;
+	}
+	if (op != 0)
+	{
+		cliente = leer_clientes(op - 1);
+		cliente.Cargar();
+
+		char op2;
+		std::cout << "esta seguro de que desea modificar el cliente?" << std::endl;
+		std::cout << "[S/N]" << std::endl;
+		std::cin >> op2;
+		if (op2 == 's' || op2 == 'S')
+		{
+			Guardar_Modificado(cliente, op -1);
+		}
+	}
+}
+
+bool Archivo_Cliente::Guardar_Modificado(Cliente cliente, int pos)
+{
+
+	FILE* p;
+	p = fopen("clientes.dat", "rb+");
+	if (p == nullptr) {
+		std::cout << "No se pudo abrir el archivo" << std::endl;
+		return false;
+	}
+	fseek(p, pos * sizeof(Cliente), SEEK_SET);
+	fwrite(&cliente, sizeof(Cliente), 1, p);
+	fclose(p);
+
+	return true;
 }
 

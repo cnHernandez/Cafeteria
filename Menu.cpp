@@ -387,10 +387,11 @@ void Menu::menu_ventas()
 
                 cout << "1- Todos" << endl;
                 cout << "2- Listar por Cliente" << endl << endl;
+                cout << "3- Listar por Fecha" << endl << endl;
                 cout << "0- volver" << endl;
                 cin >> op;
 
-                while (op < 0 || op>2)
+                while (op < 0 || op>3)
                 {
                     cout << "opcion incorrecta, vuelva a ingresar una opcion" << endl;
                     cin >> op;
@@ -438,17 +439,41 @@ void Menu::menu_ventas()
                     }
                     else
                     {
-                      archivo.listar_x_cliente();
+                        archivo.listar_x_cliente();
                         cout << endl << endl;
                         system("pause");
-                    }}
-                break;
-              
+                    }
                 }
-            }
+                break;
+                case 3:
+                {
+                    system("cls");
+                    cout << " 3- Lista de ventas por fecha" << endl;
+                    Archivo_Venta archivo;
+                    int cant = archivo.cantidad_ventas();
+                    int cantActiva = archivo.get_cantidad_Activa(cant);
+                    if (cantActiva == 0)
+                    {
+                        cout << "No se encuentran guardadas ventas Activas" << endl << endl;
+                        system("pause");
+                    }
+                    else
+                    {
+                        archivo.listar_x_fecha();
+                        cout << endl << endl;
+                        system("pause");
+                    }
+                }
+                break;
 
+
+
+
+                }
+
+            }
         }
-        break;
+
         case 2:
         {
             cout << " 2- Agregar venta" << endl;
@@ -477,6 +502,7 @@ void Menu::menu_clientes()
         cout << "---Clientes----" << endl << endl;
         cout << " 1- Listar" << endl;
         cout << " 2- Agregar" << endl;
+        cout << " 3- Modificar" << endl;
         cout << "-----------------" << endl;
         cout << " 0- SALIR" << endl;
         cout << "-----------------" << endl;
@@ -523,6 +549,23 @@ void Menu::menu_clientes()
             system("pause");
             ac.guardar(cli);
 
+        }
+        break;
+        case 3:
+        {
+			cout << " 3- Modificar cliente" << endl;
+			Archivo_Cliente ac;
+			int cant = ac.cantidad_clientes();
+			int cantActiva = ac.get_cantidad_Activa(cant);
+            if (cantActiva == 0)
+            {
+				cout << "No se encuentran guardados clientes Activos" << endl << endl;
+				system("pause");
+			}
+            else
+            {
+				ac.modificar_cliente();
+			}
         }
         break;
 

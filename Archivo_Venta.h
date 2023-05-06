@@ -15,6 +15,7 @@ class Archivo_Venta
 		int get_cantidad_Activa(int);
 		void listar_ventas(int);
 		void listar_x_cliente();
+		void listar_x_fecha();
 
 
 		

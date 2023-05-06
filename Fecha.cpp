@@ -25,7 +25,7 @@ Fecha::Fecha(int dia, int mes, int anio){
     _mes = mes;
     _anio = anio;
 }
-Fecha::Fecha(){
+Fecha::Fecha() {
     time_t rawtime;
     struct tm timeinfo;
 

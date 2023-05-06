@@ -4,6 +4,7 @@
 #include <fstream>
 #include "archivo_producto.h"
 #include "Archivo_Categoria.h"
+#include "Menu.h"
 
 
 Producto::Producto()
@@ -77,6 +78,20 @@ bool Producto::Cargar()
     }
     else {
         std::cout << "Primero deben haber Categorias activas" << std::endl;
+        system("pause");
+        char desicion;
+        Menu menu;
+        std::cout << "¿Desea generar una categoria nueva? (S/N)" << std::endl;
+        std::cin >> desicion;
+        if (desicion == 'S' || desicion == 's') {
+            
+            menu.menu_categorias();
+        }
+        else if (desicion == 'N' || desicion == 'n')
+        {
+            menu.menu_productos();
+        }
+
         return false;
     }
 }

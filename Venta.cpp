@@ -105,7 +105,7 @@ void Venta::cargar()
 
 	int cant = archivo.cantidad_de_registros();
 	archivo.listar(cant);
-	/*std::cout << std::endl;
+	std::cout << std::endl;
 	std::cout << "Ingrese la fecha" << std::endl;
 	std::cout << "Dia: ";
     std::cin >> dia;
@@ -116,7 +116,7 @@ void Venta::cargar()
 	fecha.setDia(dia);
 	fecha.setMes(mes);
 	fecha.setAnio(anio);
-	setFecha(fecha);*/
+	setFecha(fecha);
 	std::cout << std::endl;
 	std::cout << "Ingrese el ID del cliente que realiza la comprar" << std::endl;
 	std::cin >> idCliente;
@@ -187,6 +187,7 @@ Cliente Venta::getIdCliente()
 {
 	return cliente;
 }
+
 
 
 

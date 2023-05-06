@@ -8,6 +8,7 @@
 #include <fstream>
 
 using namespace std;
+
 void archivo_producto::guardar(Producto producto)
 {
     FILE* p;
@@ -213,7 +214,8 @@ void archivo_producto::listaXcategoria()
 
     int cant = cantidad_de_registros();
     Archivo_Categoria Categorias;
-    Categorias.listar_categorias(cant);
+    int CantCat = Categorias.cantidad_categorias();
+    Categorias.listar_categorias(CantCat);
     Producto* prod = new Producto[cant];
     obtener_productos(prod, cant);
     Categoria Cat;
@@ -240,15 +242,22 @@ void archivo_producto::listaXcategoria()
     system("cls");
 
     cout << "Productos con ID# de Categoria: " << idcat << endl << endl;
+            while (idcat < 0 || idcat > CantCat)
+            {
+					cout << "No existe la categoria a listar " << endl;
+                    cout << "ingrese el ID# de la Categoria a listar: " << endl;
+                    cin >> idcat;
+                    Cat = Categorias.leer_de_disco(idcat - 1);
+			}
     int cont = 0;
     for (int i = 0; i < cant; i++)
     {
         if (idcat == prod[i].getId_Categoria() && prod[i].getEstado())
         {
                 cont++;
-				cout << "-----------------" << endl;
-				prod[i].Mostrar();
-			    cout << "-----------------" << endl;
+                cout << "-----------------" << endl;
+                prod[i].Mostrar();
+                cout << "-----------------" << endl;    
         }
     }
         Menu menu;
@@ -258,15 +267,15 @@ void archivo_producto::listaXcategoria()
 			cout << "No hay productos con ID# de Categoria: " << idcat << endl;
             cout << "¿Desea cargar uno? (S/N)" << endl;
             cin >> desicion;
-            if (desicion == 'S')
+            if (desicion == 'S' || desicion == 's')
             {
                 menu.menu_productos();
             }
-            else {
+            else if(desicion == 'N' || desicion == 'n'){
                 return;
             }
 		}
-    cout << endl;
+    
 
     delete[] prod;
 }

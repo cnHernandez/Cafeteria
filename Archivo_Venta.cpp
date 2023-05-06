@@ -111,7 +111,8 @@ void Archivo_Venta::listar_x_cliente()
 	int cant = cantidad_ventas();
 	
 	Archivo_Cliente Clientes;
-	Clientes.listar_clientes(cant);
+	int cantClientes = Clientes.cantidad_clientes();
+	Clientes.listar_clientes(cantClientes);
 	
 	Venta* ventas = new Venta[cant];
 	obtener_venta(ventas, cant);
@@ -137,7 +138,14 @@ void Archivo_Venta::listar_x_cliente()
 	system("cls");
 
 	cout << "Productos con ID# de Cliente: " << idCliente << endl << endl;
-
+	while (idCliente<0 || idCliente>cantClientes)
+	{
+		cout << "ID# de cliente no posee compras " << endl;
+		cout << "ingrese otro ID# del cliente a listar: " << endl;
+		cin >> idCliente;
+		cliente = Clientes.leer_clientes(idCliente - 1);
+	}
+	
 	for (int i = 0; i < cant; i++)
 	{
 
@@ -150,6 +158,44 @@ void Archivo_Venta::listar_x_cliente()
 	}
 	cout << endl;
 
+	delete[] ventas;
+}
+
+void Archivo_Venta::listar_x_fecha()
+{
+	int cant = cantidad_ventas();
+	Venta* ventas = new Venta[cant];
+	obtener_venta(ventas, cant);
+	int dia, mes, anio;
+	cout << "Ingrese la fecha a listar: " << endl;
+	cout << "Dia: ";
+	cin >> dia;
+	cout << "Mes: ";
+	cin >> mes;
+	cout << "Anio: ";
+	cin >> anio;
+	while (dia < 1 || dia > 31 || mes < 1 || mes > 12 || anio < 2000)
+	{
+		cout << "Fecha invalida" << endl;
+		cout << "Ingrese la fecha a listar: " << endl;
+		cout << "Dia: ";
+		cin >> dia;
+		cout << "Mes: ";
+		cin >> mes;
+		cout << "Anio: ";
+		cin >> anio;
+	}
+	system("cls");
+	cout << "Ventas con fecha: " << dia << "/" << mes << "/" << anio << endl << endl;
+	for (int i = 0; i < cant; i++)
+	{
+		if (dia == ventas[i].getFecha().getDia() && mes == ventas[i].getFecha().getMes() && anio == ventas[i].getFecha().getAnio() && ventas[i].getEstado())
+		{
+			cout << "-----------------" << endl;
+			ventas[i].mostrar();
+		}
+	}
+	cout << endl;
 	delete[] ventas;
 }
 
