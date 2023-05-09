@@ -267,6 +267,7 @@ void archivo_producto::listaXcategoria()
 			cout << "No hay productos con ID# de Categoria: " << idcat << endl;
             cout << "¿Desea cargar uno? (S/N)" << endl;
             cin >> desicion;
+            system("cls");
             if (desicion == 'S' || desicion == 's')
             {
                 menu.menu_productos();

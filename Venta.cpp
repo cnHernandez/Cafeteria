@@ -78,13 +78,14 @@ float Venta::getPrecio()
 
 float Venta::getTotal()
 {
-	return precio * cantidad;
+	return total;
 }
 
 bool Venta::getEstado()
 {
 	return estado;
 }
+
 
 
 
@@ -100,7 +101,11 @@ void Venta::cargar()
 	int id, idCliente;
 	int cantidad;
 	float precio;
-	float total;
+	float total=0;
+	float totalFinal = 0;
+	float aumento;
+	float descuento;
+	int tipoPago;
 	int dia, mes, anio;
 
 	int cant = archivo.cantidad_de_registros();
@@ -127,11 +132,19 @@ void Venta::cargar()
 		std::cout << "No hay clientes cargados" << std::endl;
 		std::cout << "¿Desea cargar uno? (S/N)" << std::endl;
 		std::cin >> desicion;
-		if (desicion == "S")
+		if (desicion == "S" || desicion == "s")
 		{
-			menu.menu_clientes();
+			cliente.Cargar();
+			archivoCliente.guardar(cliente);
 		}
-		else { return; }
+		else if (desicion == "N" || desicion == "n")
+		{ return; }
+		else
+		{
+			std::cout << "Opcion incorrecta" << std::endl;
+			std::cout << "¿Desea cargar uno? (S/N)" << std::endl;
+			std::cin >> desicion;
+		}
 	}
 	while (idCliente <= 0 || idCliente > archivoCliente.cantidad_clientes())
 	{
@@ -153,12 +166,39 @@ void Venta::cargar()
 	std::cout << "Ingrese la cantidad que desea comprar" << std::endl;
 	std::cin >> cantidad;
 	precio = producto.getPrecio();
-	total = precio * cantidad;
+	std::cout << "Ingrese el tipo de pago" << std::endl;
+	std::cout << "1- Efectivo 5 % Descuento" << std::endl;
+	std::cout << "2- Tarjeta 8 % Aumento" << std::endl;
+	std::cin >> tipoPago;
+	float porcentajeEfectivo = 0.05;
+	float porcentajeTarjeta = 0.08;
+		if (tipoPago != 1 && tipoPago != 2)
+		{
+			std::cout << "Opcion incorrecta" << std::endl;
+			std::cout << "Ingrese el tipo de pago" << std::endl;
+			std::cout << "1- Efectivo 5 % Descuento" << std::endl;
+			std::cout << "2- Tarjeta 8 % Aumento" << std::endl;
+			std::cin >> tipoPago;
+		}
+		total = precio * cantidad;
+		descuento = total * porcentajeEfectivo;
+		aumento = total * porcentajeTarjeta; 
+	if (tipoPago == 1)
+	{
+		totalFinal = total - descuento;
+		//setTotal(totalFinal);
+	}
+	else if (tipoPago == 2)
+	{
+		totalFinal = total + aumento;
+		//setTotal(totalFinal);
+	}
+	setTipoPago(tipoPago);
 	setIdCliente(cliente);
 	setProducto(producto);
 	setCantidad(cantidad);
 	setPrecio(precio);
-	setTotal(total);
+	setTotal(totalFinal);
 
 }
 
@@ -166,17 +206,23 @@ void Venta::mostrar()
 {
 
 	std::cout << "********************** " << std::endl;
-	std::cout << "Fecha: " << getFecha().toString()<< std::endl;
+	std::cout << "Fecha: " << getFecha().toString() << std::endl;
 	std::cout << "ID de Cliente: " << getIdCliente().getId_Cliente() << std::endl;
 	std::cout << "ID de Venta: " << getId() << std::endl;
 	std::cout << "Producto: " << getProducto().getNombre() << std::endl;
 	std::cout << "Cantidad: " << getCantidad() << std::endl;
 	std::cout << "Precio: " << getPrecio() << std::endl;
+	if (getTipoPago() == 1)
+	{
+		std::cout << "Tipo de Pago: " << "EFECTIVO  5 % DESCUENTO" << std::endl;
+	}
+	else if (getTipoPago() == 2)
+	{
+		std::cout << "Tipo de Pago: " << "TARJETA  8 % AUMENTO" << std::endl;
+	}
 	std::cout << "Total: " << getTotal() << std::endl;
 	std::cout << "********************** " << std::endl;
 }
-
-
 
 void Venta::setIdCliente(Cliente cliente)
 {
@@ -188,6 +234,16 @@ Cliente Venta::getIdCliente()
 	return cliente;
 }
 
+void Venta::setTipoPago(int tipoPago)
+{
+	this->tipoPago = tipoPago;
+}
+
+int Venta::getTipoPago()
+{
+	return tipoPago;
+	
+}
 
 
 

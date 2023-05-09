@@ -199,3 +199,66 @@ void Archivo_Venta::listar_x_fecha()
 	delete[] ventas;
 }
 
+void Archivo_Venta::listar_x_producto()
+{
+	int cant = cantidad_ventas();
+	Venta* ventas = new Venta[cant];
+	obtener_venta(ventas, cant);
+	archivo_producto productos;
+	int cantProductos = productos.cantidad_de_registros();
+	productos.listar(cantProductos);
+	Producto producto;
+	int idProducto;
+	cout << "ingrese el ID# del producto a listar: " << endl;
+	cin >> idProducto;
+	while (idProducto <= 0 || idProducto > cant)
+	{
+		cout << "ID# de producto invalido: " << endl;
+		cout << "ingrese el ID# del producto a listar: " << endl;
+		cin >> idProducto;
+	}
+	producto = productos.leer_de_disco(idProducto - 1);
+	while (producto.getEstado() != true)
+	{
+		cout << "ID# de producto invalido: " << endl;
+		cout << "ingrese el ID# del producto a listar: " << endl;
+		cin >> idProducto;
+		producto = productos.leer_de_disco(idProducto - 1);
+	}
+	system("cls");
+	cout << "Ventas con ID# de Producto: " << idProducto << endl << endl;
+	while (idProducto < 0 || idProducto > cantProductos)
+	{
+		cout << "ID# de producto no posee compras " << endl;
+		cout << "ingrese otro ID# del producto a listar: " << endl;
+		cin >> idProducto;
+		producto = productos.leer_de_disco(idProducto - 1);
+	}
+	for (int i = 0; i < cant; i++)
+	{
+		if (idProducto == ventas[i].getProducto().getId_Producto() && ventas[i].getEstado())
+		{
+			cout << "-----------------" << endl;
+			ventas[i].mostrar();
+		}
+	}
+	cout << endl;
+	delete[] ventas;
+}
+
+
+bool Archivo_Venta::guardar_modificado(Venta venta, int pos)
+{
+	FILE* p;
+	p = fopen("ventas.dat", "rb+");
+	if (p == nullptr) {
+		std::cout << "No se pudo abrir el archivo" << std::endl;
+		return false;
+	}
+	fseek(p, pos * sizeof(Venta), SEEK_SET);
+	fwrite(&venta, sizeof(Venta), 1, p);
+	fclose(p);
+
+	return true;
+}
+

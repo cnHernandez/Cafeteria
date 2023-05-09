@@ -8,6 +8,7 @@ class Archivo_Venta
 	public:
 
 		bool guardarEnDisco(int);
+		bool guardar_modificado(Venta, int);
 		void obtener_venta(Venta * prod, int cantidad);
 		void guardar(Venta venta);
 		int cantidad_ventas();
@@ -16,6 +17,8 @@ class Archivo_Venta
 		void listar_ventas(int);
 		void listar_x_cliente();
 		void listar_x_fecha();
+		void listar_x_producto();
+		
 
 
 		

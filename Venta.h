@@ -16,6 +16,7 @@ private:
 	bool estado;
 	Fecha fecha;
 	Cliente cliente;
+	int tipoPago;
 
 public:
 	Venta();
@@ -28,6 +29,7 @@ public:
 	void setTotal(float);
 	void setEstado(bool);
 	void setFecha(Fecha);
+	void setTipoPago(int);
 
 	int getId();
 	Cliente getIdCliente();
@@ -37,6 +39,7 @@ public:
 	float getTotal();
 	bool getEstado();
 	Fecha getFecha();
+	int getTipoPago();
 	void cargar();
 	void mostrar();
 	

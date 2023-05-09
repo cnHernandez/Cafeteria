@@ -149,7 +149,7 @@ void Menu::menu_productos()
                     int cantActiva = archivo.get_cantidad_Activa(cant);
                     if (cantActiva == 0)
                     {
-                        cout << "No se encuentran guardados Productos Activos" << endl << endl;
+                        cout << "No se encuentran guardados Categorias Activas" << endl << endl;
                     }
                     else
                     {
@@ -183,8 +183,6 @@ void Menu::menu_productos()
                 cout << endl;
 
             }
-
-
         }
         break;
         case 3:
@@ -430,13 +428,16 @@ void Menu::menu_ventas()
                     system("cls");
                     cout << " 2- Lista de ventas por cliente" << endl;
                     Archivo_Venta archivo;
+                    Archivo_Cliente cliente;
                     int cant = archivo.cantidad_ventas();
+                    int cantClientes = cliente.cantidad_clientes();
                     int cantActiva = archivo.get_cantidad_Activa(cant);
                     if (cantActiva == 0)
                     {
                         cout << "No se encuentran guardadas ventas Activas" << endl << endl;
                         system("pause");
                     }
+                    
                     else
                     {
                         archivo.listar_x_cliente();
@@ -465,15 +466,10 @@ void Menu::menu_ventas()
                     }
                 }
                 break;
-
-
-
-
                 }
-
             }
         }
-
+        break;
         case 2:
         {
             cout << " 2- Agregar venta" << endl;
@@ -485,11 +481,11 @@ void Menu::menu_ventas()
             av.guardar(venta);
         }
         break;
-
-
+       
         }
     }
 }
+
 
 void Menu::menu_clientes()
 {
@@ -524,12 +520,31 @@ void Menu::menu_clientes()
             system("cls");
             cout << " 1- Lista de clientes" << endl;
             Archivo_Cliente archivo;
+            Cliente cliente;
             int cant = archivo.cantidad_clientes();
             int cantActiva = archivo.get_cantidad_Activa(cant);
             if (cantActiva == 0)
             {
+                char desicion;
                 cout << "No se encuentran guardados clientes Activos" << endl << endl;
+                cout << "¿Desea ingresar un cliente nuevo? (S/N)" << endl << endl;
+                cin >> desicion;
+                if (desicion == 's' || desicion == 'S')
+                {
+                    cliente.Cargar();
+                    archivo.guardar(cliente);
+                }
+                else if (desicion == 'n' || desicion == 'N')
+                {
+                    return;
+				}
+                else
+                {
+					cout << "Opcion incorrecta" << endl << endl;
+					system("pause");
+				}
                 system("pause");
+
             }
             else
             {
