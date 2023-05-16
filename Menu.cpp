@@ -499,6 +499,7 @@ void Menu::menu_clientes()
         cout << " 1- Listar" << endl;
         cout << " 2- Agregar" << endl;
         cout << " 3- Modificar" << endl;
+        cout << " 4- Eliminar" << endl;
         cout << "-----------------" << endl;
         cout << " 0- SALIR" << endl;
         cout << "-----------------" << endl;
@@ -583,7 +584,14 @@ void Menu::menu_clientes()
 			}
         }
         break;
-
+        case 4:
+        {
+            Archivo_Cliente cliente;
+            cliente.baja_Logica();
+            system("pause");
+            
+        }
+        break;
         }
     }
 }

@@ -12,5 +12,6 @@ public:
 	int get_cantidad_Activa(int);
 	void listar_clientes(int);
 	void modificar_cliente();
+	void baja_Logica();
 };
 
