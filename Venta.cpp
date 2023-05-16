@@ -47,9 +47,11 @@ void Venta::setEstado(bool estado)
 	this->estado = estado;
 }
 
-void Venta::setFecha(Fecha fecha)
+void Venta::setFecha(int dia, int mes, int anio)
 {
-	fecha = fecha;
+	fecha.setDia(dia);
+	fecha.setMes(mes);
+	fecha.setAnio(anio);
 }
 
 Fecha Venta::getFecha()
@@ -118,10 +120,7 @@ void Venta::cargar()
 	std::cin >> mes;
 	std::cout << "Anio: ";
 	std::cin >> anio;
-	fecha.setDia(dia);
-	fecha.setMes(mes);
-	fecha.setAnio(anio);
-	setFecha(fecha);
+	setFecha(dia,mes,anio);
 	std::cout << std::endl;
 	std::cout << "Ingrese el ID del cliente que realiza la comprar" << std::endl;
 	std::cin >> idCliente;
@@ -186,12 +185,10 @@ void Venta::cargar()
 	if (tipoPago == 1)
 	{
 		totalFinal = total - descuento;
-		//setTotal(totalFinal);
 	}
 	else if (tipoPago == 2)
 	{
 		totalFinal = total + aumento;
-		//setTotal(totalFinal);
 	}
 	setTipoPago(tipoPago);
 	setIdCliente(cliente);
@@ -220,7 +217,7 @@ void Venta::mostrar()
 	{
 		std::cout << "Tipo de Pago: " << "TARJETA  8 % AUMENTO" << std::endl;
 	}
-	std::cout << "Total: " << getTotal() << std::endl;
+	std::cout << "Total a Pagar: " << getTotal() << std::endl;
 	std::cout << "********************** " << std::endl;
 }
 

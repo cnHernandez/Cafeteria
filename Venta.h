@@ -28,7 +28,7 @@ public:
 	void setPrecio(float);
 	void setTotal(float);
 	void setEstado(bool);
-	void setFecha(Fecha);
+	void setFecha(int,int,int);
 	void setTipoPago(int);
 
 	int getId();
