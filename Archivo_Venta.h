@@ -18,6 +18,7 @@ class Archivo_Venta
 		void listar_x_cliente();
 		void listar_x_fecha();
 		void listar_x_producto();
+
 		
 
 

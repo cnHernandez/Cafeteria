@@ -16,7 +16,7 @@ bool Archivo_Venta::guardarEnDisco(int cantidad_ventas)
 	p = fopen("Ventas.dat", "ab");
 	if (p == NULL)
 	{
-		cout << "Error al abrir el archivo" << endl;
+		std::cout << "Error al abrir el archivo" << endl;
 		return false;
 	}
 	guardo = fwrite(this, sizeof(Archivo_Venta), cantidad_ventas, p);
@@ -29,7 +29,7 @@ void Archivo_Venta::obtener_venta(Venta* venta, int cant)
 	p = fopen("Ventas.dat", "rb");
 	if (p == NULL)
 	{
-		cout << "Error al abrir el archivo" << endl;
+		std::cout << "Error al abrir el archivo" << endl;
 	}
 	fread(venta, sizeof(Venta), cant, p);
 	fclose(p);
@@ -41,7 +41,7 @@ void Archivo_Venta::guardar(Venta venta)
 	FILE* pFile;
 	pFile = fopen("Ventas.dat", "ab");
 	if (pFile == nullptr) {
-		cout << "No se pudo abrir el archivo" << endl;
+		std::cout << "No se pudo abrir el archivo" << endl;
 	}
 	fwrite(&venta, sizeof(Venta), 1, pFile);
 
@@ -118,30 +118,30 @@ void Archivo_Venta::listar_x_cliente()
 	obtener_venta(ventas, cant);
 	Cliente cliente;
 	int idCliente;
-	cout << "ingrese el ID# del cliente a listar: " << endl;
+	std::cout << "ingrese el ID# del cliente a listar: " << endl;
 	cin >> idCliente;
 	while (idCliente <= 0 || idCliente > cant)
 	{
-		cout << "ID# de cliente invalido: " << endl;
-		cout << "ingrese el ID# del cliente a listar: " << endl;
+		std::cout << "ID# de cliente invalido: " << endl;
+		std::cout << "ingrese el ID# del cliente a listar: " << endl;
 		cin >> idCliente;
 	}
 	cliente=Clientes.leer_clientes(idCliente - 1);
 	while(cliente.getEstado()!= true)
 	{
-		cout << "ID# de cliente invalido: " << endl;
-		cout << "ingrese el ID# del cliente a listar: " << endl;
+		std::cout << "ID# de cliente invalido: " << endl;
+		std::cout << "ingrese el ID# del cliente a listar: " << endl;
 		cin >> idCliente;
 		cliente = Clientes.leer_clientes(idCliente - 1);
 
 	}
-	system("cls");
+	std::system("cls");
 
-	cout << "Productos con ID# de Cliente: " << idCliente << endl << endl;
+	std::cout << "Productos con ID# de Cliente: " << idCliente << endl << endl;
 	while (idCliente<0 || idCliente>cantClientes)
 	{
-		cout << "ID# de cliente no posee compras " << endl;
-		cout << "ingrese otro ID# del cliente a listar: " << endl;
+		std::cout << "ID# de cliente no posee compras " << endl;
+		std::cout << "ingrese otro ID# del cliente a listar: " << endl;
 		cin >> idCliente;
 		cliente = Clientes.leer_clientes(idCliente - 1);
 	}
@@ -151,12 +151,12 @@ void Archivo_Venta::listar_x_cliente()
 
 		if (idCliente == ventas[i].getIdCliente().getId_Cliente() && ventas[i].getEstado())
 		{
-			cout << "-----------------" << endl;
+			std::cout << "-----------------" << endl;
 			ventas[i].mostrar();
 		}
 
 	}
-	cout << endl;
+	std::cout << endl;
 
 	delete[] ventas;
 }
@@ -167,37 +167,82 @@ void Archivo_Venta::listar_x_fecha()
 	Venta* ventas = new Venta[cant];
 	obtener_venta(ventas, cant);
 	int dia, mes, anio;
-	cout << "Ingrese la fecha a listar: " << endl;
-	cout << "Dia: ";
-	cin >> dia;
-	cout << "Mes: ";
-	cin >> mes;
-	cout << "Anio: ";
-	cin >> anio;
-	while (dia < 1 || dia > 31 || mes < 1 || mes > 12 || anio < 2000)
+	int op;
+	bool menu_activo = true;
+	while (menu_activo)
 	{
-		cout << "Fecha invalida" << endl;
-		cout << "Ingrese la fecha a listar: " << endl;
-		cout << "Dia: ";
-		cin >> dia;
-		cout << "Mes: ";
-		cin >> mes;
-		cout << "Anio: ";
-		cin >> anio;
-	}
-	system("cls");
-	cout << "Ventas con fecha: " << dia << "/" << mes << "/" << anio << endl << endl;
-	for (int i = 0; i < cant; i++)
-	{
-		if (dia == ventas[i].getFecha().getDia() && mes == ventas[i].getFecha().getMes() && anio == ventas[i].getFecha().getAnio() && ventas[i].getEstado())
+		std::system("cls");
+		std::cout << "---Fecha de Ventas----" << endl << endl;
+		std::cout << " 1- Mes" << endl;
+		std::cout << " 2- Anio" << endl;
+		std::cout << "-----------------" << endl;
+		std::cout << " 0- SALIR" << endl;
+		std::cout << "-----------------" << endl;
+		cin >> op;
+		while (op < 0 || op>2)
 		{
-			cout << "-----------------" << endl;
-			ventas[i].mostrar();
+			std::cout << "opcion incorrecta, vuelva a ingresar una opcion" << endl;
+			cin >> op;
+		}
+		switch (op)
+		{
+		case 0:
+		{
+			menu_activo = false;
+		}
+		break;
+		case 1:
+		{
+			std::cout << "ingrese el Mes a listar: ";
+			cin >> mes;
+			while (mes < 1 || mes > 12)
+			{
+				std::cout << "Mes invalido" << endl;
+				std::cout << "ingrese el Mes a listar: ";
+				cin >> mes;
+			}
+			std::cout << "Ventas con mes: " << mes << endl;
+			for (int i = 0; i < cant; i++)
+			{
+				if (mes == ventas[i].getFecha().getMes() && ventas[i].getEstado())
+				{
+					std::cout << "-----------------" << endl;
+					ventas[i].mostrar();
+					std::system("pause");
+				}
+			}
+			std::cout << endl;
+		}
+		break;
+		case 2:
+		{
+			std::cout << "ingrese el anio a listar" << endl;
+			cin >> anio;
+			while (anio < 2016)
+			{
+				std::cout << "Anio invalido" << endl;
+				std::cout << "ingrese el Anio a listar: ";
+				cin >> anio;
+			}
+			std::cout << "Ventas con Anio: " << anio << endl;
+			for (int i = 0; i < cant; i++)
+			{
+				if (anio == ventas[i].getFecha().getAnio() && ventas[i].getEstado())
+				{
+					std::cout << "-----------------" << endl;
+					ventas[i].mostrar();
+					std::system("pause");
+				}
+			}
+
+		}
+		break;
 		}
 	}
-	cout << endl;
-	delete[] ventas;
-}
+		std::cout << endl;
+			delete[] ventas;
+		
+		}
 
 void Archivo_Venta::listar_x_producto()
 {
