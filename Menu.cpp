@@ -11,8 +11,6 @@
 #include "Venta.h"
 #include "Archivo_Venta.h"
 
-
-
 void Menu::menuPrincipal()
 {
 
@@ -448,9 +446,9 @@ void Menu::menu_ventas()
                 break;
                 case 3:
                 {
-                    //system("cls");
+                    system("cls");
                     cout << " 3- Lista de ventas por fecha" << endl;
-                    system("pause");
+                    
                     Archivo_Venta archivo;
                     int cant = archivo.cantidad_ventas();
                     int cantActiva = archivo.get_cantidad_Activa(cant);

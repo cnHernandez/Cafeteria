@@ -175,11 +175,12 @@ void Archivo_Venta::listar_x_fecha()
 		std::cout << "---Fecha de Ventas----" << endl << endl;
 		std::cout << " 1- Mes" << endl;
 		std::cout << " 2- Anio" << endl;
+		std::cout << " 3- Recaudacion anual" << endl;
 		std::cout << "-----------------" << endl;
 		std::cout << " 0- SALIR" << endl;
 		std::cout << "-----------------" << endl;
 		cin >> op;
-		while (op < 0 || op>2)
+		while (op < 0 || op>3)
 		{
 			std::cout << "opcion incorrecta, vuelva a ingresar una opcion" << endl;
 			cin >> op;
@@ -237,11 +238,97 @@ void Archivo_Venta::listar_x_fecha()
 
 		}
 		break;
+		case 3:
+		{
+			std::cout << "ingrese el anio a listar" << endl;
+			cin >> anio;
+			while (anio < 2016)
+			{
+				std::cout << "Anio invalido" << endl;
+				std::cout << "ingrese el Anio a listar: ";
+				cin >> anio;
+			}
+			std::cout << "Recaudacion Anual: " << anio << endl;
+			float total = 0;
+			for (int i = 0; i < cant; i++)
+			{
+				if (anio == ventas[i].getFecha().getAnio() && ventas[i].getEstado())
+				{
+					total += ventas[i].getTotal();
+				}
+			}
+			std::cout << "RECAUDACION TOTAL: $" << total<< endl;
+			string mes[12] = { "Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"
+			};
+			
+			float ventasMensuales[12] = {};
+			for (int i = 0; i < cant; i++)
+			{
+				if (anio == ventas[i].getFecha().getAnio() && ventas[i].getEstado())
+				{
+					if (ventas[i].getFecha().getMes() == 1)
+					{
+						ventasMensuales[0] += ventas[i].getTotal();
+					}
+					else if (ventas[i].getFecha().getMes() == 2)
+					{
+						ventasMensuales[1] += ventas[i].getTotal();
+					}
+					else if (ventas[i].getFecha().getMes() == 3)
+					{
+						ventasMensuales[2] += ventas[i].getTotal();
+					}
+					else if (ventas[i].getFecha().getMes() == 4)
+					{
+						ventasMensuales[3] += ventas[i].getTotal();
+					}
+					else if (ventas[i].getFecha().getMes() == 5)
+					{
+						ventasMensuales[4] += ventas[i].getTotal();
+					}
+					else if (ventas[i].getFecha().getMes() == 6)
+					{
+						ventasMensuales[5] += ventas[i].getTotal();
+					}
+					else if (ventas[i].getFecha().getMes() == 7)
+					{
+						ventasMensuales[6] += ventas[i].getTotal();
+					}
+					else if (ventas[i].getFecha().getMes() == 8)
+					{
+						ventasMensuales[7] += ventas[i].getTotal();
+					}
+					else if (ventas[i].getFecha().getMes() == 9)
+					{
+						ventasMensuales[8] += ventas[i].getTotal();
+					}
+					else if (ventas[i].getFecha().getMes() == 10)
+					{
+						ventasMensuales[9] += ventas[i].getTotal();
+					}
+					else if (ventas[i].getFecha().getMes() == 11)
+					{
+						ventasMensuales[10] += ventas[i].getTotal();
+					}
+					else if (ventas[i].getFecha().getMes() == 12)
+					{
+						ventasMensuales[11] += ventas[i].getTotal();
+					}
+				}
+			}
+			cout << "---------------------------------------" << endl;
+			for (int i = 0; i < 12; i++)
+			{
+				
+				std::cout <<  mes[i]<<"          " << "$" << ventasMensuales[i] << endl;
+				
+			}
+			std::system("pause");
+		}break;
+
 		}
 	}
-		std::cout << endl;
 			delete[] ventas;
-		
 		}
 
 void Archivo_Venta::listar_x_producto()
