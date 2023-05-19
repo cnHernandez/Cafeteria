@@ -151,7 +151,6 @@ void Archivo_Venta::listar_x_cliente()
 
 		if (idCliente == ventas[i].getIdCliente().getId_Cliente() && ventas[i].getEstado())
 		{
-			std::cout << "-----------------" << endl;
 			ventas[i].mostrar();
 		}
 
@@ -203,15 +202,15 @@ void Archivo_Venta::listar_x_fecha()
 				cin >> mes;
 			}
 			std::cout << "Ventas con mes: " << mes << endl;
+			system("cls");
 			for (int i = 0; i < cant; i++)
 			{
 				if (mes == ventas[i].getFecha().getMes() && ventas[i].getEstado())
 				{
-					std::cout << "-----------------" << endl;
 					ventas[i].mostrar();
-					std::system("pause");
 				}
 			}
+			std::system("pause");
 			std::cout << endl;
 		}
 		break;
@@ -225,16 +224,16 @@ void Archivo_Venta::listar_x_fecha()
 				std::cout << "ingrese el Anio a listar: ";
 				cin >> anio;
 			}
-			std::cout << "Ventas con Anio: " << anio << endl;
+			system("cls");
+			std::cout << "          VENTAS CON ANIO " << anio << endl << endl;
 			for (int i = 0; i < cant; i++)
 			{
 				if (anio == ventas[i].getFecha().getAnio() && ventas[i].getEstado())
 				{
-					std::cout << "-----------------" << endl;
 					ventas[i].mostrar();
-					std::system("pause");
 				}
 			}
+			std::system("pause");
 
 		}
 		break;
@@ -248,7 +247,6 @@ void Archivo_Venta::listar_x_fecha()
 				std::cout << "ingrese el Anio a listar: ";
 				cin >> anio;
 			}
-			std::cout << "Recaudacion Anual: " << anio << endl;
 			float total = 0;
 			for (int i = 0; i < cant; i++)
 			{
@@ -257,7 +255,6 @@ void Archivo_Venta::listar_x_fecha()
 					total += ventas[i].getTotal();
 				}
 			}
-			std::cout << "RECAUDACION TOTAL: $" << total<< endl;
 			string mes[12] = { "Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"
 			};
 			
@@ -316,13 +313,20 @@ void Archivo_Venta::listar_x_fecha()
 					}
 				}
 			}
+			system("cls");
+			std::cout << "	RECAUDACION ANUAL: " << anio << endl;
 			cout << "---------------------------------------" << endl;
 			for (int i = 0; i < 12; i++)
 			{
-				
-				std::cout <<  mes[i]<<"          " << "$" << ventasMensuales[i] << endl;
-				
+				if (mes[i].size() < 7) {
+					std::cout << mes[i] << "\t\t\t" << "$" << ventasMensuales[i] << endl;
+				}
+				else {
+					std::cout << mes[i] << "  \t\t" << "$" << ventasMensuales[i] << endl;
+				}
 			}
+			cout << "----------------------------------------" << endl;
+			std::cout << "       RECAUDACION TOTAL: $" << total << endl << endl;
 			std::system("pause");
 		}break;
 

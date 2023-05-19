@@ -54,8 +54,10 @@ bool Cliente::Cargar()
 
 void Cliente::Mostrar()
 {
+	cout << "-----------------------" << endl;
 	cout << "Id: " << id_cliente << endl;
 	cout << "Nombre: " << _nombre << endl;
+	cout << "-----------------------" << endl << endl;
 	
 }
 

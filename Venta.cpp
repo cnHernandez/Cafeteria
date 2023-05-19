@@ -111,7 +111,7 @@ void Venta::cargar()
 	int dia, mes, anio;
 
 	int cant = archivo.cantidad_de_registros();
-	archivo.listar(cant);
+	//archivo.listar(cant);
 	std::cout << std::endl;
 	std::cout << "Ingrese la fecha" << std::endl;
 	std::cout << "Dia: ";
@@ -202,7 +202,7 @@ void Venta::cargar()
 void Venta::mostrar()
 {
 
-	std::cout << "********************** " << std::endl;
+	std::cout << "****************************************** " << std::endl;
 	std::cout << "Fecha: " << getFecha().toString() << std::endl;
 	std::cout << "ID de Cliente: " << getIdCliente().getId_Cliente() << std::endl;
 	std::cout << "ID de Venta: " << getId() << std::endl;
@@ -218,7 +218,7 @@ void Venta::mostrar()
 		std::cout << "Tipo de Pago: " << "TARJETA  8 % AUMENTO" << std::endl;
 	}
 	std::cout << "Total a Pagar: " << getTotal() << std::endl;
-	std::cout << "********************** " << std::endl;
+	std::cout << "****************************************** " << std::endl;
 }
 
 void Venta::setIdCliente(Cliente cliente)
