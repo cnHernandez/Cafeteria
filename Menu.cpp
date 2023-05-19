@@ -349,7 +349,7 @@ void Menu::menu_ventas()
     while (menu_activo)
     {
         system("cls");
-        cout << "---Ventas----" << endl << endl;
+        cout << "---Ventas----" << endl;
         cout << " 1- Listar" << endl;
         cout << " 2- Agregar" << endl;
         //cout << " 3- Modificar" << endl;
@@ -378,13 +378,14 @@ void Menu::menu_ventas()
             while (menu2activo)
             {
                 system("cls");
-                cout << "Listar Ventas" << endl << endl;;
-
-
+                cout << "Listar Ventas" << endl;
+                cout << "-----------------------" << endl;
                 cout << "1- Todos" << endl;
-                cout << "2- Listar por Cliente" << endl << endl;
-                cout << "3- Listar por Fecha" << endl << endl;
+                cout << "2- Listar por Cliente" << endl;
+                cout << "3- Listar por Fecha" << endl;
+                cout << "-----------------------" << endl;
                 cout << "0- volver" << endl;
+                cout << "-----------------------" << endl;
                 cin >> op;
 
                 while (op < 0 || op>3)
@@ -414,7 +415,8 @@ void Menu::menu_ventas()
                     }
                     else
                     {
-                        cout << "********VENTAS*******" << endl;
+                        system("cls");
+                        cout << "        ******** VENTAS ********" << endl;
                         archivo.listar_ventas(cant);
                         cout << "*********************" << endl;
                         system("pause");
@@ -424,7 +426,7 @@ void Menu::menu_ventas()
                 case 2:
                 {
                     system("cls");
-                    cout << " 2- Lista de ventas por cliente" << endl;
+                    cout << " 2- Lista de ventas por cliente" << endl << endl;
                     Archivo_Venta archivo;
                     Archivo_Cliente cliente;
                     int cant = archivo.cantidad_ventas();
@@ -471,10 +473,15 @@ void Menu::menu_ventas()
         break;
         case 2:
         {
-            cout << " 2- Agregar venta" << endl;
+            system("cls");
+            cout << "2- Agregar venta" << endl;
             Archivo_Venta av;
             Venta venta;
             venta.cargar();
+            system("cls");
+            cout << "CARGO LA VENTA CON EXITO..." << endl;
+            system("pause");
+            system("cls");
             venta.mostrar();
             system("pause");
             av.guardar(venta);
