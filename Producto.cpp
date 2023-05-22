@@ -67,11 +67,11 @@ bool Producto::Cargar()
     if (arch.cantidad_categorias() > 0) {
         CargarCategoria();
         std::string Nombre;
-        std::cout << "Ingrese el nombre del Producto: " << std::endl;
+        std::cout << "Ingrese el nombre del Producto: ";
         std::cin.ignore();
         getline(std::cin, Nombre);
         setNombre(Nombre);
-        std::cout << "Ingrese el precio del Producto: " << std::endl;
+        std::cout << "Ingrese el precio del Producto: ";
         std::cin >> precio;
         setPrecio(precio);
         return true;
@@ -81,7 +81,7 @@ bool Producto::Cargar()
         system("pause");
         char desicion;
         Menu menu;
-        std::cout << "¿Desea generar una categoria nueva? (S/N)" << std::endl;
+        std::cout << "¿Desea generar una categoria nueva? (S/N): ";
         std::cin >> desicion;
         if (desicion == 'S' || desicion == 's') {
             
@@ -102,9 +102,7 @@ void Producto::CargarCategoria()
     Archivo_Categoria ArchivoC;
     ArchivoC.listar_categorias(ArchivoC.cantidad_categorias());
     std::cout << std::endl;
-    std::cout << "Ingrese de ID de la categoria a..." << std::endl;
-    std::cout << " ...la que pertenece el producto" << std::endl;
-    std::cout << std::endl;
+    std::cout << "Ingrese de ID de la categoria a la que pertenece el producto: ";
     std::cin >> op;
 
     while (ArchivoC.Existe(op) == false)

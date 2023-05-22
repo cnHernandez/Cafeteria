@@ -10,7 +10,7 @@ public:
     void listar(int cantidad);
     int get_cantidad_Activa(int cantidad);
     void baja_Logica();
-    void modificar();
+    int modificar();
     void obtener_productos(Producto* prod, int cantidad);
     void listaXcategoria();
     bool Existe(int opcion);

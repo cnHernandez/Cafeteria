@@ -37,16 +37,15 @@ void Categoria::set_id(int nuevo_id)
     id_categoria = nuevo_id;
 }
 void Categoria::cargar() {
-    cout << "------------------" << endl;
-    cout << "Ingrese nombre: ";
+    cout << "Ingrese nombre de la nueva categoria: ";
     cin >> _nombre;
 }
 void Categoria::mostrar()
 {
-   
-    cout << "------------------" << endl;
+    cout << "------------------------------------" << endl;
     cout << "ID de categoria: " << get_id() << endl;
     cout << "Nombre: " << _nombre << endl;
+    cout << "------------------------------------" << endl;
 
 }
 /*void categorias::cargar_categias_vector(categorias vec[], int cantidad) {
