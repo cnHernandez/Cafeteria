@@ -103,15 +103,14 @@ void Archivo_Cliente::modificar_cliente() {
 	int cant = cantidad_clientes();
 	listar_clientes(cant);
 	std::cout << std::endl;
-	std::cout << "Ingrese de ID del cliente que desea modificar" << std::endl;
-	std::cout << std::endl;
+	std::cout << "Ingrese de ID del cliente que desea modificar: ";
 	std::cin >> op;
 
 	cliente = leer_clientes(op - 1);
 
 	while (op<0 || op>cant || cliente.getEstado() == false)
 	{
-		std::cout << "ingrese una opcion correcta" << std::endl;
+		std::cout << "ingrese una opcion correcta: ";
 		std::cin >> op;
 	}
 	if (op != 0)
@@ -121,7 +120,7 @@ void Archivo_Cliente::modificar_cliente() {
 
 		char op2;
 		std::cout << "esta seguro de que desea modificar el cliente?" << std::endl;
-		std::cout << "[S/N]" << std::endl;
+		std::cout << "[S/N]: ";
 		std::cin >> op2;
 		if (op2 == 's' || op2 == 'S')
 		{
@@ -152,26 +151,25 @@ void Archivo_Cliente::baja_Logica() {
 	int cant = cantidad_clientes();
 	listar_clientes(cant);
 	std::cout << std::endl;
-	std::cout << "Ingrese de ID del cliente que desea eliminar" << std::endl;
-	std::cout << std::endl;
+	std::cout << "Ingrese de ID del cliente que desea eliminar: ";
 	std::cin >> op;
 
 	while (op<0 || op>cant)
 	{
-		std::cout << "ingrese una opcion correcta" << std::endl;
+		std::cout << "ingrese una opcion correcta: ";
 		std::cin >> op;
 	}
 	cliente = leer_clientes(op - 1);
 	if (cliente.getEstado() == false)
 	{
-		std::cout << "ingrese una opcion correcta" << std::endl;
+		std::cout << "ingrese una opcion correcta: ";
 		std::cin >> op;
 	}
 	else {
 
 		char op2;
 		std::cout << "esta seguro de que desea eliminar el cliente?" << std::endl;
-		std::cout << "[S/N]" << std::endl;
+		std::cout << "[S/N]: ";
 		std::cin >> op2;
 		if (op2 == 's' || op2 == 'S')
 		{

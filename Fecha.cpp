@@ -117,3 +117,13 @@ std::string Fecha::toString(std::string formatoFecha) {
 
     return fechaFormateada;
 }
+
+void Fecha::Cargar()
+{
+    std::cout << "Dia: ";
+    std::cin >> _dia;
+    std::cout << "Mes: ";
+    std::cin >> _mes;
+    std::cout << "Anio: ";
+    std::cin >> _anio;
+}

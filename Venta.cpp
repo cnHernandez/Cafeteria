@@ -99,7 +99,6 @@ void Venta::cargar()
 	Archivo_Cliente archivoCliente;
 	Archivo_Venta venta;
 	Cliente cliente;
-	Fecha fecha;
 	int id, idCliente;
 	int cantidad;
 	float precio;
@@ -111,18 +110,11 @@ void Venta::cargar()
 	int dia, mes, anio;
 
 	int cant = archivo.cantidad_de_registros();
-	//archivo.listar(cant);
-	std::cout << std::endl;
+	cout << endl;
+	cout << "-------------------------------------------------------------" << endl;
 	std::cout << "Ingrese la fecha" << std::endl;
-	std::cout << "Dia: ";
-    std::cin >> dia;
-	std::cout << "Mes: ";
-	std::cin >> mes;
-	std::cout << "Anio: ";
-	std::cin >> anio;
-	setFecha(dia,mes,anio);
-	std::cout << std::endl;
-	std::cout << "Ingrese el ID del cliente que realiza la comprar" << std::endl;
+	fecha.Cargar();
+	std::cout << "Ingrese el ID del cliente que realiza la comprar: ";
 	std::cin >> idCliente;
 	Menu menu;
 	while (archivoCliente.cantidad_clientes() == 0)
@@ -152,8 +144,7 @@ void Venta::cargar()
 		std::cin >> idCliente;
 	}
 	cliente = archivoCliente.leer_clientes(idCliente - 1);
-	std::cout << std::endl;
-	std::cout << "Ingrese el ID del producto que desea comprar" << std::endl;
+	std::cout << "Ingrese el ID del producto que desea comprar: ";
 	std::cin >> id;
 	while (id <= 0 || id > cant)
 	{
@@ -162,12 +153,11 @@ void Venta::cargar()
 		std::cin >> id;
 	}
 	producto = archivo.leer_de_disco(id - 1);
-	std::cout << "Ingrese la cantidad que desea comprar" << std::endl;
+	std::cout << "Ingrese la cantidad que desea comprar: ";
 	std::cin >> cantidad;
 	precio = producto.getPrecio();
 	std::cout << "Ingrese el tipo de pago" << std::endl;
-	std::cout << "1- Efectivo 5 % Descuento" << std::endl;
-	std::cout << "2- Tarjeta 8 % Aumento" << std::endl;
+	std::cout << "1- Efectivo 5 % Descuento  //  2 - Tarjeta 8 % Aumento: " ;
 	std::cin >> tipoPago;
 	float porcentajeEfectivo = 0.05;
 	float porcentajeTarjeta = 0.08;
@@ -196,7 +186,8 @@ void Venta::cargar()
 	setCantidad(cantidad);
 	setPrecio(precio);
 	setTotal(totalFinal);
-
+	cout << "-------------------------------------------------------------" << endl << endl;
+	system("pause");
 }
 
 void Venta::mostrar()
