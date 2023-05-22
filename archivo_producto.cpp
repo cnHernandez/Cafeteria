@@ -81,12 +81,12 @@ void archivo_producto::listar(int cantidad)
         if(cat.getEstado())
         {
 
-        std::cout<<"------------------"<<std::endl;
+        std::cout<<"------------------------------------------------"<<std::endl;
         producto.Mostrar();
         }
-
         }
     }
+    std::cout << "------------------------------------------------" << std::endl;
 }
 
 int archivo_producto::get_cantidad_Activa(int cantidad)
@@ -112,8 +112,7 @@ void archivo_producto::baja_Logica()
     int cant = cantidad_de_registros();
     listar(cant);
     std::cout << std::endl;
-    std::cout << "Ingrese de ID del producto que desea eliminar" << std::endl;
-    std::cout << std::endl;
+    std::cout << "Ingrese de ID del producto que desea eliminar: ";
     std::cin >> op;
 
     while (op<0 || op>cant)
@@ -130,8 +129,13 @@ void archivo_producto::baja_Logica()
     else {
 
         char op2;
+        system("cls");
+        cout << "----------------------------------------" << endl;
+        producto.Mostrar();
+        cout << "----------------------------------------" << endl << endl;
+        cout << endl;
         std::cout << "esta seguro de que desea eliminar al producto?" << std::endl;
-        std::cout << "[S/N]" << std::endl;
+        std::cout << "[S/N]: ";
         std::cin >> op2;
         if (op2 == 's' || op2 == 'S')
         {
@@ -158,25 +162,23 @@ void archivo_producto::baja_Logica(int id)
         }
         i++;
     }
-
 }
 
-void archivo_producto::modificar()
+int archivo_producto::modificar()
 {
     int op;
     Producto producto;
     int cant = cantidad_de_registros();
     listar(cant);
-    std::cout << std::endl;
-    std::cout << "Ingrese de ID del producto que desea modificar" << std::endl;
-    std::cout << std::endl;
+    std::cout << "Ingrese de ID del producto que desea modificar: ";
     std::cin >> op;
-
+    system("cls");
+    cout << "Categorias existentes: " << endl;
     producto = leer_de_disco(op - 1);
 
     while (op<0 || op>cant || producto.getEstado() == false)
     {
-        std::cout << "ingrese una opcion correcta" << std::endl;
+        std::cout << "ingrese una opcion correcta: ";
         std::cin >> op;
     }
     if (op != 0)
@@ -186,14 +188,14 @@ void archivo_producto::modificar()
 
         char op2;
         std::cout << "esta seguro de que desea modificar al producto?" << std::endl;
-        std::cout << "[S/N]" << std::endl;
+        std::cout << "[S/N]: ";
         std::cin >> op2;
         if (op2 == 's' || op2 == 'S')
         {
             guardar(producto, op - 1);
         }
     }
-
+    return op;
 }
 void archivo_producto::obtener_productos(Producto* prod, int cantidad)
 {
@@ -220,20 +222,20 @@ void archivo_producto::listaXcategoria()
     obtener_productos(prod, cant);
     Categoria Cat;
     int idcat;
-    cout << "ingrese el ID# de la Categoria a listar: " << endl;
+    cout << "ingrese el ID# de la Categoria a listar: " ;
     cin >> idcat;
    
     while (idcat <= 0 || idcat > cant)
     {
 		cout << "ID# de Categoria invalido: " << endl;
-		cout << "ingrese el ID# de la Categoria a listar: " << endl;
+		cout << "ingrese el ID# de la Categoria a listar: " ;
 		cin >> idcat;
 	}
     Cat = Categorias.leer_de_disco(idcat - 1);
     while (Cat.getEstado() != true)
     {
         cout << "ID# de Categoria invalido: " << endl;
-        cout << "ingrese el ID# de la Categoria a listar: " << endl;
+        cout << "ingrese el ID# de la Categoria a listar: " ;
         cin >> idcat;
         Cat = Categorias.leer_de_disco(idcat - 1);
 
@@ -245,7 +247,7 @@ void archivo_producto::listaXcategoria()
             while (idcat < 0 || idcat > CantCat)
             {
 					cout << "No existe la categoria a listar " << endl;
-                    cout << "ingrese el ID# de la Categoria a listar: " << endl;
+                    cout << "ingrese el ID# de la Categoria a listar: " ;
                     cin >> idcat;
                     Cat = Categorias.leer_de_disco(idcat - 1);
 			}
@@ -255,9 +257,9 @@ void archivo_producto::listaXcategoria()
         if (idcat == prod[i].getId_Categoria() && prod[i].getEstado())
         {
                 cont++;
-                cout << "-----------------" << endl;
+                cout << "------------------------------" << endl;
                 prod[i].Mostrar();
-                cout << "-----------------" << endl;    
+                cout << "------------------------------" << endl;    
         }
     }
         Menu menu;

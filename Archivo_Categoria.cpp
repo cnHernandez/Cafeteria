@@ -91,8 +91,7 @@ void Archivo_Categoria::baja_Logica()
     int cant = cantidad_categorias();
     listar_categorias(cant);
     std::cout << std::endl;
-    std::cout << "Ingrese de ID del categoria que desea eliminar" << std::endl;
-    std::cout << std::endl;
+    std::cout << "Ingrese de ID del categoria que desea eliminar: ";
     std::cin >> op;
 
     while (op<0 || op>cant)
@@ -109,8 +108,10 @@ void Archivo_Categoria::baja_Logica()
     else {
 
         char op2;
+        system("cls");
+        categoria.mostrar();
         std::cout << "esta seguro de que desea eliminar la categoria?" << std::endl;
-        std::cout << "[S/N]" << std::endl;
+        std::cout << "[S/N]: ";
         std::cin >> op2;
         if (op2 == 's' || op2 == 'S')
         {
@@ -276,11 +277,8 @@ void Archivo_Categoria::listar_categorias(int cantidad)
             cat = acat.leer_de_disco(categoria.get_id());
             if (cat.getEstado())
             {
-
-                std::cout << "------------------" << std::endl;
                 categoria.mostrar();
             }
-
         }
     }
 }
@@ -294,20 +292,27 @@ void Archivo_Categoria::modificar_categorias()
     ac.obtener_categorias(cat, cant_cat);
     ac.listar_categorias(cant_cat);
     int cod;
-    cout << endl << "ingresar codigo a modificar" << endl;
+    cout << endl << "ingresar codigo a modificar: ";
     cin >> cod;
+    system("pause");
+    system("cls");
     for (int i = 0; i < cant_cat; i++)
     {
         if (cod == cat[i].get_id())
         {
             cat[i].mostrar();
-            system("pause");
+            cout << endl;
             char nuevo_nombre[30];
             cout << "ingresar nuevo nombre" << endl;
             cin >> nuevo_nombre;
             cat[i].setNombre(nuevo_nombre);
             system("pause");
-           cat[i].sobreescribir_categoria(c, i);
+            system("cls");
+            cat[i].sobreescribir_categoria(c, i);
+            cout << "Categoria modificada..." << endl << endl;
+            cat[i].mostrar();
+            system("pause");
+            system("cls");
             delete[] cat;
         }
     }
@@ -321,6 +326,10 @@ void Archivo_Categoria::agregar_categoria()
 
     cat.cargar();
     ac.guardar(cat);
+    system("cls");
+    cout << "Se guardo la categoria " << cat.getNombre() << " exitosamente" << endl;
+    system("pause");
+    system("cls");
     cat.mostrar();
     cout << endl;
     system("pause");

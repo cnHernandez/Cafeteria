@@ -10,10 +10,13 @@
 #include "Archivo_Cliente.h"
 #include "Venta.h"
 #include "Archivo_Venta.h"
+#include "rlutil.h"
+#include <iostream>
 
 void Menu::menuPrincipal()
 {
-
+    rlutil::setBackgroundColor(rlutil::CYAN);
+    rlutil::setColor(rlutil::WHITE);
     int op;
 	bool menu_activo = true;
     while (menu_activo)
@@ -30,7 +33,7 @@ void Menu::menuPrincipal()
 		cin >> op;
         while (op < 0 || op>4)
         {
-			cout << "opcion incorrecta, vuelva a ingresar una opcion" << endl;
+			cout << "opcion incorrecta, vuelva a ingresar una opcion: ";
 			cin >> op;
 		}
         switch (op)
@@ -71,7 +74,7 @@ void Menu::menu_productos()
     while (menu_activo)
     {
         system("cls");
-        cout << "----Productos----" << endl << endl;
+        cout << "----Productos----" << endl;
         cout << " 1- Listar" << endl;
         cout << " 2- Agregar" << endl;
         cout << " 3- Modificar" << endl;
@@ -84,7 +87,7 @@ void Menu::menu_productos()
 
         while (op < 0 || op>4)
         {
-            cout << "opcion incorrecta, vuelva a ingresar una opcion" << endl;
+            cout << "opcion incorrecta, vuelva a ingresar una opcion: ";
             cin >> op;
         }
         switch (op)
@@ -101,17 +104,17 @@ void Menu::menu_productos()
             while (menu2activo)
             {
                 system("cls");
-                cout << "Listar Productos" << endl << endl;;
-
-
+                cout << "Listar Productos" << endl;
+                cout << "-------------------------" << endl;
                 cout << "1- Todos" << endl;
-                cout << "2- Listar por categorias" << endl << endl;
-                cout << "0- volver" << endl;
+                cout << "2- Listar por categorias" << endl ;
+                cout << "-------------------------" << endl;
+                cout << "0- Volver" << endl;
                 cin >> op;
 
                 while (op < 0 || op>2)
                 {
-                    cout << "opcion incorrecta, vuelva a ingresar una opcion" << endl;
+                    cout << "opcion incorrecta, vuelva a ingresar una opcion: ";
                     cin >> op;
                 }
 
@@ -169,14 +172,21 @@ void Menu::menu_productos()
         case 2:
         {
             system("cls");
-            cout << " 2- Agregar producto" << endl;
+            cout << "Eliga categoria del producto" << endl;
             Producto producto;
             bool leyo = producto.Cargar();
             if (leyo)
             {
                 archivo_producto archivo;
                 archivo.guardar(producto);
+                system("cls");
+                cout << "Se cargo el producto exitosamente... // Pulse cualquier tecla para ver el producto cargado..." << endl<<endl;
+                system("pause");
+                system("cls");
+                cout << "Producto cargado" << endl;
+                cout << "-----------------------------------" << endl;
                 producto.Mostrar();
+                cout << "-----------------------------------" << endl<<endl;
                 system("pause");
                 cout << endl;
 
@@ -186,7 +196,6 @@ void Menu::menu_productos()
         case 3:
         {
             system("cls");
-
             archivo_producto archivo;
             int cant = archivo.cantidad_de_registros();
             int cantActiva = archivo.get_cantidad_Activa(cant);
@@ -194,17 +203,23 @@ void Menu::menu_productos()
             {
                 cout << "No se encuentran guardados Productos Activos" << endl << endl;
                 system("pause");
-
             }
             else {
                 system("cls");
-                cout << " 3-Modificar producto" << endl;
+                cout << "Modificar producto" << endl;
                 archivo_producto archivo;
-                archivo.modificar();
-       
+                int pro = archivo.modificar();   
                 system("pause");
+                system("cls");
+                cout << "Producto modificado exitosamente... // Pulse cualquier tecla para ver el producto modificado..." << endl << endl;
+                system("pause");
+                system("cls");
+                Producto aux = archivo.leer_de_disco(pro-1);
+                cout << "----------------------------------------" << endl;
+                aux.Mostrar();
+                cout << "----------------------------------------" << endl << endl;
+                system("pause"); 
             }
-
         }
         break;
         case 4:
@@ -220,11 +235,12 @@ void Menu::menu_productos()
 
             }
             else {
-                cout << " 4- Eliminar producto" << endl;
+                cout << "Eliminar producto" << endl;
                 archivo_producto archivo;
                 archivo.baja_Logica();
                 system("pause");
-            }}
+            }
+        }
         break;
 
         }
@@ -251,7 +267,7 @@ void Menu::menu_categorias()
 
         while (op < 0 || op>4)
         {
-            cout << "opcion incorrecta, vuelva a ingresar una opcion" << endl;
+            cout << "opcion incorrecta, vuelva a ingresar una opcion: ";
             cin >> op;
         }
         switch (op)
@@ -264,7 +280,7 @@ void Menu::menu_categorias()
         case 1:
         {
             system("cls");
-            cout << " 1- Lista de categorias" << endl;
+            cout << "Lista de categorias" << endl << endl;
             Archivo_Categoria archivo;
             int cant = archivo.cantidad_categorias();
             int cantActiva = archivo.get_cantidad_Activa(cant);
@@ -279,16 +295,13 @@ void Menu::menu_categorias()
                 archivo.listar_categorias(cant);
                 cout << endl << endl;
                 system("pause");
-
             }
-
         }
         break;
 
         case 2:
         {
-            cout << " 2- Agregar categoria" << endl;
-
+            cout << "Agregar categoria" << endl;
             Archivo_Categoria ac;
             ac.agregar_categoria();
         }
@@ -296,8 +309,7 @@ void Menu::menu_categorias()
         case 3:
         {
             system("cls");
-
-            cout << " 3-Modificar categoria" << endl;
+            cout << "Modificar categoria" << endl;
             Archivo_Categoria archivo;
             Categoria cat;
             int cant = archivo.cantidad_categorias();
@@ -306,12 +318,9 @@ void Menu::menu_categorias()
             {
                 cout << "No se encuentran guardadas categorias Activas" << endl << endl;
                 system("pause");
-
             }
             else {
                 archivo.modificar_categorias();
-                
-                //archivo.sobreescribir_categoria(cat,);
             }
 
         }
@@ -319,7 +328,7 @@ void Menu::menu_categorias()
         case 4:
         {
             system("cls");
-            cout << " 4- Eliminar categoria" << endl;
+            cout << "Eliminar categoria" << endl;
             Archivo_Categoria archivo;
             Categoria ca;
             int cant = archivo.cantidad_categorias();
@@ -332,6 +341,10 @@ void Menu::menu_categorias()
             }
             else {
                 archivo.baja_Logica();
+                cout << endl;
+                cout << "Se elimino la categoria exitosamente... // Pulse cualquier tecla para volver" << endl;
+                system("pause");
+                system("cls");
             }
 
         }
@@ -463,7 +476,6 @@ void Menu::menu_ventas()
                     {
                         archivo.listar_x_fecha();
                         cout << endl << endl;
-                        system("pause");
                     }
                 }
                 break;
@@ -479,7 +491,7 @@ void Menu::menu_ventas()
             Venta venta;
             venta.cargar();
             system("cls");
-            cout << "CARGO LA VENTA CON EXITO..." << endl;
+            cout << "Se cargo la venta exitosamente... // Pulse cualquier tecla..." << endl;
             system("pause");
             system("cls");
             venta.mostrar();
@@ -525,7 +537,7 @@ void Menu::menu_clientes()
         case 1:
         {
             system("cls");
-            cout << " 1- Lista de clientes" << endl;
+            cout << "Lista de clientes" << endl;
             Archivo_Cliente archivo;
             Cliente cliente;
             int cant = archivo.cantidad_clientes();
@@ -534,7 +546,7 @@ void Menu::menu_clientes()
             {
                 char desicion;
                 cout << "No se encuentran guardados clientes Activos" << endl << endl;
-                cout << "¿Desea ingresar un cliente nuevo? (S/N)" << endl << endl;
+                cout << "¿Desea ingresar un cliente nuevo? (S/N): ";
                 cin >> desicion;
                 if (desicion == 's' || desicion == 'S')
                 {
@@ -556,17 +568,22 @@ void Menu::menu_clientes()
             else
             {
                 archivo.listar_clientes(cant);
-                cout << endl << endl;
+                cout << endl;
                 system("pause");
             }
         }
         break;
         case 2:
         {
-            cout << " 2- Agregar cliente" << endl;
+            system("cls");
+            cout << "Agregar cliente" << endl << endl;
             Archivo_Cliente ac;
             Cliente cli;
             cli.Cargar();
+            system("cls");
+            cout << "Se cargo el cliente exitosamente... // Pulse cualquier tecla para ver su ID..." << endl << endl;
+            system("pause");
+            system("cls");
             cli.Mostrar();
             system("pause");
             ac.guardar(cli);
@@ -575,7 +592,8 @@ void Menu::menu_clientes()
         break;
         case 3:
         {
-			cout << " 3- Modificar cliente" << endl;
+            system("cls");
+			cout << "Modificar cliente" << endl;
 			Archivo_Cliente ac;
 			int cant = ac.cantidad_clientes();
 			int cantActiva = ac.get_cantidad_Activa(cant);
@@ -587,15 +605,22 @@ void Menu::menu_clientes()
             else
             {
 				ac.modificar_cliente();
+                system("cls");
+                cout << "Se modifico el cliente exitosamente... // Pulse cualquier tecla para volver..." << endl;
+                system("pause");
 			}
         }
         break;
         case 4:
         {
+            system("cls");
+            cout << "Eliminar cliente" << endl;
             Archivo_Cliente cliente;
             cliente.baja_Logica();
             system("pause");
-            
+            system("cls");
+            cout << "Se elimino el cliente exitosamente... // Pulse cualquier tecla para volver..." << endl;
+            system("pause");           
         }
         break;
         }

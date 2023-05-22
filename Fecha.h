@@ -21,6 +21,7 @@ public:
     void setDia(int dia);
     void setMes(int mes);
     void setAnio(int anio);
+    void Cargar();
 
     void agregarDias(int cantidadDias);
     std::string toString(std::string formatoFecha = "DD/MM/YYYY");
