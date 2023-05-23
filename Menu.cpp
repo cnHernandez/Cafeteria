@@ -402,12 +402,13 @@ void Menu::menu_ventas()
                 cout << "1- Todos" << endl;
                 cout << "2- Listar por Cliente" << endl;
                 cout << "3- Listar por Fecha" << endl;
+                cout << "4-	RECAUDACION ANUAL POR VENDEDOR" << endl;
                 cout << "-----------------------" << endl;
                 cout << "0- volver" << endl;
                 cout << "-----------------------" << endl;
                 cin >> op;
 
-                while (op < 0 || op>3)
+                while (op < 0 || op>4)
                 {
                     cout << "opcion incorrecta, vuelva a ingresar una opcion" << endl;
                     cin >> op;
@@ -483,6 +484,13 @@ void Menu::menu_ventas()
                         archivo.listar_x_fecha();
                         cout << endl << endl;
                     }
+                }
+                break;
+                case 4: 
+                {
+                    Archivo_Venta archivo;
+                    std::cout << "	RECAUDACION ANUAL POR VENDEDOR: " << endl;
+                    archivo.recaudacion_x_vendedor();
                 }
                 break;
                 }
