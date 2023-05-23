@@ -10,9 +10,11 @@
 #include "Archivo_Cliente.h"
 #include "Venta.h"
 #include "Archivo_Venta.h"
+#include "Archivo_bkp.h"
 #include "rlutil.h"
 #include <iostream>
 
+using namespace std;
 void Menu::menuPrincipal()
 {
     rlutil::setBackgroundColor(rlutil::CYAN);
@@ -21,15 +23,17 @@ void Menu::menuPrincipal()
 	bool menu_activo = true;
     while (menu_activo)
     {
+       
 		system("cls");
-		cout << "----Menu Principal----" << endl << endl;
-		cout << " 1- Productos" << endl;
-		cout << " 2- Categorias" << endl;
+        cout << "----Menu Principal----" << endl << endl;
+        cout << " 1- Productos" << endl;
+        cout << " 2- Categorias" << endl;
         cout << " 3- Ventas" << endl;
         cout << " 4- Clientes" << endl;
-		cout << "-----------------" << endl;
-		cout << " 0- SALIR" << endl;
-		cout << "-----------------" << endl;
+        cout << "-----------------" << endl;
+        cout << " 0- SALIR" << endl;
+        cout << "-----------------" << endl;
+        
 		cin >> op;
         while (op < 0 || op>4)
         {
@@ -367,11 +371,13 @@ void Menu::menu_ventas()
         cout << " 2- Agregar" << endl;
         //cout << " 3- Modificar" << endl;
         //cout << " 4- Eliminar" << endl;
+        cout << " 5- Hacer copia de Seguridad" << endl;
+        cout << " 6- Restaurar copia de Seguridad" << endl;
         cout << "-----------------" << endl;
         cout << " 0- SALIR" << endl;
         cout << "-----------------" << endl;
         cin >> op;
-        while (op < 0 || op>4)
+        while (op < 0 || op>6)
         {
             cout << "opcion incorrecta, vuelva a ingresar una opcion" << endl;
             cin >> op;
@@ -499,7 +505,27 @@ void Menu::menu_ventas()
             av.guardar(venta);
         }
         break;
-       
+        case 5:
+        {
+			system("cls");
+			cout << "5- Hacer copia de seguridad" << endl;
+            Archivo_bkp Backup;
+            Backup.HacerCopiaDeSeguridad();
+			cout << "Se realizo la copia de seguridad exitosamente..." << endl;
+            
+			system("pause");
+        }
+        break;
+        case 6:
+        {
+			system("cls");
+			cout << "6- Restaurar copia de seguridad" << endl;
+			Archivo_bkp Backup;
+			Backup.RestaurarCopiaDeSeguridad();
+			cout << "Se restauro la copia de seguridad exitosamente..." << endl;
+			system("pause");
+        }
+        break;
         }
     }
 }

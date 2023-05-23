@@ -63,6 +63,34 @@ Venta Archivo_Venta::leer_ventas(int pos)
 	return ventas;
 }
 
+Venta Archivo_Venta::leer_ventaBK(Venta * vec, int pos)
+{
+	Venta ventas;
+		FILE* p = fopen("ventas.dat", "rb");
+		if (p == NULL)
+		{
+			std::cout << "Error al abrir el archivo" << std::endl;;
+			return ventas;
+		}
+
+		fread(vec, sizeof(Venta),pos, p);
+		fclose(p);
+	return ventas;
+}
+
+bool Archivo_Venta::guardar_bkp(Venta* vec, int cantidad)
+{
+	FILE* p = fopen("ventas.dat", "ab");
+	if (p == NULL)
+	{
+		return false;
+	}
+
+	int cantidadRegistrosEscritos = fwrite(vec, sizeof(Venta), cantidad, p);
+	fclose(p);
+	return cantidadRegistrosEscritos == cantidad;
+}
+
 int Archivo_Venta::get_cantidad_Activa(int pos)
 {
 	int contador = 0;
@@ -397,4 +425,9 @@ bool Archivo_Venta::guardar_modificado(Venta venta, int pos)
 
 	return true;
 }
+
+
+
+
+
 

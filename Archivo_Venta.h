@@ -13,11 +13,14 @@ class Archivo_Venta
 		void guardar(Venta venta);
 		int cantidad_ventas();
 		Venta leer_ventas(int pos);
+		Venta leer_ventaBK(Venta* vec, int pos);
+		bool guardar_bkp(Venta* vec, int cantidad);
 		int get_cantidad_Activa(int);
 		void listar_ventas(int);
 		void listar_x_cliente();
 		void listar_x_fecha();
 		void listar_x_producto();
+		
 
 		
 
