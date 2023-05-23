@@ -17,6 +17,7 @@ private:
 	Fecha fecha;
 	Cliente cliente;
 	int tipoPago;
+	int idVendedor;
 
 public:
 	Venta();
@@ -30,6 +31,7 @@ public:
 	void setEstado(bool);
 	void setFecha(int,int,int);
 	void setTipoPago(int);
+	void setIdVendedor(int);
 
 	int getId();
 	Cliente getIdCliente();
@@ -40,6 +42,7 @@ public:
 	bool getEstado();
 	Fecha getFecha();
 	int getTipoPago();
+	int getIdVendedor();
 	void cargar();
 	void mostrar();
 	

@@ -22,6 +22,11 @@ void Venta::setId(int id)
 	this->id = id;
 }
 
+void Venta::setIdCliente(Cliente cliente)
+{
+	this->cliente = cliente;
+}
+
 void Venta::setProducto(Producto producto)
 {
 	this->producto = producto;
@@ -92,6 +97,8 @@ bool Venta::getEstado()
 
 
 
+
+
 void Venta::cargar()
 {
 	archivo_producto archivo;
@@ -99,22 +106,30 @@ void Venta::cargar()
 	Archivo_Cliente archivoCliente;
 	Archivo_Venta venta;
 	Cliente cliente;
-	int id, idCliente;
+	int id, idCliente, idVendedor;
 	int cantidad;
 	float precio;
 	float total=0;
 	float totalFinal = 0;
 	float aumento;
 	float descuento;
-	int tipoPago;
+	int tipoPago = 0;
 	int dia, mes, anio;
 
 	int cant = archivo.cantidad_de_registros();
-	cout << endl;
-	cout << "-------------------------------------------------------------" << endl;
+	std::cout << endl;
+	std::cout << "-------------------------------------------------------------" << endl;
 	std::cout << "Ingrese la fecha" << std::endl;
 	fecha.Cargar();
-	std::cout << "Ingrese el ID del cliente que realiza la comprar: ";
+	std::cout << "Ingrese el ID del vendedor que lo asistio" << endl;
+	std::cin >> idVendedor;
+	while (idVendedor <= 0 || idVendedor > 4)
+	{
+		std::cout << "El ID ingresado no existe" << std::endl;
+		std::cout << "Ingrese el ID del vendedor que lo asistio" << endl;
+		std::cin >> idVendedor;
+	}
+	std::cout << "Ingrese el ID del cliente que realiza la compra: ";
 	std::cin >> idCliente;
 	Menu menu;
 	while (archivoCliente.cantidad_clientes() == 0)
@@ -164,42 +179,64 @@ void Venta::cargar()
 		if (tipoPago != 1 && tipoPago != 2)
 		{
 			std::cout << "Opcion incorrecta" << std::endl;
-			std::cout << "Ingrese el tipo de pago" << std::endl;
+		std::cout << "Ingrese el tipo de pago" << std::endl;
 			std::cout << "1- Efectivo 5 % Descuento" << std::endl;
 			std::cout << "2- Tarjeta 8 % Aumento" << std::endl;
 			std::cin >> tipoPago;
 		}
 		total = precio * cantidad;
-		descuento = total * porcentajeEfectivo;
-		aumento = total * porcentajeTarjeta; 
-	if (tipoPago == 1)
-	{
-		totalFinal = total - descuento;
-	}
-	else if (tipoPago == 2)
-	{
-		totalFinal = total + aumento;
-	}
+		descuento  = total * porcentajeEfectivo;
+		aumento = total * porcentajeTarjeta;
+		if (tipoPago == 1)
+		{
+			totalFinal = total - descuento;
+		}
+		else if (tipoPago == 2)
+		{
+			totalFinal = total + aumento;
+		}
+	setIdVendedor(idVendedor);
 	setTipoPago(tipoPago);
 	setIdCliente(cliente);
 	setProducto(producto);
 	setCantidad(cantidad);
 	setPrecio(precio);
 	setTotal(totalFinal);
+	cout << "Se cargo la venta exitosamente..." << endl;
 	cout << "-------------------------------------------------------------" << endl << endl;
-	system("pause");
-}
+	
+	}
+
 
 void Venta::mostrar()
 {
 
 	std::cout << "****************************************** " << std::endl;
 	std::cout << "Fecha: " << getFecha().toString() << std::endl;
+	std::cout << "ID de Vendedor: " << getIdVendedor() << std::endl;
 	std::cout << "ID de Cliente: " << getIdCliente().getId_Cliente() << std::endl;
 	std::cout << "ID de Venta: " << getId() << std::endl;
 	std::cout << "Producto: " << getProducto().getNombre() << std::endl;
 	std::cout << "Cantidad: " << getCantidad() << std::endl;
 	std::cout << "Precio: " << getPrecio() << std::endl;
+	if (getIdVendedor() == 1)
+	{
+		std::cout << "ID Vendedor: 1  " << "Nombre : Juan" << std::endl;
+	}
+	if (getIdVendedor() == 2)
+	{
+		std::cout << "ID Vendedor: 2  " << "Nombre : Pedro" << std::endl;
+	}
+	if (getIdVendedor() == 3)
+	{
+		std::cout << "ID Vendedor: 3  " << "Nombre : Romina" << std::endl;
+	}
+	if (getIdVendedor() == 4)
+	{
+		std::cout << "ID Vendedor: 4  " << "Nombre : Carla" << std::endl;
+	}
+
+
 	if (getTipoPago() == 1)
 	{
 		std::cout << "Tipo de Pago: " << "EFECTIVO  5 % DESCUENTO" << std::endl;
@@ -210,11 +247,6 @@ void Venta::mostrar()
 	}
 	std::cout << "Total a Pagar: " << getTotal() << std::endl;
 	std::cout << "****************************************** " << std::endl;
-}
-
-void Venta::setIdCliente(Cliente cliente)
-{
-this-> cliente = cliente;
 }
 
 Cliente Venta::getIdCliente()
@@ -231,6 +263,16 @@ int Venta::getTipoPago()
 {
 	return tipoPago;
 	
+}
+
+void Venta::setIdVendedor(int vendedor)
+{
+	this->idVendedor = vendedor;
+}
+
+int Venta::getIdVendedor()
+{
+	return idVendedor;
 }
 
 
