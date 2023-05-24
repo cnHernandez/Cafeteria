@@ -298,3 +298,24 @@ bool archivo_producto::Existe(int op)
     return false;
 
 }
+
+void archivo_producto::listaXrango(float precio1, float precio2)
+{
+    system("cls");
+    int cant = cantidad_de_registros();
+    Producto reg;
+    if (precio1 < precio2) {
+        cout << "Los productos cuyo precio rondan entre " << precio1 << " y " << precio2 << " son:" << endl << endl;
+    }
+    else {
+        cout << "Los productos cuyo precio ronda entre " << precio2 << " y " << precio1 << " son:" << endl << endl;
+    }
+    for (int i = 0; i < cant; i++) {
+        reg = leer_de_disco(i);
+        if ((reg.getPrecio() >= precio1) && (reg.getPrecio() <= precio2) && (reg.getEstado()) || (reg.getPrecio() >= precio2) && (reg.getPrecio() <= precio1) && (reg.getEstado())) {
+            cout << "----------------------------------------------" << endl;
+            reg.Mostrar();
+        }
+    }
+    cout << "----------------------------------------------" << endl;
+}
