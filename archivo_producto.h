@@ -13,7 +13,7 @@ public:
     int modificar();
     void obtener_productos(Producto* prod, int cantidad);
     void listaXcategoria();
-    void listaXrango(float precio1, float precio2);
+    void listaXrango();
     bool Existe(int opcion);
     void baja_Logica(int id);
 };

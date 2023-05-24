@@ -174,15 +174,11 @@ void Menu::menu_productos()
                     int cantActiva = archivo.get_cantidad_Activa(cant);
                     if (cantActiva == 0)
                     {
-                        cout << "No se encuentran guardados Categorias Activas" << endl << endl;
+                        cout << "No se encuentran guardados Productos Activos" << endl << endl;
                     }
                     else
-                    {
-                        float precio1, precio2;
-                        cout << "Ingrese los rangos de precios: " << endl;
-                        cin >> precio1;
-                        cin >> precio2;
-                        archivo.listaXrango(precio1, precio2);
+                    {                 
+                        archivo.listaXrango();
                     }
                     system("pause");
                 }
@@ -420,12 +416,13 @@ void Menu::menu_ventas()
                 cout << "2- Listar por Cliente" << endl;
                 cout << "3- Listar por Fecha" << endl;
                 cout << "4- Recaudacion anual por vendedor" << endl;
+                cout << "5- Recaudacion anual por Productos" << endl;
                 cout << "-----------------------" << endl;
                 cout << "0- volver" << endl;
                 cout << "-----------------------" << endl;
                 cin >> op;
 
-                while (op < 0 || op>4)
+                while (op < 0 || op>5)
                 {
                     cout << "opcion incorrecta, vuelva a ingresar una opcion" << endl;
                     cin >> op;
@@ -509,6 +506,14 @@ void Menu::menu_ventas()
                     system("cls");
                     std::cout << "RECAUDACION ANUAL POR VENDEDOR: " << endl;
                     archivo.recaudacion_x_vendedor();
+                }
+                break;
+                case 5:
+                {
+					Archivo_Venta archivo;
+					system("cls");
+					std::cout << "RECAUDACION ANUAL POR PRODUCTO: " << endl;
+					archivo.recaudacion_x_producto();
                 }
                 break;
                 }

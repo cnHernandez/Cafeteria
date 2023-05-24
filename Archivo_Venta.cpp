@@ -537,6 +537,45 @@ void Archivo_Venta::recaudacion_x_vendedor()
 	delete[] ventas;	
 }
 
+void Archivo_Venta::recaudacion_x_producto()
+{
+	archivo_producto archiProd;
+	int cant = cantidad_ventas();
+	Venta* ventas = new Venta[cant];
+	obtener_venta(ventas, cant);
+
+	int cantProd = archiProd.cantidad_de_registros();
+	Producto* productos = new Producto[cantProd];
+	archiProd.obtener_productos(productos, cantProd);
+	
+	int anio;
+	std::cout << "ingrese el anio a listar" << endl;
+	cin >> anio;
+	while (anio < 2016)
+	{
+		std::cout << "Anio invalido" << endl;
+		std::cout << "ingrese el Anio a listar: ";
+		cin >> anio;
+	}
+
+	float total = 0;
+
+		cout << "PRODUCTO""  \t\t""CATEGORIA""  \t\t" "RECAUDADO" "  \t\t" << endl;
+	for (int i = 0; i < cantProd; i++)
+	{
+		for (int j = 0; j < cant; j++)
+		{
+			if (productos[i].getId_Producto() == ventas[j].getProducto().getId_Producto() && anio == ventas[j].getFecha().getAnio() && ventas[j].getEstado())
+			{
+				total += ventas[j].getTotal();
+			}
+		}
+			cout << productos[i].getNombre() << "\t\t" << productos[i].getId_Categoria() << "\t\t" << "$" << total << endl;
+	}
+			system("pause");
+
+}
+
 
 
 

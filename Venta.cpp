@@ -195,6 +195,23 @@ void Venta::cargar()
 		{
 			totalFinal = total + aumento;
 		}
+		std::cout << "Ingrese la forma de entrega" << std::endl;
+		std::cout << "1- Retiro del local  //  2 - Entrega a domicilio "<<endl;
+		int tipoEntrega;
+		cin >> tipoEntrega;
+		if (tipoEntrega != 1 || tipoEntrega != 2)
+		{
+			std::cout << "Opcion incorrecta" << std::endl;
+			std::cout << "Ingrese la forma de entrega" << std::endl;
+			std::cout << "1- Retiro del local  //  2 - Entrega a domicilio " << endl;
+			cin >> tipoEntrega;
+		}
+		if (tipoEntrega == 2)
+		{
+			cout<<"El envio cuesta $200"<<endl;
+			totalFinal = totalFinal + 200;
+		}
+	setEntrega(tipoEntrega);
 	setIdVendedor(idVendedor);
 	setTipoPago(tipoPago);
 	setIdCliente(cliente);
@@ -219,6 +236,7 @@ void Venta::mostrar()
 	std::cout << "Producto: " << getProducto().getNombre() << std::endl;
 	std::cout << "Cantidad: " << getCantidad() << std::endl;
 	std::cout << "Precio: " << getPrecio() << std::endl;
+
 	if (getIdVendedor() == 1)
 	{
 		std::cout << "ID Vendedor: 1  " << "Nombre : Juan" << std::endl;
@@ -236,7 +254,6 @@ void Venta::mostrar()
 		std::cout << "ID Vendedor: 4  " << "Nombre : Carla" << std::endl;
 	}
 
-
 	if (getTipoPago() == 1)
 	{
 		std::cout << "Tipo de Pago: " << "EFECTIVO  5 % DESCUENTO" << std::endl;
@@ -244,6 +261,14 @@ void Venta::mostrar()
 	else if (getTipoPago() == 2)
 	{
 		std::cout << "Tipo de Pago: " << "TARJETA  8 % AUMENTO" << std::endl;
+	}
+	if (getEntrega() == 1)
+	{
+		std::cout << "ENTREGA A DOMICILIO" << std::endl;
+	}
+	if (getEntrega() == 2)
+	{
+		std::cout << "RETIRA DEL LOCAL" << std::endl;
 	}
 	std::cout << "Total a Pagar: " << getTotal() << std::endl;
 	std::cout << "****************************************** " << std::endl;
@@ -253,7 +278,15 @@ Cliente Venta::getIdCliente()
 {
 	return cliente;
 }
+void Venta::setEntrega(int tipoEntrega)
+{
+	this-> entrega = tipoEntrega;
+}
+int Venta::getEntrega()
+{
+	return entrega;
 
+}
 void Venta::setTipoPago(int tipoPago)
 {
 	this->tipoPago = tipoPago;

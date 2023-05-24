@@ -18,6 +18,7 @@ private:
 	Cliente cliente;
 	int tipoPago;
 	int idVendedor;
+	int entrega;
 
 public:
 	Venta();
@@ -32,7 +33,8 @@ public:
 	void setFecha(int,int,int);
 	void setTipoPago(int);
 	void setIdVendedor(int);
-
+	void setEntrega(int);
+	int getEntrega();
 	int getId();
 	Cliente getIdCliente();
 	Producto getProducto();
