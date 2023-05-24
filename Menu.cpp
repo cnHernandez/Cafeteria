@@ -17,7 +17,7 @@
 using namespace std;
 void Menu::menuPrincipal()
 {
-    rlutil::setBackgroundColor(rlutil::CYAN);
+    rlutil::setBackgroundColor(rlutil::LIGHTMAGENTA);
     rlutil::setColor(rlutil::WHITE);
     int op;
 	bool menu_activo = true;
@@ -112,11 +112,12 @@ void Menu::menu_productos()
                 cout << "-------------------------" << endl;
                 cout << "1- Todos" << endl;
                 cout << "2- Listar por categorias" << endl ;
+                cout << "3- Por rango de precio " << endl;
                 cout << "-------------------------" << endl;
                 cout << "0- Volver" << endl;
                 cin >> op;
 
-                while (op < 0 || op>2)
+                while (op < 0 || op>3)
                 {
                     cout << "opcion incorrecta, vuelva a ingresar una opcion: ";
                     cin >> op;
@@ -164,6 +165,28 @@ void Menu::menu_productos()
 
                 }
                 break;
+                case 3:
+                {
+                    system("cls");
+                    cout << " Lista por rango de precio" << endl << endl;
+                    archivo_producto archivo;
+                    int cant = archivo.cantidad_de_registros();
+                    int cantActiva = archivo.get_cantidad_Activa(cant);
+                    if (cantActiva == 0)
+                    {
+                        cout << "No se encuentran guardados Categorias Activas" << endl << endl;
+                    }
+                    else
+                    {
+                        float precio1, precio2;
+                        cout << "Ingrese los rangos de precios: " << endl;
+                        cin >> precio1;
+                        cin >> precio2;
+                        archivo.listaXrango(precio1, precio2);
+                    }
+                    system("pause");
+                }
+                break;
                 case 0:
                 {
                     menu2activo = false;
@@ -183,9 +206,6 @@ void Menu::menu_productos()
             {
                 archivo_producto archivo;
                 archivo.guardar(producto);
-                system("cls");
-                cout << "Se cargo el producto exitosamente... // Pulse cualquier tecla para ver el producto cargado..." << endl<<endl;
-                system("pause");
                 system("cls");
                 cout << "Producto cargado" << endl;
                 cout << "-----------------------------------" << endl;
@@ -213,9 +233,6 @@ void Menu::menu_productos()
                 cout << "Modificar producto" << endl;
                 archivo_producto archivo;
                 int pro = archivo.modificar();   
-                system("pause");
-                system("cls");
-                cout << "Producto modificado exitosamente... // Pulse cualquier tecla para ver el producto modificado..." << endl << endl;
                 system("pause");
                 system("cls");
                 Producto aux = archivo.leer_de_disco(pro-1);
@@ -346,7 +363,7 @@ void Menu::menu_categorias()
             else {
                 archivo.baja_Logica();
                 cout << endl;
-                cout << "Se elimino la categoria exitosamente... // Pulse cualquier tecla para volver" << endl;
+                cout << "Se elimino la categoria exitosamente..." << endl;
                 system("pause");
                 system("cls");
             }
@@ -402,7 +419,7 @@ void Menu::menu_ventas()
                 cout << "1- Todos" << endl;
                 cout << "2- Listar por Cliente" << endl;
                 cout << "3- Listar por Fecha" << endl;
-                cout << "4-	RECAUDACION ANUAL POR VENDEDOR" << endl;
+                cout << "4- Recaudacion anual por vendedor" << endl;
                 cout << "-----------------------" << endl;
                 cout << "0- volver" << endl;
                 cout << "-----------------------" << endl;
@@ -489,7 +506,8 @@ void Menu::menu_ventas()
                 case 4: 
                 {
                     Archivo_Venta archivo;
-                    std::cout << "	RECAUDACION ANUAL POR VENDEDOR: " << endl;
+                    system("cls");
+                    std::cout << "RECAUDACION ANUAL POR VENDEDOR: " << endl;
                     archivo.recaudacion_x_vendedor();
                 }
                 break;
@@ -505,7 +523,7 @@ void Menu::menu_ventas()
             Venta venta;
             venta.cargar();
             system("cls");
-            cout << "Se cargo la venta exitosamente... // Pulse cualquier tecla..." << endl;
+            cout << "Se cargo la venta exitosamente..." << endl;
             system("pause");
             system("cls");
             venta.mostrar();
@@ -615,7 +633,7 @@ void Menu::menu_clientes()
             Cliente cli;
             cli.Cargar();
             system("cls");
-            cout << "Se cargo el cliente exitosamente... // Pulse cualquier tecla para ver su ID..." << endl << endl;
+            cout << "Se cargo el cliente exitosamente..." << endl << endl;
             system("pause");
             system("cls");
             cli.Mostrar();
@@ -640,7 +658,7 @@ void Menu::menu_clientes()
             {
 				ac.modificar_cliente();
                 system("cls");
-                cout << "Se modifico el cliente exitosamente... // Pulse cualquier tecla para volver..." << endl;
+                cout << "Se modifico el cliente exitosamente..." << endl;
                 system("pause");
 			}
         }
@@ -653,7 +671,7 @@ void Menu::menu_clientes()
             cliente.baja_Logica();
             system("pause");
             system("cls");
-            cout << "Se elimino el cliente exitosamente... // Pulse cualquier tecla para volver..." << endl;
+            cout << "Se elimino el cliente exitosamente..." << endl;
             system("pause");           
         }
         break;
