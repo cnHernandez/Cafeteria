@@ -119,17 +119,17 @@ void Venta::cargar()
 	int cant = archivo.cantidad_de_registros();
 	std::cout << endl;
 	std::cout << "-------------------------------------------------------------" << endl;
-	std::cout << "Ingrese la fecha" << std::endl;
+	std::cout << "* Ingrese la fecha" << std::endl;
 	fecha.Cargar();
-	std::cout << "Ingrese el ID del vendedor que lo asistio" << endl;
+	std::cout << "* Ingrese el ID del vendedor que lo asistio: ";
 	std::cin >> idVendedor;
 	while (idVendedor <= 0 || idVendedor > 4)
 	{
 		std::cout << "El ID ingresado no existe" << std::endl;
-		std::cout << "Ingrese el ID del vendedor que lo asistio" << endl;
+		std::cout << "* Ingrese el ID del vendedor que lo asistio: ";
 		std::cin >> idVendedor;
 	}
-	std::cout << "Ingrese el ID del cliente que realiza la compra: ";
+	std::cout << "* Ingrese el ID del cliente que realiza la compra: ";
 	std::cin >> idCliente;
 	Menu menu;
 	while (archivoCliente.cantidad_clientes() == 0)
@@ -155,33 +155,32 @@ void Venta::cargar()
 	while (idCliente <= 0 || idCliente > archivoCliente.cantidad_clientes())
 	{
 		std::cout << "El ID ingresado no existe" << std::endl;
-		std::cout << "Ingrese el ID del cliente que realiza la comprar" << std::endl;
+		std::cout << "* Ingrese el ID del cliente que realiza la comprar: ";
 		std::cin >> idCliente;
 	}
 	cliente = archivoCliente.leer_clientes(idCliente - 1);
-	std::cout << "Ingrese el ID del producto que desea comprar: ";
+	std::cout << "* Ingrese el ID del producto que desea comprar: ";
 	std::cin >> id;
 	while (id <= 0 || id > cant)
 	{
 		std::cout << "El ID ingresado no existe" << std::endl;
-		std::cout << "Ingrese el ID del producto que desea comprar" << std::endl;
+		std::cout << "* Ingrese el ID del producto que desea comprar: " ;
 		std::cin >> id;
 	}
 	producto = archivo.leer_de_disco(id - 1);
-	std::cout << "Ingrese la cantidad que desea comprar: ";
+	std::cout << "* Ingrese la cantidad que desea comprar: ";
 	std::cin >> cantidad;
 	precio = producto.getPrecio();
-	std::cout << "Ingrese el tipo de pago" << std::endl;
-	std::cout << "1- Efectivo 5 % Descuento  //  2 - Tarjeta 8 % Aumento: " ;
+	//std::cout << "Ingrese el tipo de pago" << std::endl;
+	std::cout << "* 1- Efectivo 5 % Descuento  //  2 - Tarjeta 8 % Aumento: " ;
 	std::cin >> tipoPago;
 	float porcentajeEfectivo = 0.05;
 	float porcentajeTarjeta = 0.08;
 		if (tipoPago != 1 && tipoPago != 2)
 		{
 			std::cout << "Opcion incorrecta" << std::endl;
-		std::cout << "Ingrese el tipo de pago" << std::endl;
 			std::cout << "1- Efectivo 5 % Descuento" << std::endl;
-			std::cout << "2- Tarjeta 8 % Aumento" << std::endl;
+			std::cout << "2- Tarjeta 8 % Aumento: " ;
 			std::cin >> tipoPago;
 		}
 		total = precio * cantidad;
@@ -195,11 +194,11 @@ void Venta::cargar()
 		{
 			totalFinal = total + aumento;
 		}
-		std::cout << "Ingrese la forma de entrega" << std::endl;
-		std::cout << "1- Retiro del local  //  2 - Entrega a domicilio "<<endl;
+		//std::cout << "Ingrese la forma de entrega" << std::endl;
+		std::cout << "* 1- Retiro del local  //  2 - Entrega a domicilio: ";
 		int tipoEntrega;
 		cin >> tipoEntrega;
-		if (tipoEntrega != 1 || tipoEntrega != 2)
+		if (tipoEntrega != 1 && tipoEntrega != 2)
 		{
 			std::cout << "Opcion incorrecta" << std::endl;
 			std::cout << "Ingrese la forma de entrega" << std::endl;
@@ -210,6 +209,10 @@ void Venta::cargar()
 		{
 			cout<<"El envio cuesta $200"<<endl;
 			totalFinal = totalFinal + 200;
+		}
+		else if (tipoEntrega == 1) {
+			cout << "Retiro en local, no hay costo de envio" << endl;
+		
 		}
 	setEntrega(tipoEntrega);
 	setIdVendedor(idVendedor);
@@ -239,19 +242,19 @@ void Venta::mostrar()
 
 	if (getIdVendedor() == 1)
 	{
-		std::cout << "ID Vendedor: 1  " << "Nombre : Juan" << std::endl;
+		std::cout <<"Nombre del vendedor : Juan" << std::endl;
 	}
 	if (getIdVendedor() == 2)
 	{
-		std::cout << "ID Vendedor: 2  " << "Nombre : Pedro" << std::endl;
+		std::cout << "Nombre del vendedor : Pedro" << std::endl;
 	}
 	if (getIdVendedor() == 3)
 	{
-		std::cout << "ID Vendedor: 3  " << "Nombre : Romina" << std::endl;
+		std::cout << "Nombre del vendedor : Romina" << std::endl;
 	}
 	if (getIdVendedor() == 4)
 	{
-		std::cout << "ID Vendedor: 4  " << "Nombre : Carla" << std::endl;
+		std::cout <<"Nombre del vendedor : Carla" << std::endl;
 	}
 
 	if (getTipoPago() == 1)
@@ -262,11 +265,11 @@ void Venta::mostrar()
 	{
 		std::cout << "Tipo de Pago: " << "TARJETA  8 % AUMENTO" << std::endl;
 	}
-	if (getEntrega() == 1)
+	if (getEntrega() == 2)
 	{
 		std::cout << "ENTREGA A DOMICILIO" << std::endl;
 	}
-	if (getEntrega() == 2)
+	if (getEntrega() == 1)
 	{
 		std::cout << "RETIRA DEL LOCAL" << std::endl;
 	}

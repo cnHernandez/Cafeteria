@@ -6,6 +6,7 @@
 #include "Cliente.h"
 #include <iostream>
 #include <string>
+#include <iomanip>
 
 using namespace std;
 
@@ -520,7 +521,11 @@ void Archivo_Venta::recaudacion_x_vendedor()
 		}
 	}
 	system("cls");
-	std::cout << "	RECAUDACION ANUAL POR VENDEDOR: " << anio << endl;
+	if (id == 1) {std::cout <<"RECAUDACION ANUAL DE JUAN EN EL ANIO : " << anio << endl;
+	}else if(id == 2){ std::cout << "RECAUDACION ANUAL DE PEDRO EN EL ANIO: " << anio << endl; }
+	else if(id == 3){ std::cout << "RECAUDACION ANUAL DE ROMINA EN EL ANIO: " << anio << endl; }
+	else if(id == 4){std::cout << "RECAUDACION ANUAL DE CARLA EN EL ANIO: " << anio << endl; }
+
 	cout << "---------------------------------------" << endl;
 	for (int i = 0; i < 12; i++)
 	{
@@ -557,10 +562,10 @@ void Archivo_Venta::recaudacion_x_producto()
 		std::cout << "ingrese el Anio a listar: ";
 		cin >> anio;
 	}
-
+	system("cls");
 	float total = 0;
-
-		cout << "PRODUCTO""  \t\t""CATEGORIA""  \t\t" "RECAUDADO" "  \t\t" << endl;
+	cout << "-------------------------- " << anio << " ----------------------------" << endl << endl;
+	cout << "PRODUCTO""  \t\t""CATEGORIA""  \t\t" "RECAUDADO" "  \t\t" << endl << endl;
 	for (int i = 0; i < cantProd; i++)
 	{
 		for (int j = 0; j < cant; j++)
@@ -570,10 +575,14 @@ void Archivo_Venta::recaudacion_x_producto()
 				total += ventas[j].getTotal();
 			}
 		}
-			cout << productos[i].getNombre() << "\t\t" << productos[i].getId_Categoria() << "\t\t" << "$" << total << endl;
-	}
-			system("pause");
 
+			cout <<  setw(28) << setiosflags(ios::left) << productos[i].getNombre() << setw(22) << setiosflags(ios::left)<< productos[i].getId_Categoria()  << "$" << total << endl;
+	
+	}
+	cout<<endl;
+	cout << "-------------------------------------------------------------" << endl << endl;
+	cout << endl;
+			system("pause");
 }
 
 
