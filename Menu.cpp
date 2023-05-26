@@ -439,9 +439,12 @@ void Menu::menu_ventas()
                 break;
                 case 1:
                 {
+                    
                     system("cls");
                     cout << " 1- Lista de ventas" << endl;
                     Archivo_Venta archivo;
+                    
+                  
                     int cant = archivo.cantidad_ventas();
                     int cantActiva = archivo.get_cantidad_Activa(cant);
                     if (cantActiva == 0)
@@ -452,7 +455,7 @@ void Menu::menu_ventas()
                     else
                     {
                         system("cls");
-                        cout << "        ******** VENTAS ********" << endl;
+                        cout << "        ******** VENTAS ********" << endl;                       
                         archivo.listar_ventas(cant);
                         cout << "*********************" << endl;
                         system("pause");
@@ -538,15 +541,16 @@ void Menu::menu_ventas()
             cout << "2- Agregar venta" << endl;
             Archivo_Venta av;
             Venta venta;
+            
             venta.cargar();
             system("cls");
             cout << "Se cargo la venta exitosamente..." << endl;
-            ventas.push_back(venta);
+            //ventas.push_back(venta);
             system("pause");
             system("cls");
             venta.mostrar();
             system("pause");
-           // av.guardarVentas(ventas);
+           //av.guardarVentas(ventas);
             av.guardar(venta);
         }
         break;

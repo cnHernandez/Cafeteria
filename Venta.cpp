@@ -174,13 +174,13 @@ void Venta::cargar()
 	}
 	producto = archivo.leer_de_disco(id - 1);
 	
-	//std::cout << "* Ingrese la cantidad que desea comprar: ";
-	//std::cin >> cantidad;
+	std::cout << "* Ingrese la cantidad que desea comprar: ";
+	std::cin >> cantidad;
 	
-	//precio = producto.getPrecio();
-	//total = precio * cantidad;
+	precio = producto.getPrecio();
+	total = precio * cantidad;
 
-	productos.push_back(producto);
+	/*productos.push_back(producto);
 	std::cout << "* Ingrese la cantidad que desea comprar: ";
 	std::cin >> cantidad;
 	cantidades.push_back(cantidad);
@@ -204,7 +204,7 @@ void Venta::cargar()
 		cout <<"desea agregar otra compra  S/N? "<<endl;
 		cin >> desicion;
 	}
-	
+	*/
 
 
 
@@ -268,21 +268,22 @@ void Venta::cargar()
 
 void Venta::mostrar()
 {
-
-	std::cout << "****************************************** " << std::endl;
-	std::cout << "Fecha: " << getFecha().toString() << std::endl;
-	std::cout << "ID de Vendedor: " << getIdVendedor() << std::endl;
-	std::cout << "ID de Cliente: " << getIdCliente().getId_Cliente() << std::endl;
-	std::cout << "ID de Venta: " << getId() << std::endl;
-	//std::cout << "Cantidad: " << getCantidad() << std::endl;
-	//std::cout << "Producto: " << getProducto().getNombre() << std::endl;
-	//std::cout << "Precio: " << getPrecio() << std::endl;
-	for (size_t i = 0; i < productos.size(); ++i) {
-		cout << "ID Producto: " << productos[i].getId_Producto() << endl;
-		cout << "Nombre: " << productos[i].getNombre() << endl;
-		cout << "Precio: "<< productos[i].getPrecio() << endl;
-		cout << "Cantidad: " << cantidades[i] << endl;
-	}
+	
+		std::cout << "****************************************** " << std::endl;
+		std::cout << "Fecha: " << getFecha().toString() << std::endl;
+		std::cout << "ID de Vendedor: " << getIdVendedor() << std::endl;
+		std::cout << "ID de Cliente: " << getIdCliente().getId_Cliente() << std::endl;
+		std::cout << "ID de Venta: " << getId() << std::endl;
+		std::cout << "Cantidad: " << getCantidad() << std::endl;
+		std::cout << "Producto: " << getProducto().getNombre() << std::endl;
+		std::cout << "Precio: " << getPrecio() << std::endl;
+		/*for (size_t j = 0; j < productos.size(); ++j) {
+			cout << "ID Producto: " << productos[j].getId_Producto() << endl;
+			cout << "Nombre: " << productos[j].getNombre() << endl;
+			cout << "Precio: " << productos[j].getPrecio() << endl;
+			cout << "Cantidad: " << cantidades[j] << endl;
+		}*/
+	
 	if (getIdVendedor() == 1)
 	{
 		std::cout <<"Nombre del vendedor : Juan" << std::endl;

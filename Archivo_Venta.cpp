@@ -114,12 +114,18 @@ void Archivo_Venta::listar_ventas(int pos)
 	for (int i = 0; i < pos; i++) {
 		venta = leer_ventas(i);
 		if (venta.getEstado()== true) {
-		venta.mostrar();
-			
+		venta.mostrar();	
 		}
 	}
-
 }	
+/*void Archivo_Venta::listar_ventasDin(vector<Venta>ventas)
+{
+	Venta venta;
+	for (int i = 0; i < sizeof(ventas); i++) {
+		ventas[i].mostrar();
+		}
+	}*/
+
 
 int Archivo_Venta::cantidad_ventas()
 {
@@ -628,14 +634,14 @@ void Archivo_Venta::recaudacion_x_categoria()
 /*void Archivo_Venta::guardarVentas(const vector<Venta>& ventas)
 {
 	FILE* pFile;
-	pFile = fopen("Ventas.dat", "ab");
+	pFile = fopen("Ventas.dat", "wb");
 	if (pFile == nullptr) {
 		std::cout << "No se pudo abrir el archivo" << endl;
 	}
-	for (int i = 0; i < ventas.size(); i++)
-	{
-		fwrite(&ventas[i], sizeof(Venta), 1, pFile);
-	}
+	//for (int i = 0; i < ventas.size(); i++)
+	
+		fwrite(&ventas, sizeof(Venta), ventas.size(), pFile);
+	
 	fclose(pFile);
 
 }*/
