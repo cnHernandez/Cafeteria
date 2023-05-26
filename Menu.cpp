@@ -12,6 +12,7 @@
 #include "Archivo_Venta.h"
 #include "Archivo_bkp.h"
 #include "rlutil.h"
+#include <vector>
 #include <iostream>
 
 using namespace std;
@@ -531,6 +532,8 @@ void Menu::menu_ventas()
         break;
         case 2:
         {
+            vector <Venta> ventas;
+            
             system("cls");
             cout << "2- Agregar venta" << endl;
             Archivo_Venta av;
@@ -538,10 +541,12 @@ void Menu::menu_ventas()
             venta.cargar();
             system("cls");
             cout << "Se cargo la venta exitosamente..." << endl;
+            ventas.push_back(venta);
             system("pause");
             system("cls");
             venta.mostrar();
             system("pause");
+           // av.guardarVentas(ventas);
             av.guardar(venta);
         }
         break;

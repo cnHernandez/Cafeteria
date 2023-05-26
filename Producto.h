@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
-
+#include <vector>
 
 
 using namespace std;
@@ -9,6 +9,7 @@ using namespace std;
 class Producto
 {
 private:
+   
     int id_producto;
     int id_categoria;
     char _nombre[50];
@@ -31,5 +32,6 @@ public:
     bool Cargar();
     void CargarCategoria();
     void Mostrar();
+    
 };
 

@@ -8,7 +8,9 @@
 #include "Archivo_Venta.h"
 #include "Fecha.h"
 #include "Menu.h"
+#include <vector>
 using namespace std;
+
 
 Venta::Venta()
 {
@@ -105,6 +107,8 @@ void Venta::cargar()
 	Producto producto;
 	Archivo_Cliente archivoCliente;
 	Archivo_Venta venta;
+	int cantven=venta.cantidad_ventas();
+	
 	Cliente cliente;
 	int id, idCliente, idVendedor;
 	int cantidad;
@@ -121,6 +125,7 @@ void Venta::cargar()
 	std::cout << "-------------------------------------------------------------" << endl;
 	std::cout << "* Ingrese la fecha" << std::endl;
 	fecha.Cargar();
+
 	std::cout << "* Ingrese el ID del vendedor que lo asistio: ";
 	std::cin >> idVendedor;
 	while (idVendedor <= 0 || idVendedor > 4)
@@ -168,10 +173,43 @@ void Venta::cargar()
 		std::cin >> id;
 	}
 	producto = archivo.leer_de_disco(id - 1);
+	
+	//std::cout << "* Ingrese la cantidad que desea comprar: ";
+	//std::cin >> cantidad;
+	
+	//precio = producto.getPrecio();
+	//total = precio * cantidad;
 
+	productos.push_back(producto);
 	std::cout << "* Ingrese la cantidad que desea comprar: ";
 	std::cin >> cantidad;
-	precio = producto.getPrecio();                     
+	cantidades.push_back(cantidad);
+	precio = producto.getPrecio(); 
+		total = precio * cantidad;
+
+	cout << "desea agregar otra compra? S/N" << endl;
+	char desicion;
+	cin >> desicion;
+	
+	while (desicion == 'S')
+	{
+		std::cout << "* Ingrese el ID del producto que desea comprar: ";
+		std::cin >> id;
+		producto = archivo.leer_de_disco(id - 1);
+		productos.push_back(producto);
+		std::cout << "* Ingrese la cantidad que desea comprar: ";
+		std::cin >> cantidad;
+		cantidades.push_back(cantidad);
+		total += producto.getPrecio() * cantidad;
+		cout <<"desea agregar otra compra  S/N? "<<endl;
+		cin >> desicion;
+	}
+	
+
+
+
+
+	
 	//std::cout << "Ingrese el tipo de pago" << std::endl;
 	std::cout << "* 1- Efectivo 5 % Descuento  //  2 - Tarjeta 8 % Aumento: " ;
 	std::cin >> tipoPago;
@@ -184,7 +222,6 @@ void Venta::cargar()
 			std::cout << "2- Tarjeta 8 % Aumento: " ;
 			std::cin >> tipoPago;
 		}
-		total = precio * cantidad;
 		descuento  = total * porcentajeEfectivo;
 		aumento = total * porcentajeTarjeta;
 		if (tipoPago == 1)
@@ -226,7 +263,6 @@ void Venta::cargar()
 	setTotal(totalFinal);
 	cout << "Se cargo la venta exitosamente..." << endl;
 	cout << "-------------------------------------------------------------" << endl << endl;
-	
 	}
 
 
@@ -238,10 +274,15 @@ void Venta::mostrar()
 	std::cout << "ID de Vendedor: " << getIdVendedor() << std::endl;
 	std::cout << "ID de Cliente: " << getIdCliente().getId_Cliente() << std::endl;
 	std::cout << "ID de Venta: " << getId() << std::endl;
-	std::cout << "Producto: " << getProducto().getNombre() << std::endl;
-	std::cout << "Cantidad: " << getCantidad() << std::endl;
-	std::cout << "Precio: " << getPrecio() << std::endl;
-
+	//std::cout << "Cantidad: " << getCantidad() << std::endl;
+	//std::cout << "Producto: " << getProducto().getNombre() << std::endl;
+	//std::cout << "Precio: " << getPrecio() << std::endl;
+	for (size_t i = 0; i < productos.size(); ++i) {
+		cout << "ID Producto: " << productos[i].getId_Producto() << endl;
+		cout << "Nombre: " << productos[i].getNombre() << endl;
+		cout << "Precio: "<< productos[i].getPrecio() << endl;
+		cout << "Cantidad: " << cantidades[i] << endl;
+	}
 	if (getIdVendedor() == 1)
 	{
 		std::cout <<"Nombre del vendedor : Juan" << std::endl;

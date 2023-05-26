@@ -118,6 +118,7 @@ void Archivo_Venta::listar_ventas(int pos)
 			
 		}
 	}
+
 }	
 
 int Archivo_Venta::cantidad_ventas()
@@ -624,7 +625,20 @@ void Archivo_Venta::recaudacion_x_categoria()
 	system("pause");
 }
 
+/*void Archivo_Venta::guardarVentas(const vector<Venta>& ventas)
+{
+	FILE* pFile;
+	pFile = fopen("Ventas.dat", "ab");
+	if (pFile == nullptr) {
+		std::cout << "No se pudo abrir el archivo" << endl;
+	}
+	for (int i = 0; i < ventas.size(); i++)
+	{
+		fwrite(&ventas[i], sizeof(Venta), 1, pFile);
+	}
+	fclose(pFile);
 
+}*/
 
 
 

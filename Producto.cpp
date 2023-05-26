@@ -124,3 +124,5 @@ void Producto::Mostrar()
    std::cout << "#ID de la Categoria: " << getId_Categoria()<< std::endl;
     std::cout << "-Precio del Producto: " << getPrecio() << std::endl;
 }
+
+

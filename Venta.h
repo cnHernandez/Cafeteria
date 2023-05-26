@@ -4,11 +4,15 @@
 #include "Cliente.h"
 #include "Producto.h"
 #include "Fecha.h"
+#include <vector>
 
 using namespace std;
 class Venta
 {
 private:
+	vector <Producto> productos;
+	vector <int> cantidades;
+	vector <Venta> ventas;
 	int id;
 	Producto producto;
 	int cantidad;
@@ -48,6 +52,7 @@ public:
 	int getIdVendedor();
 	void cargar();
 	void mostrar();
+	
 	
 
 };
