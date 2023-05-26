@@ -168,9 +168,10 @@ void Venta::cargar()
 		std::cin >> id;
 	}
 	producto = archivo.leer_de_disco(id - 1);
+
 	std::cout << "* Ingrese la cantidad que desea comprar: ";
 	std::cin >> cantidad;
-	precio = producto.getPrecio();
+	precio = producto.getPrecio();                     
 	//std::cout << "Ingrese el tipo de pago" << std::endl;
 	std::cout << "* 1- Efectivo 5 % Descuento  //  2 - Tarjeta 8 % Aumento: " ;
 	std::cin >> tipoPago;
@@ -214,6 +215,7 @@ void Venta::cargar()
 			cout << "Retiro en local, no hay costo de envio" << endl;
 		
 		}
+		
 	setEntrega(tipoEntrega);
 	setIdVendedor(idVendedor);
 	setTipoPago(tipoPago);
@@ -310,6 +312,7 @@ int Venta::getIdVendedor()
 {
 	return idVendedor;
 }
+
 
 
 

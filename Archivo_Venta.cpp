@@ -585,7 +585,44 @@ void Archivo_Venta::recaudacion_x_producto()
 			system("pause");
 }
 
-
+void Archivo_Venta::recaudacion_x_categoria()
+{
+	Archivo_Categoria archiCat;
+	int cant = cantidad_ventas();
+	Venta* ventas = new Venta[cant];
+	obtener_venta(ventas, cant);
+	int cantCat = archiCat.cantidad_categorias();
+	Categoria* categorias = new Categoria[cantCat];
+	archiCat.obtener_categorias(categorias, cantCat);
+	int anio;
+	std::cout << "ingrese el anio a listar" << endl;
+	cin >> anio;
+	while (anio < 2016)
+	{
+		std::cout << "Anio invalido" << endl;
+		std::cout << "ingrese el Anio a listar: ";
+		cin >> anio;
+	}
+	system("cls");
+	float total = 0;
+	cout << "-------------------------- " << anio << " ----------------------------" << endl << endl;
+	cout << "CATEGORIA""  \t\t" "RECAUDADO" "  \t\t" << endl << endl;
+	for (int i = 0; i < cantCat; i++)
+	{
+		for (int j = 0; j < cant; j++)
+		{
+			if (categorias[i].get_id() == ventas[j].getProducto().getId_Categoria() && anio == ventas[j].getFecha().getAnio() && ventas[j].getEstado())
+			{
+				total += ventas[j].getTotal();
+			}
+		}
+		cout << setw(28) << setiosflags(ios::left) << categorias[i].getNombre() << "$" << total << endl;
+	}
+	cout << endl;
+	cout << "-------------------------------------------------------------" << endl << endl;
+	cout << endl;
+	system("pause");
+}
 
 
 
