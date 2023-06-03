@@ -122,8 +122,26 @@ void Fecha::Cargar()
 {
     std::cout << "Dia: ";
     std::cin >> _dia;
+    if (_dia > 31 || _dia < 0)
+    {
+        cout << "Ingrese una fecha valida" << endl;
+            std::cout << "Dia: ";
+            std::cin >> _dia;
+    }
     std::cout << "Mes: ";
     std::cin >> _mes;
+    if (_mes > 12 || _mes < 0)
+    {
+		cout << "Ingrese una fecha valida " << endl;
+		std::cout << "Mes: ";
+		std::cin >> _mes;
+	}
     std::cout << "Anio: ";
     std::cin >> _anio;
+    if (_anio < 0)
+    {
+		cout << "Ingrese una fecha valida " << endl;
+		std::cout << "Anio: ";
+		std::cin >> _anio;
+	}
 }

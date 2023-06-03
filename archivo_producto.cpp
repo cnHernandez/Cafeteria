@@ -330,3 +330,16 @@ void archivo_producto::listaXrango()
     }
     std::cout<< "----------------------------------------------" << endl;
 }
+
+bool archivo_producto::guardarVec(Producto * prod, int cantidadRegistrosAEscribir) {
+   
+    FILE* p = fopen("Producto.dat", "ab");
+    if (p == NULL)
+    {
+        return false;
+    }
+
+    int cantidadRegistrosEscritos = fwrite(prod, sizeof(Producto), cantidadRegistrosAEscribir, p);
+    fclose(p);
+    return cantidadRegistrosEscritos == cantidadRegistrosAEscribir;
+}

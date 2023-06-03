@@ -462,21 +462,14 @@ void Archivo_Venta::recaudacion_x_vendedor()
 		cin >> id;
 	}
 	float total = 0;
+	float ventasMensuales[12] = {};
+	string mes[12] = { "Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"
+	};
 	for (int i = 0; i < cant; i++)
 	{
 		if (anio == ventas[i].getFecha().getAnio() && ventas[i].getEstado() && ventas[i].getIdVendedor()==id)
 		{
 			total += ventas[i].getTotal();
-		}
-	}
-	string mes[12] = { "Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"
-	};
-
-	float ventasMensuales[12] = {};
-	for (int i = 0; i < cant; i++)
-	{
-		if (anio == ventas[i].getFecha().getAnio() && ventas[i].getEstado())
-		{
 			if (ventas[i].getFecha().getMes() == 1)
 			{
 				ventasMensuales[0] += ventas[i].getTotal();
@@ -527,6 +520,7 @@ void Archivo_Venta::recaudacion_x_vendedor()
 			}
 		}
 	}
+
 	system("cls");
 	if (id == 1) {std::cout <<"RECAUDACION ANUAL DE JUAN EN EL ANIO : " << anio << endl;
 	}else if(id == 2){ std::cout << "RECAUDACION ANUAL DE PEDRO EN EL ANIO: " << anio << endl; }
@@ -534,13 +528,16 @@ void Archivo_Venta::recaudacion_x_vendedor()
 	else if(id == 4){std::cout << "RECAUDACION ANUAL DE CARLA EN EL ANIO: " << anio << endl; }
 
 	cout << "---------------------------------------" << endl;
+	
 	for (int i = 0; i < 12; i++)
 	{
 		if (mes[i].size() < 7) {
 			std::cout << mes[i] << "\t\t\t" << "$" << ventasMensuales[i] << endl;
+			
 		}
 		else {
 			std::cout << mes[i] << "  \t\t" << "$" << ventasMensuales[i] << endl;
+			
 		}
 	}
 	cout << "----------------------------------------" << endl;
@@ -555,11 +552,13 @@ void Archivo_Venta::recaudacion_x_producto()
 	int cant = cantidad_ventas();
 	Venta* ventas = new Venta[cant];
 	obtener_venta(ventas, cant);
-
+	Archivo_Categoria archiCat;
 	int cantProd = archiProd.cantidad_de_registros();
 	Producto* productos = new Producto[cantProd];
 	archiProd.obtener_productos(productos, cantProd);
-	
+	int cantCat= archiCat.cantidad_categorias();
+	Categoria* categorias = new Categoria[cantCat];
+	archiCat.obtener_categorias(categorias, cantCat);
 	int anio;
 	std::cout << "ingrese el anio a listar" << endl;
 	cin >> anio;
@@ -569,27 +568,41 @@ void Archivo_Venta::recaudacion_x_producto()
 		std::cout << "ingrese el Anio a listar: ";
 		cin >> anio;
 	}
-	system("cls");
-	float total = 0;
-	cout << "-------------------------- " << anio << " ----------------------------" << endl << endl;
-	cout << "PRODUCTO""  \t\t""CATEGORIA""  \t\t" "RECAUDADO" "  \t\t" << endl << endl;
+	std::system("cls");
+	string nombre;
+	string nombreProd;
+	
+	std::cout << "-------------------------- " << anio << " ----------------------------" << endl << endl;
+	std::cout << "PRODUCTO""  \t\t""CATEGORIA""  \t\t" "RECAUDADO" "  \t\t" << endl << endl;
+		float total = 0;
+		
 	for (int i = 0; i < cantProd; i++)
 	{
 		for (int j = 0; j < cant; j++)
 		{
-			if (productos[i].getId_Producto() == ventas[j].getProducto().getId_Producto() && anio == ventas[j].getFecha().getAnio() && ventas[j].getEstado())
-			{
-				total += ventas[j].getTotal();
-			}
+			if (productos[i].getId_Producto() == ventas[j].getProducto().getId_Producto() && anio == ventas[j].getFecha().getAnio() && ventas[j].getEstado() == true)
+					
+					{
+						total += ventas[j].getTotal();
+						nombreProd = ventas[j].getProducto().getNombre();
+					}		
+		
 		}
-
-			cout <<  setw(28) << setiosflags(ios::left) << productos[i].getNombre() << setw(22) << setiosflags(ios::left)<< productos[i].getId_Categoria()  << "$" << total << endl;
-	
+		
+			if (categorias[i].get_id() == productos[i].getId_Categoria())
+			{
+			nombre = categorias[i].getNombre();
+		     }
+			if (nombreProd == productos[i].getNombre())
+			{
+				std::cout << setw(28) << setiosflags(ios::left) << productos[i].getNombre() << setw(22) << setiosflags(ios::left) << nombre << "$" << total << endl;
+				std::cout << endl;
+			}
+		
 	}
-	cout<<endl;
-	cout << "-------------------------------------------------------------" << endl << endl;
-	cout << endl;
-			system("pause");
+	std::cout << "-------------------------------------------------------------" << endl << endl;
+	std::cout << endl;
+	std::system("pause");
 }
 
 void Archivo_Venta::recaudacion_x_categoria()
@@ -611,19 +624,28 @@ void Archivo_Venta::recaudacion_x_categoria()
 		cin >> anio;
 	}
 	system("cls");
-	float total = 0;
+	
+	string nombre;
 	cout << "-------------------------- " << anio << " ----------------------------" << endl << endl;
 	cout << "CATEGORIA""  \t\t" "RECAUDADO" "  \t\t" << endl << endl;
 	for (int i = 0; i < cantCat; i++)
 	{
+	float total = 0;
 		for (int j = 0; j < cant; j++)
 		{
 			if (categorias[i].get_id() == ventas[j].getProducto().getId_Categoria() && anio == ventas[j].getFecha().getAnio() && ventas[j].getEstado())
 			{
 				total += ventas[j].getTotal();
 			}
+			if (categorias[i].get_id() == ventas[j].getProducto().getId_Categoria())
+			{
+				nombre= categorias[i].getNombre();
+			}
 		}
-		cout << setw(28) << setiosflags(ios::left) << categorias[i].getNombre() << "$" << total << endl;
+		if (nombre == categorias[i].getNombre())
+		{
+			cout << setw(28) << setiosflags(ios::left) << nombre << "$" << total << endl;
+		}
 	}
 	cout << endl;
 	cout << "-------------------------------------------------------------" << endl << endl;

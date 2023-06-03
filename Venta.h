@@ -11,8 +11,9 @@ class Venta
 {
 private:
 	//vector <Producto> productos;
-	//vector <int> cantidades;
+	int * cantidades;
 	//vector <Venta> ventas;
+	Producto * productos;
 	int id;
 	Producto producto;
 	int cantidad;
