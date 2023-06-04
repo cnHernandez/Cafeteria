@@ -183,9 +183,7 @@ int archivo_producto::modificar()
     }
     if (op != 0)
     {
-        producto = leer_de_disco(op - 1);
         producto.Cargar();
-
         char op2;
         std::cout << "esta seguro de que desea modificar al producto?" << std::endl;
         std::cout << "[S/N]: ";
@@ -286,17 +284,17 @@ void archivo_producto::listaXcategoria()
 bool archivo_producto::Existe(int op)
 {
     Producto prod;
-    for (int i = 0; i < cantidad_de_registros(); i++)
+    int cantidad = cantidad_de_registros();
+
+    for (int i = 0; i < cantidad; i++)
     {
         prod = leer_de_disco(i);
-        if (prod.getId_Producto() == op)
+        if ((prod.getId_Producto() == op) && (prod.getEstado()))
         {
             return true;
         }
-
     }
     return false;
-
 }
 
 void archivo_producto::listaXrango()

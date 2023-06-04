@@ -97,30 +97,25 @@ bool Venta::getEstado()
 
 
 
-
-
-
-
 void Venta::cargar()
 {
-	archivo_producto archivo;
+	archivo_producto archivoProducto;
 	Producto producto;
 	Archivo_Cliente archivoCliente;
+	Cliente cliente;
 	Archivo_Venta venta;
 	int cantven=venta.cantidad_ventas();
-	int cantProd = archivo.cantidad_de_registros();
-	
-	Cliente cliente;
-	int id, idCliente, idVendedor;
+	int cantProd = archivoProducto.cantidad_de_registros();
+	int idProducto, idCliente, idVendedor;
 	int cantidad;
 	float precio;
 	float total=0;
 	float totalFinal = 0;
 	float aumento;
 	float descuento;
-	int tipoPago = 0;
-	int dia, mes, anio;
-	int cant = archivo.cantidad_de_registros();
+	int tipoPago;
+	int cant = archivoProducto.cantidad_de_registros();
+
 	std::cout << endl;
 	std::cout << "-------------------------------------------------------------" << endl;
 	std::cout << "* Ingrese la fecha" << std::endl;
@@ -134,9 +129,7 @@ void Venta::cargar()
 		std::cout << "* Ingrese el ID del vendedor que lo asistio: ";
 		std::cin >> idVendedor;
 	}
-	std::cout << "* Ingrese el ID del cliente que realiza la compra: ";
-	std::cin >> idCliente;
-	Menu menu;
+
 	while (archivoCliente.cantidad_clientes() == 0)
 	{
 		string desicion;
@@ -157,23 +150,26 @@ void Venta::cargar()
 			std::cin >> desicion;
 		}
 	}
-	while (idCliente <= 0 || idCliente > archivoCliente.cantidad_clientes())
+
+	std::cout << "* Ingrese el ID del cliente que realiza la compra: ";
+	std::cin >> idCliente;
+	while (!archivoCliente.ExisteCliente(idCliente))
 	{
 		std::cout << "El ID ingresado no existe" << std::endl;
 		std::cout << "* Ingrese el ID del cliente que realiza la comprar: ";
 		std::cin >> idCliente;
 	}
 	cliente = archivoCliente.leer_clientes(idCliente - 1);
+
 	std::cout << "* Ingrese el ID del producto que desea comprar: ";
-	std::cin >> id;
-	while (id <= 0 || id > cant)
+	std::cin >> idProducto;
+	while (!archivoProducto.Existe(idProducto))
 	{
 		std::cout << "El ID ingresado no existe" << std::endl;
 		std::cout << "* Ingrese el ID del producto que desea comprar: " ;
-		std::cin >> id;
+		std::cin >> idProducto;
 	}
-	int opcion;
-	producto = archivo.leer_de_disco(id - 1);
+	producto = archivoProducto.leer_de_disco(idProducto - 1);
 	
 	std::cout << "* Ingrese la cantidad que desea comprar: ";
 	std::cin >> cantidad;
@@ -202,7 +198,7 @@ void Venta::cargar()
 		{
 			totalFinal = total + aumento;
 		}
-		//std::cout << "Ingrese la forma de entrega" << std::endl;
+
 		std::cout << "* 1- Retiro del local  //  2 - Entrega a domicilio: ";
 		int tipoEntrega;
 		cin >> tipoEntrega;
@@ -238,7 +234,6 @@ void Venta::cargar()
 
 void Venta::mostrar()
 {
-	
 		std::cout << "****************************************** " << std::endl;
 		std::cout << "Fecha: " << getFecha().toString() << std::endl;
 		std::cout << "ID de Vendedor: " << getIdVendedor() << std::endl;
@@ -248,7 +243,6 @@ void Venta::mostrar()
 		std::cout << "Producto: " << getProducto().getNombre() << std::endl;
 		std::cout << "Precio: " << getPrecio() << std::endl;
 		
-	
 	if (getIdVendedor() == 1)
 	{
 		std::cout <<"Nombre del vendedor : Juan" << std::endl;
@@ -319,10 +313,3 @@ int Venta::getIdVendedor()
 {
 	return idVendedor;
 }
-
-
-
-
-
-
-
