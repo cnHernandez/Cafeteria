@@ -179,3 +179,20 @@ void Archivo_Cliente::baja_Logica() {
 		}
 	}
 }
+
+bool Archivo_Cliente::ExisteCliente(int id)
+{
+	int cantidadNoActiva = cantidad_clientes();
+	int cantidadActiva = get_cantidad_Activa(cantidadNoActiva);
+	Cliente cliente;
+
+	for (int i = 0; i < cantidadActiva; i++)
+	{
+		cliente = leer_clientes(i);
+		if (cliente.getId_Cliente() == id)
+		{
+			return true;
+		}
+	}
+	return false;
+}

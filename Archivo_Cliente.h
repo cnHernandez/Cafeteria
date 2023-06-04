@@ -13,5 +13,6 @@ public:
 	void listar_clientes(int);
 	void modificar_cliente();
 	void baja_Logica();
+	bool ExisteCliente(int id);
 };
 

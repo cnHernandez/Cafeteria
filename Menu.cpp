@@ -383,8 +383,8 @@ void Menu::menu_ventas()
         cout << "---Ventas----" << endl;
         cout << " 1- Listar" << endl;
         cout << " 2- Agregar" << endl;
-        //cout << " 3- Modificar" << endl;
-        //cout << " 4- Eliminar" << endl;
+        cout << " 3- Modificar" << endl;
+        cout << " 4- Eliminar" << endl;
         cout << " 5- Hacer copia de Seguridad" << endl;
         cout << " 6- Restaurar copia de Seguridad" << endl;
         cout << "-----------------" << endl;
@@ -552,6 +552,42 @@ void Menu::menu_ventas()
             system("pause");
            //av.guardarVentas(ventas);
             av.guardar(venta);
+        }
+        break;
+        case 3:
+        {
+            system("cls");
+            Archivo_Venta archivo;
+            int cant = archivo.cantidad_ventas();
+            int cantActiva = archivo.get_cantidad_Activa(cant);
+            if (cantActiva == 0)
+            {
+                cout << "No se encuentran guardadas ventas activas" << endl << endl;
+                system("pause");
+            }
+            else {
+                system("cls");
+                cout << "Modificar venta" << endl;
+                int pro = archivo.Modificar_Venta();
+                system("pause");
+                system("cls");
+                Venta aux = archivo.leer_ventas(pro - 1);
+                cout << "----------------------------------------" << endl;
+                aux.mostrar();
+                cout << "----------------------------------------" << endl << endl;
+                system("pause");
+            }
+        }
+        break;
+        case 4:
+        {
+            system("cls");
+            cout << "4- Eliminar venta" << endl;
+            Archivo_Venta venta;
+            venta.BajaLogica();
+            system("cls");
+            cout << "Se elimino la venta correctamente..." << endl;
+            system("pause");
         }
         break;
         case 5:

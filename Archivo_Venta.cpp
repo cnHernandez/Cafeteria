@@ -669,4 +669,73 @@ void Archivo_Venta::recaudacion_x_categoria()
 }*/
 
 
+void Archivo_Venta::BajaLogica()
+{
+	int op;
+	Venta venta;
+	int cant = cantidad_ventas();
+	listar_ventas(cant);
+	std::cout << std::endl;
+
+	std::cout << "Ingrese de ID de la venta que desea eliminar: ";
+	std::cin >> op;
+	venta = leer_ventas(op - 1);
+
+	while (op<0 || op>cant || !venta.getEstado())
+	{
+		std::cout << "ingrese una opcion correcta" << std::endl;
+		std::cin >> op;
+	}
+	venta = leer_ventas(op - 1);
+
+	if(op != 0) {
+		char op2;
+		system("cls");
+		cout << "----------------------------------------" << endl;
+		venta.mostrar();
+		cout << "----------------------------------------" << endl << endl;
+		cout << endl;
+		std::cout << "esta seguro de que desea eliminar la venta?" << std::endl;
+		std::cout << "[S/N]: ";
+		std::cin >> op2;
+		if (op2 == 's' || op2 == 'S')
+		{
+			venta.setEstado(false);
+			guardar_modificado(venta, op - 1);
+		}
+	}
+}
+
+
+int Archivo_Venta::Modificar_Venta()
+{
+	int op;
+	Venta venta;
+	int cant = cantidad_ventas();
+	listar_ventas(cant);
+	std::cout << "Ingrese de ID de la venta que desea modificar: ";
+	std::cin >> op;
+	system("cls");
+	venta = leer_ventas(op - 1);
+
+	while (op<0 || op>cant || !venta.getEstado())
+	{
+		std::cout << "ingrese una opcion correcta: ";
+		std::cin >> op;
+	}
+	if (op != 0)
+	{
+		venta.cargar();
+		char op2;
+		std::cout << "esta seguro de que desea modificar la venta?" << std::endl;
+		std::cout << "[S/N]: ";
+		std::cin >> op2;
+		if (op2 == 's' || op2 == 'S')
+		{
+			guardar_modificado(venta, op - 1);
+		}
+	}
+	return op;
+}
+
 

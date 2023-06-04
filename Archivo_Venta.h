@@ -23,6 +23,12 @@ class Archivo_Venta
 		void recaudacion_x_vendedor();
 		void recaudacion_x_producto();
 		void recaudacion_x_categoria();
+		void BajaLogica();
+		int Modificar_Venta();
+
+
+
+
 		//void guardarVentas(const vector<Venta>& ventas);
 		//void listar_ventasDin(vector<Venta>ventas);
 		
