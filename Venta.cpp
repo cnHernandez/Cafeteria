@@ -181,7 +181,35 @@ void Venta::cargar()
 	
 	std::cout << "* Ingrese la cantidad que desea comprar: ";
 	std::cin >> cantidad;
-	
+	if (cantidad < 0)
+	{
+		cout<<"ingrese una cantidad valida"<<endl;
+		std::cout << "* Ingrese la cantidad que desea comprar: ";
+		std::cin >> cantidad;
+	}
+	if (cantidad > producto.getStock())
+	{
+		cout<<"no hay stock suficiente"<<endl;
+		std::cout << "* Ingrese la cantidad que desea comprar: ";
+		std::cin >> cantidad;
+	}
+	producto.setStock(producto.getStock() - cantidad);
+	if (producto.getStock() < 5)
+	{
+		string desicion;
+		cout<<"quedan menos de 5 unidades"<<endl;
+		cout << "¿desea agregar mas unidades al stock? (S/N) " << endl;
+		std::cin >> desicion;
+		if (desicion == "S" || desicion == "s")
+		{
+			producto.AgregarStock();
+		}
+		else if (desicion == "N" || desicion == "n")
+		{
+			return;
+		}
+	}
+	archivoProducto.guardar(producto, idProducto - 1);
 	precio = producto.getPrecio();
 	total = precio * cantidad;
 	

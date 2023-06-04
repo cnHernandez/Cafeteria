@@ -34,6 +34,16 @@ void Producto::setEstado(bool nEstado)
     estado = nEstado;
 }
 
+void Producto::setStock(int nStock)
+{
+	stock = nStock;
+}
+
+int Producto::getStock()
+{
+	return stock;
+}
+
 std::string Producto::getNombre()
 {
     return _nombre;
@@ -61,6 +71,19 @@ void Producto::setPrecio(float nPrecio)
 	precio = nPrecio;
 }
 
+void Producto::AgregarStock()
+{
+	int cantidad;
+	std::cout << "Ingrese la cantidad de stock a agregar: ";
+	std::cin >> cantidad;
+	stock += cantidad;
+}
+
+void Producto::RestarStock(int cantidad)
+{
+	stock -= cantidad;
+}
+
 bool Producto::Cargar()
 {
     Archivo_Categoria arch;
@@ -74,6 +97,9 @@ bool Producto::Cargar()
         std::cout << "Ingrese el precio del Producto: ";
         std::cin >> precio;
         setPrecio(precio);
+        cout << "ingrese la cantidad a Stockear: " << endl;
+        cin >> stock;
+        setStock(stock);
         return true;
     }
     else {
@@ -123,6 +149,7 @@ void Producto::Mostrar()
     std::cout << "#ID del Producto: " << getId_Producto() << std::endl;
    std::cout << "#ID de la Categoria: " << getId_Categoria()<< std::endl;
     std::cout << "-Precio del Producto: " << getPrecio() << std::endl;
+    std::cout << "-Stock del Producto: " << getStock() << std::endl;
 }
 
 
