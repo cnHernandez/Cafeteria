@@ -104,6 +104,7 @@ void Venta::cargar()
 	Archivo_Cliente archivoCliente;
 	Cliente cliente;
 	Archivo_Venta venta;
+	int cantClientes = archivoCliente.cantidad_clientes();
 	int cantven=venta.cantidad_ventas();
 	int cantProd = archivoProducto.cantidad_de_registros();
 	int idProducto, idCliente, idVendedor;
@@ -120,9 +121,15 @@ void Venta::cargar()
 	std::cout << "-------------------------------------------------------------" << endl;
 	std::cout << "* Ingrese la fecha" << std::endl;
 	fecha.Cargar();
+	std::cout << "-------------------------------------------------------------" << endl;
+	cout <<"1- JUAN     " << endl;
+	cout <<"2- PEDRO    "<<endl;
+	cout <<"3- ROMINA   "<<endl;
+	cout <<"4- CARLA    "<<endl;
 
 	std::cout << "* Ingrese el ID del vendedor que lo asistio: ";
 	std::cin >> idVendedor;
+
 	while (idVendedor <= 0 || idVendedor > 4)
 	{
 		std::cout << "El ID ingresado no existe" << std::endl;
@@ -130,7 +137,7 @@ void Venta::cargar()
 		std::cin >> idVendedor;
 	}
 
-	while (archivoCliente.cantidad_clientes() == 0)
+	while (archivoCliente.cantidad_clientes() == 0 )
 	{
 		string desicion;
 		std::cout << "No hay clientes cargados" << std::endl;
@@ -150,7 +157,7 @@ void Venta::cargar()
 			std::cin >> desicion;
 		}
 	}
-
+	archivoCliente.listar_clientes(cantClientes);
 	std::cout << "* Ingrese el ID del cliente que realiza la compra: ";
 	std::cin >> idCliente;
 	while (!archivoCliente.ExisteCliente(idCliente))
@@ -160,7 +167,8 @@ void Venta::cargar()
 		std::cin >> idCliente;
 	}
 	cliente = archivoCliente.leer_clientes(idCliente - 1);
-
+	
+	archivoProducto.listar(cantProd);
 	std::cout << "* Ingrese el ID del producto que desea comprar: ";
 	std::cin >> idProducto;
 	while (!archivoProducto.Existe(idProducto))

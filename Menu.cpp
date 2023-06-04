@@ -12,6 +12,7 @@
 #include "Archivo_Venta.h"
 #include "Archivo_bkp.h"
 #include "rlutil.h"
+#include <iomanip>
 #include <vector>
 #include <iostream>
 
@@ -26,7 +27,7 @@ void Menu::menuPrincipal()
     {
        
 		system("cls");
-        cout << "----Menu Principal----" << endl << endl;
+        std::cout << std::setw(30) << std::right << "----Menu Principal----" << endl << endl;
         cout << " 1- Productos" << endl;
         cout << " 2- Categorias" << endl;
         cout << " 3- Ventas" << endl;
