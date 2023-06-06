@@ -25,10 +25,10 @@ private:
 	int tipoPago;
 	int idVendedor;
 	int entrega;
-
+	float ganancia;
 public:
 	Venta();
-
+	void setGanancia(float);
 	void setIdCliente(Cliente);
 	void setId(int);
 	void setProducto(Producto);
@@ -40,6 +40,7 @@ public:
 	void setTipoPago(int);
 	void setIdVendedor(int);
 	void setEntrega(int);
+	float getGanancia();
 	int getEntrega();
 	int getId();
 	Cliente getIdCliente();

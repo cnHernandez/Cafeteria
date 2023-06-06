@@ -25,6 +25,8 @@ class Archivo_Venta
 		void recaudacion_x_categoria();
 		void BajaLogica();
 		int Modificar_Venta();
+		void ganancia_x_Venta();
+		void ganancia_x_mes_Anual();
 
 
 

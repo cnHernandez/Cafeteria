@@ -420,12 +420,13 @@ void Menu::menu_ventas()
                 cout << "4- Recaudacion anual por vendedor" << endl;
                 cout << "5- Recaudacion anual por Productos" << endl;
                 cout << "6- Recaudacion anual por Categorias" << endl;
+                cout << "7- Ganancia neta mensual por año" << endl;
                 cout << "-----------------------" << endl;
                 cout << "0- volver" << endl;
                 cout << "-----------------------" << endl;
                 cin >> op;
 
-                while (op < 0 || op>6)
+                while (op < 0 || op>7)
                 {
                     cout << "opcion incorrecta, vuelva a ingresar una opcion" << endl;
                     cin >> op;
@@ -528,6 +529,14 @@ void Menu::menu_ventas()
                     system("cls");
                     std::cout << "RECAUDACION ANUAL POR PRODUCTO: " << endl;
                     archivo.recaudacion_x_categoria();
+                }
+                break;
+                case 7:
+                {
+                    Archivo_Venta archivo;
+                    system("cls");
+                    std::cout << "RECAUDACION ANUAL POR PRODUCTO: " << endl;
+                    archivo.ganancia_x_mes_Anual();
                 }
                 break;
                 }

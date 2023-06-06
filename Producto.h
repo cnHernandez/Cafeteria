@@ -16,15 +16,17 @@ private:
     bool estado;
     float precio;
     int stock;
+    float precio_compra;
 public:
     Producto();
+    void setPrecioCompra(float precio_compra);
     void setStock(int nStock);
     void setPrecio(float nPrecio);
     void setNombre(std::string _nombre);
     void setId_Categoria(int id_categoria);
     void setId_Producto(int id_producto);
     void setEstado(bool nEstado);
-
+    float getPrecioCompra();
     int getStock();
     void AgregarStock();
     void RestarStock(int cantidad);

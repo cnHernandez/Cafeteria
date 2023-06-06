@@ -39,6 +39,16 @@ void Producto::setStock(int nStock)
 	stock = nStock;
 }
 
+void Producto::setPrecioCompra(float precio_compra)
+{
+	this->precio_compra = precio_compra;
+}
+
+float Producto::getPrecioCompra()
+{
+	return precio_compra;
+}
+
 int Producto::getStock()
 {
 	return stock;
@@ -94,7 +104,10 @@ bool Producto::Cargar()
         std::cin.ignore();
         getline(std::cin, Nombre);
         setNombre(Nombre);
-        std::cout << "Ingrese el precio del Producto: ";
+        std::cout << "Ingrese el precio de compra del Producto: ";
+        std::cin >> precio_compra;
+        setPrecioCompra(precio_compra);
+        std::cout << "Ingrese el precio de venta del Producto: ";
         std::cin >> precio;
         setPrecio(precio);
         cout << "ingrese la cantidad a Stockear: " << endl;

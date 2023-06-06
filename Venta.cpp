@@ -61,6 +61,15 @@ void Venta::setFecha(int dia, int mes, int anio)
 	fecha.setAnio(anio);
 }
 
+void Venta::setGanancia(float ganancia)
+{
+	this->ganancia = ganancia;
+}
+
+float Venta::getGanancia()
+{
+	return ganancia;
+}
 Fecha Venta::getFecha()
 {
 	return fecha;
@@ -115,6 +124,7 @@ void Venta::cargar()
 	float aumento;
 	float descuento;
 	int tipoPago;
+	float ganancia;
 	int cant = archivoProducto.cantidad_de_registros();
 
 	std::cout << endl;
@@ -194,21 +204,7 @@ void Venta::cargar()
 		std::cin >> cantidad;
 	}
 	producto.setStock(producto.getStock() - cantidad);
-	if (producto.getStock() < 5)
-	{
-		string desicion;
-		cout<<"quedan menos de 5 unidades"<<endl;
-		cout << "¿desea agregar mas unidades al stock? (S/N) " << endl;
-		std::cin >> desicion;
-		if (desicion == "S" || desicion == "s")
-		{
-			producto.AgregarStock();
-		}
-		else if (desicion == "N" || desicion == "n")
-		{
-			return;
-		}
-	}
+	
 	archivoProducto.guardar(producto, idProducto - 1);
 	precio = producto.getPrecio();
 	total = precio * cantidad;
@@ -229,10 +225,12 @@ void Venta::cargar()
 		if (tipoPago == 1)
 		{
 			totalFinal = total - descuento;
+			ganancia = totalFinal - producto.getPrecioCompra() * cantidad;
 		}
 		else if (tipoPago == 2)
 		{
 			totalFinal = total + aumento;
+			ganancia= total - producto.getPrecioCompra() * cantidad;
 		}
 
 		std::cout << "* 1- Retiro del local  //  2 - Entrega a domicilio: ";
@@ -249,12 +247,31 @@ void Venta::cargar()
 		{
 			cout<<"El envio cuesta $200"<<endl;
 			totalFinal = totalFinal + 200;
+			ganancia = total - producto.getPrecioCompra() * cantidad;
 		}
 		else if (tipoEntrega == 1) {
 			cout << "Retiro en local, no hay costo de envio" << endl;
+			ganancia = totalFinal - producto.getPrecioCompra() * cantidad;
 		
 		}
+		if (producto.getStock() < 5)
+		{
+			string desicion;
+			cout << "quedan menos de 5 unidades" << endl;
+			cout << "¿desea agregar mas unidades del producto al stock? (S/N) " << endl;
+			std::cin >> desicion;
+			if (desicion == "S" || desicion == "s")
+			{
+				producto.AgregarStock();
+			}
+			else if (desicion == "N" || desicion == "n")
+			{
+				return;
+			}
+		}
 		
+	;
+	setGanancia(ganancia);
 	setEntrega(tipoEntrega);
 	setIdVendedor(idVendedor);
 	setTipoPago(tipoPago);
@@ -265,6 +282,21 @@ void Venta::cargar()
 	setTotal(totalFinal);
 	cout << "Se cargo la venta exitosamente..." << endl;
 	cout << "-------------------------------------------------------------" << endl << endl;
+	if (producto.getStock() < 5)
+	{
+		string desicion;
+		cout << "quedan menos de 5 unidades del producto seleccionado" << endl;
+		cout << "¿desea agregar mas unidades al stock? (S/N) " << endl;
+		std::cin >> desicion;
+		if (desicion == "S" || desicion == "s")
+		{
+			producto.AgregarStock();
+		}
+		else if (desicion == "N" || desicion == "n")
+		{
+			return;
+		}
+	}
 	}
 
 
@@ -278,7 +310,10 @@ void Venta::mostrar()
 		std::cout << "Cantidad: " << getCantidad() << std::endl;
 		std::cout << "Producto: " << getProducto().getNombre() << std::endl;
 		std::cout << "Precio: " << getPrecio() << std::endl;
-		
+		std::cout << "Precio Compra: " << getProducto().getPrecioCompra() << std::endl;
+		std::cout << "Ganancia: " << getGanancia() << std::endl;
+		std::cout << "Total: " << getTotal() << std::endl;
+
 	if (getIdVendedor() == 1)
 	{
 		std::cout <<"Nombre del vendedor : Juan" << std::endl;
