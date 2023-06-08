@@ -296,13 +296,10 @@ void Venta::mostrar()
 		std::cout << "Cantidad: " << getCantidad() << std::endl;
 		std::cout << "Producto: " << getProducto().getNombre() << std::endl;
 		std::cout << "Precio: " << getPrecio() << std::endl;
-<<<<<<< HEAD
-		
-=======
 		std::cout << "Precio Compra: " << getProducto().getPrecioCompra() << std::endl;
 		std::cout << "Ganancia: " << getGanancia() << std::endl;
 		std::cout << "Total: " << getTotal() << std::endl;
->>>>>>> 265105449b33a252895b56161a28b37d6f486fd7
+
 
 	if (getIdVendedor() == 1)
 	{

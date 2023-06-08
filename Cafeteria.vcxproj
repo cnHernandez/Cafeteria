@@ -42,13 +42,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -143,7 +143,9 @@
     <ClCompile Include="Cliente.cpp" />
     <ClCompile Include="Fecha.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Persona.cpp" />
     <ClCompile Include="Producto.cpp" />
+    <ClCompile Include="Vendedor.cpp" />
     <ClCompile Include="Venta.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -156,7 +158,9 @@
     <ClInclude Include="Cliente.h" />
     <ClInclude Include="Fecha.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="Persona.h" />
     <ClInclude Include="Producto.h" />
+    <ClInclude Include="Vendedor.h" />
     <ClInclude Include="Venta.h" />
   </ItemGroup>
   <ItemGroup>
