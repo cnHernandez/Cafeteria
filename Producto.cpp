@@ -12,6 +12,7 @@ Producto::Producto()
     archivo_producto Archivo;
     id_producto = Archivo.cantidad_de_registros() + 1;
     estado = true;
+    stock = 0;
   
 }
 
@@ -81,12 +82,9 @@ void Producto::setPrecio(float nPrecio)
 	precio = nPrecio;
 }
 
-void Producto::AgregarStock()
+void Producto::AgregarStock(int can)
 {
-	int cantidad;
-	std::cout << "Ingrese la cantidad de stock a agregar: ";
-	std::cin >> cantidad;
-	stock += cantidad;
+	stock += can;
 }
 
 void Producto::RestarStock(int cantidad)

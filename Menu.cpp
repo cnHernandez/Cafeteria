@@ -22,12 +22,12 @@ void Menu::menuPrincipal()
     rlutil::setBackgroundColor(rlutil::LIGHTMAGENTA);
     rlutil::setColor(rlutil::WHITE);
     int op;
-	bool menu_activo = true;
+    bool menu_activo = true;
     while (menu_activo)
     {
-       
-		system("cls");
-        std::cout << std::setw(30) << std::right << "----Menu Principal----" << endl << endl;
+
+        system("cls");
+        cout <<"----Menu Principal----" << endl << endl;
         cout << " 1- Productos" << endl;
         cout << " 2- Categorias" << endl;
         cout << " 3- Ventas" << endl;
@@ -35,42 +35,42 @@ void Menu::menuPrincipal()
         cout << "-----------------" << endl;
         cout << " 0- SALIR" << endl;
         cout << "-----------------" << endl;
-        
-		cin >> op;
+
+        cin >> op;
         while (op < 0 || op>4)
         {
-			cout << "opcion incorrecta, vuelva a ingresar una opcion: ";
-			cin >> op;
-		}
+            cout << "opcion incorrecta, vuelva a ingresar una opcion: ";
+            cin >> op;
+        }
         switch (op)
         {
-		case 0:
+        case 0:
         {
-			menu_activo = false;
-		}
-		break;
-		case 1:
-        {
-			menu_productos();
-		}
-		break;
-		case 2:
-        {
-			menu_categorias();
-		}
-		break;
-        case 3:
-		{
-            menu_ventas();
-		}
-		break;
-		case 4:
-        {
-			menu_clientes();
+            menu_activo = false;
         }
-       break;
-		}
-	}
+        break;
+        case 1:
+        {
+            menu_productos();
+        }
+        break;
+        case 2:
+        {
+            menu_categorias();
+        }
+        break;
+        case 3:
+        {
+            menu_ventas();
+        }
+        break;
+        case 4:
+        {
+            menu_clientes();
+        }
+        break;
+        }
+    }
 }
 
 void Menu::menu_productos()
@@ -113,7 +113,7 @@ void Menu::menu_productos()
                 cout << "Listar Productos" << endl;
                 cout << "-------------------------" << endl;
                 cout << "1- Todos" << endl;
-                cout << "2- Listar por categorias" << endl ;
+                cout << "2- Listar por categorias" << endl;
                 cout << "3- Por rango de precio " << endl;
                 cout << "-------------------------" << endl;
                 cout << "0- Volver" << endl;
@@ -179,7 +179,7 @@ void Menu::menu_productos()
                         cout << "No se encuentran guardados Productos Activos" << endl << endl;
                     }
                     else
-                    {                 
+                    {
                         archivo.listaXrango();
                     }
                     system("pause");
@@ -196,22 +196,73 @@ void Menu::menu_productos()
 
         case 2:
         {
-            system("cls");
-            cout << "Eliga categoria del producto" << endl;
-            Producto producto;
-            bool leyo = producto.Cargar();
-            if (leyo)
-            {
-                archivo_producto archivo;
-                archivo.guardar(producto);
-                system("cls");
-                cout << "Producto cargado" << endl;
-                cout << "-----------------------------------" << endl;
-                producto.Mostrar();
-                cout << "-----------------------------------" << endl<<endl;
-                system("pause");
-                cout << endl;
+            bool menu3activo = true;
 
+            while (menu3activo)
+            {
+                system("cls");
+                cout << "Agregar Productos" << endl;
+                cout << "----------------------------" << endl;
+                cout << "1- Agregar producto nuevo" << endl;
+                cout << "2- Agregar stock de producto" << endl;
+                cout << "----------------------------" << endl;
+                cout << "0- Volver" << endl;
+                cin >> op;
+
+                while (op < 0 || op>2)
+                {
+                    cout << "opcion incorrecta, vuelva a ingresar una opcion: ";
+                    cin >> op;
+                }
+
+                switch (op)
+                {
+                case 0:
+                {
+                    menu3activo = false;
+                }
+
+                case 1:
+                {
+                    system("cls");
+                    cout << "Eliga categoria del producto" << endl;
+                    Producto producto;
+                    bool leyo = producto.Cargar();
+                    if (leyo)
+                    {
+                        archivo_producto archivo;
+                        archivo.guardar(producto);
+                        system("cls");
+                        cout << "Producto cargado" << endl;
+                        cout << "-----------------------------------" << endl;
+                        producto.Mostrar();
+                        cout << "-----------------------------------" << endl << endl;
+                        system("pause");
+                        cout << endl;
+                    }
+                }
+
+                break;
+                case 2:
+                {
+                    system("cls");
+                    cout << "AGREGAR STOCK" << endl;
+                    archivo_producto ar;
+                    int cant = ar.cantidad_de_registros();
+                    ar.listar(cant);
+                    int id;
+                    archivo_producto archivo;
+                    Producto producto, aux;
+                    cout << "Ingrese ID del producto al que desea agregarle stock: " ;
+                    cin >> id;
+                    system("cls");
+                    if (archivo.Existe(id)) {
+                        archivo.Stock(id);
+                    }
+                }
+                break;
+                }
+                break;
             }
         }
         break;
@@ -230,14 +281,14 @@ void Menu::menu_productos()
                 system("cls");
                 cout << "Modificar producto" << endl;
                 archivo_producto archivo;
-                int pro = archivo.modificar();   
+                int pro = archivo.modificar();
                 system("pause");
                 system("cls");
-                Producto aux = archivo.leer_de_disco(pro-1);
+                Producto aux = archivo.leer_de_disco(pro - 1);
                 cout << "----------------------------------------" << endl;
                 aux.Mostrar();
                 cout << "----------------------------------------" << endl << endl;
-                system("pause"); 
+                system("pause");
             }
         }
         break;
@@ -420,7 +471,7 @@ void Menu::menu_ventas()
                 cout << "4- Recaudacion anual por vendedor" << endl;
                 cout << "5- Recaudacion anual por Productos" << endl;
                 cout << "6- Recaudacion anual por Categorias" << endl;
-                cout << "7- Ganancia neta mensual por año" << endl;
+                cout << "7- Ganancia neta mensual por anio" << endl;
                 cout << "-----------------------" << endl;
                 cout << "0- volver" << endl;
                 cout << "-----------------------" << endl;
@@ -441,12 +492,12 @@ void Menu::menu_ventas()
                 break;
                 case 1:
                 {
-                    
+
                     system("cls");
                     cout << " 1- Lista de ventas" << endl;
                     Archivo_Venta archivo;
-                    
-                  
+
+
                     int cant = archivo.cantidad_ventas();
                     int cantActiva = archivo.get_cantidad_Activa(cant);
                     if (cantActiva == 0)
@@ -457,7 +508,7 @@ void Menu::menu_ventas()
                     else
                     {
                         system("cls");
-                        cout << "        ******** VENTAS ********" << endl;                       
+                        cout << "        ******** VENTAS ********" << endl;
                         archivo.listar_ventas(cant);
                         cout << "*********************" << endl;
                         system("pause");
@@ -478,7 +529,7 @@ void Menu::menu_ventas()
                         cout << "No se encuentran guardadas ventas Activas" << endl << endl;
                         system("pause");
                     }
-                    
+
                     else
                     {
                         archivo.listar_x_cliente();
@@ -491,7 +542,7 @@ void Menu::menu_ventas()
                 {
                     system("cls");
                     cout << " 3- Lista de ventas por fecha" << endl;
-                    
+
                     Archivo_Venta archivo;
                     int cant = archivo.cantidad_ventas();
                     int cantActiva = archivo.get_cantidad_Activa(cant);
@@ -507,7 +558,7 @@ void Menu::menu_ventas()
                     }
                 }
                 break;
-                case 4: 
+                case 4:
                 {
                     Archivo_Venta archivo;
                     system("cls");
@@ -517,10 +568,10 @@ void Menu::menu_ventas()
                 break;
                 case 5:
                 {
-					Archivo_Venta archivo;
-					system("cls");
-					std::cout << "RECAUDACION ANUAL POR PRODUCTO: " << endl;
-					archivo.recaudacion_x_producto();
+                    Archivo_Venta archivo;
+                    system("cls");
+                    std::cout << "RECAUDACION ANUAL POR PRODUCTO: " << endl;
+                    archivo.recaudacion_x_producto();
                 }
                 break;
                 case 6:
@@ -546,12 +597,12 @@ void Menu::menu_ventas()
         case 2:
         {
             vector <Venta> ventas;
-            
+
             system("cls");
             cout << "2- Agregar venta" << endl;
             Archivo_Venta av;
             Venta venta;
-            
+
             venta.cargar();
             system("cls");
             cout << "Se cargo la venta exitosamente..." << endl;
@@ -560,7 +611,7 @@ void Menu::menu_ventas()
             system("cls");
             venta.mostrar();
             system("pause");
-           //av.guardarVentas(ventas);
+            //av.guardarVentas(ventas);
             av.guardar(venta);
         }
         break;
@@ -602,23 +653,23 @@ void Menu::menu_ventas()
         break;
         case 5:
         {
-			system("cls");
-			cout << "5- Hacer copia de seguridad" << endl;
+            system("cls");
+            cout << "5- Hacer copia de seguridad" << endl;
             Archivo_bkp Backup;
             Backup.HacerCopiaDeSeguridad();
-			cout << "Se realizo la copia de seguridad exitosamente..." << endl;
-            
-			system("pause");
+            cout << "Se realizo la copia de seguridad exitosamente..." << endl;
+
+            system("pause");
         }
         break;
         case 6:
         {
-			system("cls");
-			cout << "6- Restaurar copia de seguridad" << endl;
-			Archivo_bkp Backup;
-			Backup.RestaurarCopiaDeSeguridad();
-			cout << "Se restauro la copia de seguridad exitosamente..." << endl;
-			system("pause");
+            system("cls");
+            cout << "6- Restaurar copia de seguridad" << endl;
+            Archivo_bkp Backup;
+            Backup.RestaurarCopiaDeSeguridad();
+            cout << "Se restauro la copia de seguridad exitosamente..." << endl;
+            system("pause");
         }
         break;
         }
@@ -677,12 +728,12 @@ void Menu::menu_clientes()
                 else if (desicion == 'n' || desicion == 'N')
                 {
                     return;
-				}
+                }
                 else
                 {
-					cout << "Opcion incorrecta" << endl << endl;
-					system("pause");
-				}
+                    cout << "Opcion incorrecta" << endl << endl;
+                    system("pause");
+                }
                 system("pause");
 
             }
@@ -714,22 +765,22 @@ void Menu::menu_clientes()
         case 3:
         {
             system("cls");
-			cout << "Modificar cliente" << endl;
-			Archivo_Cliente ac;
-			int cant = ac.cantidad_clientes();
-			int cantActiva = ac.get_cantidad_Activa(cant);
+            cout << "Modificar cliente" << endl;
+            Archivo_Cliente ac;
+            int cant = ac.cantidad_clientes();
+            int cantActiva = ac.get_cantidad_Activa(cant);
             if (cantActiva == 0)
             {
-				cout << "No se encuentran guardados clientes Activos" << endl << endl;
-				system("pause");
-			}
+                cout << "No se encuentran guardados clientes Activos" << endl << endl;
+                system("pause");
+            }
             else
             {
-				ac.modificar_cliente();
+                ac.modificar_cliente();
                 system("cls");
                 cout << "Se modifico el cliente exitosamente..." << endl;
                 system("pause");
-			}
+            }
         }
         break;
         case 4:
@@ -741,7 +792,7 @@ void Menu::menu_clientes()
             system("pause");
             system("cls");
             cout << "Se elimino el cliente exitosamente..." << endl;
-            system("pause");           
+            system("pause");
         }
         break;
         }

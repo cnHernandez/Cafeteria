@@ -114,12 +114,12 @@ void Venta::cargar()
 	Cliente cliente;
 	Archivo_Venta venta;
 	int cantClientes = archivoCliente.cantidad_clientes();
-	int cantven=venta.cantidad_ventas();
+	int cantven = venta.cantidad_ventas();
 	int cantProd = archivoProducto.cantidad_de_registros();
 	int idProducto, idCliente, idVendedor;
 	int cantidad;
 	float precio;
-	float total=0;
+	float total = 0;
 	float totalFinal = 0;
 	float aumento;
 	float descuento;
@@ -132,10 +132,10 @@ void Venta::cargar()
 	std::cout << "* Ingrese la fecha" << std::endl;
 	fecha.Cargar();
 	std::cout << "-------------------------------------------------------------" << endl;
-	cout <<"1- JUAN     " << endl;
-	cout <<"2- PEDRO    "<<endl;
-	cout <<"3- ROMINA   "<<endl;
-	cout <<"4- CARLA    "<<endl;
+	cout << "1- JUAN     " << endl;
+	cout << "2- PEDRO    " << endl;
+	cout << "3- ROMINA   " << endl;
+	cout << "4- CARLA    " << endl;
 
 	std::cout << "* Ingrese el ID del vendedor que lo asistio: ";
 	std::cin >> idVendedor;
@@ -147,7 +147,7 @@ void Venta::cargar()
 		std::cin >> idVendedor;
 	}
 
-	while (archivoCliente.cantidad_clientes() == 0 )
+	while (archivoCliente.cantidad_clientes() == 0)
 	{
 		string desicion;
 		std::cout << "No hay clientes cargados" << std::endl;
@@ -159,7 +159,9 @@ void Venta::cargar()
 			archivoCliente.guardar(cliente);
 		}
 		else if (desicion == "N" || desicion == "n")
-		{ return; }
+		{
+			return;
+		}
 		else
 		{
 			std::cout << "Opcion incorrecta" << std::endl;
@@ -177,35 +179,51 @@ void Venta::cargar()
 		std::cin >> idCliente;
 	}
 	cliente = archivoCliente.leer_clientes(idCliente - 1);
-	
+
 	archivoProducto.listar(cantProd);
 	std::cout << "* Ingrese el ID del producto que desea comprar: ";
 	std::cin >> idProducto;
 	while (!archivoProducto.Existe(idProducto))
 	{
 		std::cout << "El ID ingresado no existe" << std::endl;
-		std::cout << "* Ingrese el ID del producto que desea comprar: " ;
+		std::cout << "* Ingrese el ID del producto que desea comprar: ";
 		std::cin >> idProducto;
 	}
-	producto = archivoProducto.leer_de_disco(idProducto - 1);
-	
+	int pos = archivoProducto.PosicionEnDisco(idProducto);
+	producto = archivoProducto.leer_de_disco(pos);
+
 	std::cout << "* Ingrese la cantidad que desea comprar: ";
 	std::cin >> cantidad;
 	if (cantidad < 0)
 	{
-		cout<<"ingrese una cantidad valida"<<endl;
+		cout << "ingrese una cantidad valida" << endl;
 		std::cout << "* Ingrese la cantidad que desea comprar: ";
 		std::cin >> cantidad;
 	}
-	if (cantidad > producto.getStock())
-	{
-		cout<<"no hay stock suficiente"<<endl;
+
+	if (producto.getStock() == 0) {
+		cout << "* No hay stock suficiente" << endl;
+		std::cout << "* Quiere ingresar un ID de un producto nuevo?: ";
+		std::cin >> idProducto;
 		std::cout << "* Ingrese la cantidad que desea comprar: ";
 		std::cin >> cantidad;
+		pos = archivoProducto.PosicionEnDisco(idProducto);
+		producto = archivoProducto.leer_de_disco(pos);
+		if (cantidad > producto.getStock()) {
+			cout << "ingrese una cantidad valida: ";
+			std::cin >> cantidad;
+			if (cantidad > producto.getStock() || producto.getStock() == 0 || !archivoProducto.Existe(idProducto)) {
+				system("cls");
+				cout << "COMPRA CANCELADA POR FALTA DE STOCK" << endl;
+				exit(-1);
+			}
+		}
 	}
+		producto = archivoProducto.leer_de_disco(pos);
+		
 	producto.setStock(producto.getStock() - cantidad);
 	
-	archivoProducto.guardar(producto, idProducto - 1);
+	archivoProducto.guardar(producto, pos);
 	precio = producto.getPrecio();
 	total = precio * cantidad;
 	
@@ -254,23 +272,6 @@ void Venta::cargar()
 			ganancia = totalFinal - producto.getPrecioCompra() * cantidad;
 		
 		}
-		if (producto.getStock() < 5)
-		{
-			string desicion;
-			cout << "quedan menos de 5 unidades" << endl;
-			cout << "¿desea agregar mas unidades del producto al stock? (S/N) " << endl;
-			std::cin >> desicion;
-			if (desicion == "S" || desicion == "s")
-			{
-				producto.AgregarStock();
-			}
-			else if (desicion == "N" || desicion == "n")
-			{
-				return;
-			}
-		}
-		
-	;
 	setGanancia(ganancia);
 	setEntrega(tipoEntrega);
 	setIdVendedor(idVendedor);
@@ -282,21 +283,6 @@ void Venta::cargar()
 	setTotal(totalFinal);
 	cout << "Se cargo la venta exitosamente..." << endl;
 	cout << "-------------------------------------------------------------" << endl << endl;
-	if (producto.getStock() < 5)
-	{
-		string desicion;
-		cout << "quedan menos de 5 unidades del producto seleccionado" << endl;
-		cout << "¿desea agregar mas unidades al stock? (S/N) " << endl;
-		std::cin >> desicion;
-		if (desicion == "S" || desicion == "s")
-		{
-			producto.AgregarStock();
-		}
-		else if (desicion == "N" || desicion == "n")
-		{
-			return;
-		}
-	}
 	}
 
 

@@ -28,14 +28,13 @@ public:
     void setEstado(bool nEstado);
     float getPrecioCompra();
     int getStock();
-    void AgregarStock();
+    void AgregarStock(int can);
     void RestarStock(int cantidad);
     std::string getNombre();
     int getId_Categoria();
     float getPrecio();
     int getId_Producto();
     bool getEstado();
-
     bool Cargar();
     void CargarCategoria();
     void Mostrar();
