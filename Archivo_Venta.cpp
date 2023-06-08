@@ -14,7 +14,7 @@ bool Archivo_Venta::guardarEnDisco(int cantidad_ventas)
 {
 	bool guardo;
 	FILE *p;
-	p = fopen("Ventas.dat", "ab");
+	p = fopen("Ventas.dat", "wb");
 	if (p == NULL)
 	{
 		std::cout << "Error al abrir el archivo" << endl;
