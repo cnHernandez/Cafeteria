@@ -1,5 +1,6 @@
 #pragma once
-class Vendedor
+#include "Persona.h"
+class Vendedor: public Persona
 {
 	private:
 	int id_vendedor;
