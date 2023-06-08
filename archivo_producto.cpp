@@ -173,16 +173,27 @@ int archivo_producto::modificar()
     std::cout << "Ingrese de ID del producto que desea modificar: ";
     std::cin >> op;
     system("cls");
-    cout << "Categorias existentes: " << endl;
     producto = leer_de_disco(op - 1);
 
-    while (op<0 || op>cant || producto.getEstado() == false)
+    while (op<0 || producto.getEstado() == false)
     {
         std::cout << "ingrese una opcion correcta: ";
         std::cin >> op;
     }
     if (op != 0)
     {
+        int encontrado = 0;
+        int posicion = 0;
+
+        for (int i = 0; i < cant; i++) {
+            producto = leer_de_disco(i);
+
+            if (producto.getId_Producto() == op && producto.getEstado()) {
+                encontrado = 1;
+                posicion = i;
+                break;
+            }
+        }
         producto.Cargar();
         char op2;
         std::cout << "esta seguro de que desea modificar al producto?" << std::endl;
@@ -190,10 +201,10 @@ int archivo_producto::modificar()
         std::cin >> op2;
         if (op2 == 's' || op2 == 'S')
         {
-            guardar(producto, op - 1);
+            guardar(producto, posicion);
         }
+        return posicion;
     }
-    return op;
 }
 void archivo_producto::obtener_productos(Producto* prod, int cantidad)
 {
@@ -340,4 +351,74 @@ bool archivo_producto::guardarVec(Producto * prod, int cantidadRegistrosAEscribi
     int cantidadRegistrosEscritos = fwrite(prod, sizeof(Producto), cantidadRegistrosAEscribir, p);
     fclose(p);
     return cantidadRegistrosEscritos == cantidadRegistrosAEscribir;
+}
+
+void archivo_producto::Stock(int id)
+{
+    Producto producto;
+    int cant = cantidad_de_registros();
+    listar(cant);
+    system("cls");
+    producto = leer_de_disco(id - 1);
+
+    while (id<0 || producto.getEstado() == false)
+    {
+        std::cout << "ingrese una opcion correcta: ";
+        std::cin >> id;
+    }
+    if (id != 0)
+    {
+        int encontrado = 0;
+        int posicion = 0;
+
+        for (int i = 0; i < cant; i++) {
+            producto = leer_de_disco(i);
+
+            if (producto.getId_Producto() == id && producto.getEstado()) {
+                encontrado = 1;
+                posicion = i;
+                break;
+            }
+        }
+        int st;
+        cout << "INGRESE CANTIDAD DE STOCK: ";
+        cin >> st;
+        producto.AgregarStock(st);
+        char op2;
+        std::cout << "esta seguro de que desea modificar al producto?" << std::endl;
+        std::cout << "[S/N]: ";
+        std::cin >> op2;
+        if (op2 == 's' || op2 == 'S')
+        {
+            guardar(producto, posicion);
+        }
+        system("pause");
+        system("cls");
+        cout << "PRODUCTO CON EL STOCK NUEVO" << endl;
+        std::cout << "----------------------------------------------" << endl;
+        producto.Mostrar();
+        std::cout << "----------------------------------------------" << endl;
+        system("pause");
+    }
+
+}
+
+int archivo_producto::PosicionEnDisco(int id)
+{
+    Producto producto;
+    int cant = cantidad_de_registros();
+    int encontrado = 0;
+    int posicion = 0;
+
+    for (int i = 0; i < cant; i++) {
+        producto = leer_de_disco(i);
+
+        if (producto.getId_Producto() == id && producto.getEstado()) {
+            encontrado = 1;
+            posicion = i;
+            return posicion;
+        }
+    }
+
+    return -1;
 }
