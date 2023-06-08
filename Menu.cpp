@@ -471,11 +471,7 @@ void Menu::menu_ventas()
                 cout << "4- Recaudacion anual por vendedor" << endl;
                 cout << "5- Recaudacion anual por Productos" << endl;
                 cout << "6- Recaudacion anual por Categorias" << endl;
-<<<<<<< HEAD
-                cout << "7- Ganancia neta mensual por año" << endl;
-=======
                 cout << "7- Ganancia neta mensual por anio" << endl;
->>>>>>> 265105449b33a252895b56161a28b37d6f486fd7
                 cout << "-----------------------" << endl;
                 cout << "0- volver" << endl;
                 cout << "-----------------------" << endl;

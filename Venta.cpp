@@ -223,11 +223,7 @@ void Venta::cargar()
 		
 	producto.setStock(producto.getStock() - cantidad);
 	
-<<<<<<< HEAD
-	archivoProducto.guardar(producto, idProducto - 1);
-=======
 	archivoProducto.guardar(producto, pos);
->>>>>>> 265105449b33a252895b56161a28b37d6f486fd7
 	precio = producto.getPrecio();
 	total = precio * cantidad;
 	
@@ -276,26 +272,6 @@ void Venta::cargar()
 			ganancia = totalFinal - producto.getPrecioCompra() * cantidad;
 		
 		}
-<<<<<<< HEAD
-		if (producto.getStock() < 5)
-		{
-			string desicion;
-			cout << "quedan menos de 5 unidades" << endl;
-			cout << "¿desea agregar mas unidades del producto al stock? (S/N) " << endl;
-			std::cin >> desicion;
-			if (desicion == "S" || desicion == "s")
-			{
-				producto.AgregarStock();
-			}
-			else if (desicion == "N" || desicion == "n")
-			{
-				return;
-			}
-		}
-		
-	;
-=======
->>>>>>> 265105449b33a252895b56161a28b37d6f486fd7
 	setGanancia(ganancia);
 	setEntrega(tipoEntrega);
 	setIdVendedor(idVendedor);
@@ -307,21 +283,6 @@ void Venta::cargar()
 	setTotal(totalFinal);
 	cout << "Se cargo la venta exitosamente..." << endl;
 	cout << "-------------------------------------------------------------" << endl << endl;
-	if (producto.getStock() < 5)
-	{
-		string desicion;
-		cout << "quedan menos de 5 unidades del producto seleccionado" << endl;
-		cout << "¿desea agregar mas unidades al stock? (S/N) " << endl;
-		std::cin >> desicion;
-		if (desicion == "S" || desicion == "s")
-		{
-			producto.AgregarStock();
-		}
-		else if (desicion == "N" || desicion == "n")
-		{
-			return;
-		}
-	}
 	}
 
 
