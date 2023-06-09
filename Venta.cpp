@@ -8,7 +8,8 @@
 #include "Archivo_Venta.h"
 #include "Fecha.h"
 #include "Menu.h"
-#include <vector>
+#include "Vendedor.h"
+#include "Archivo_Vendedor.h"
 using namespace std;
 
 
@@ -288,19 +289,27 @@ void Venta::cargar()
 
 void Venta::mostrar()
 {
-		std::cout << "****************************************** " << std::endl;
-		std::cout << "Fecha: " << getFecha().toString() << std::endl;
-		std::cout << "ID de Vendedor: " << getIdVendedor() << std::endl;
-		std::cout << "ID de Cliente: " << getIdCliente().getId_Cliente() << std::endl;
-		std::cout << "ID de Venta: " << getId() << std::endl;
-		std::cout << "Cantidad: " << getCantidad() << std::endl;
-		std::cout << "Producto: " << getProducto().getNombre() << std::endl;
-		std::cout << "Precio: " << getPrecio() << std::endl;
-		std::cout << "Precio Compra: " << getProducto().getPrecioCompra() << std::endl;
-		std::cout << "Ganancia: " << getGanancia() << std::endl;
-		std::cout << "Total: " << getTotal() << std::endl;
-
-
+	Archivo_Vendedor vendedor;
+	Vendedor vende;
+	int cant = vendedor.Cantidad_vendedores();
+	for (int x = 0; x < cant; x++)
+	{
+		if (getIdVendedor() == vende.getId_Vendedor())
+		{
+			std::cout << "****************************************** " << std::endl;
+			std::cout << "Fecha: " << getFecha().toString() << std::endl;
+			std::cout << "ID de Vendedor: " << getIdVendedor() << "Nombre: " << vende.getNombre() << std::endl;
+			std::cout << "ID de Cliente: " << getIdCliente().getId_Cliente() << std::endl;
+			std::cout << "ID de Venta: " << getId() << std::endl;
+			std::cout << "Cantidad: " << getCantidad() << std::endl;
+			std::cout << "Producto: " << getProducto().getNombre() << std::endl;
+			std::cout << "Precio: " << getPrecio() << std::endl;
+			std::cout << "Precio Compra: " << getProducto().getPrecioCompra() << std::endl;
+			std::cout << "Ganancia: " << getGanancia() << std::endl;
+			std::cout << "Total: " << getTotal() << std::endl;
+		}
+	}
+/*
 	if (getIdVendedor() == 1)
 	{
 		std::cout <<"Nombre del vendedor : Juan" << std::endl;
@@ -317,7 +326,7 @@ void Venta::mostrar()
 	{
 		std::cout <<"Nombre del vendedor : Carla" << std::endl;
 	}
-
+	*/
 	if (getTipoPago() == 1)
 	{
 		std::cout << "Tipo de Pago: " << "EFECTIVO  5 % DESCUENTO" << std::endl;

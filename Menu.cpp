@@ -10,10 +10,12 @@
 #include "Archivo_Cliente.h"
 #include "Venta.h"
 #include "Archivo_Venta.h"
+#include "Archivo_Vendedor.h"
+#include "Vendedor.h"
 #include "Archivo_bkp.h"
 #include "rlutil.h"
 #include <iomanip>
-#include <vector>
+
 #include <iostream>
 
 using namespace std;
@@ -32,12 +34,13 @@ void Menu::menuPrincipal()
         cout << " 2- Categorias" << endl;
         cout << " 3- Ventas" << endl;
         cout << " 4- Clientes" << endl;
+        cout << " 5- Vendedores" << endl;
         cout << "-----------------" << endl;
         cout << " 0- SALIR" << endl;
         cout << "-----------------" << endl;
 
         cin >> op;
-        while (op < 0 || op>4)
+        while (op < 0 || op>5)
         {
             cout << "opcion incorrecta, vuelva a ingresar una opcion: ";
             cin >> op;
@@ -67,6 +70,11 @@ void Menu::menuPrincipal()
         case 4:
         {
             menu_clientes();
+        }
+        break;
+        case 5:
+        {
+            menu_vendedores();
         }
         break;
         }
@@ -793,6 +801,123 @@ void Menu::menu_clientes()
             cout << "Se elimino el cliente exitosamente..." << endl;
             system("pause");
         }
+        break;
+        }
+    }
+}
+
+void Menu::menu_vendedores()
+{
+    Archivo_Vendedor archivo;
+    Vendedor vendedor;
+    int op;
+    bool menu_activo = true;
+    while (menu_activo)
+    {
+        system("cls");
+        cout << "---Vendedores----" << endl << endl;
+        cout << " 1- Listar" << endl;
+        cout << " 2- Agregar" << endl;
+        cout << " 3- Modificar" << endl;
+        cout << " 4- Eliminar" << endl;
+        cout << "-----------------" << endl;
+        cout << " 0- SALIR" << endl;
+        cout << "-----------------" << endl;
+        cin >> op;
+        while (op < 0 || op>4)
+        {
+            cout << "opcion incorrecta, vuelva a ingresar una opcion" << endl;
+            cin >> op;
+        }
+        switch (op)
+        {
+        case 0:
+        {
+            menu_activo = false;
+        }
+        break;
+        case 1:
+        {
+    int cant = archivo.Cantidad_vendedores();
+    int cantActiva = archivo.Get_cantidad_Activa(cant);
+            system("cls");
+            cout << "Lista de Vendedores" << endl;
+            if (cantActiva == 0)
+            {
+                char desicion;
+                cout << "No se encuentran guardados vendedores Activos" << endl << endl;
+                cout << "¿Desea ingresar un vendedor nuevo? (S/N): ";
+                cin >> desicion;
+                if (desicion == 's' || desicion == 'S')
+                {
+                    vendedor.Cargar();
+                    archivo.Guardar(vendedor);
+                }
+                else if (desicion == 'n' || desicion == 'N')
+                {
+                    return;
+                }
+                else
+                {
+                    cout << "Opcion incorrecta" << endl << endl;
+                    system("pause");
+                }
+                system("pause");
+
+            }
+            else
+            {
+                archivo.Listar_Vendedor(cant);
+                cout << endl;
+                system("pause");
+            }
+        }break;
+        case 2:
+        {
+            system("cls");
+            cout << "Agregar Vendedor" << endl << endl;
+            vendedor.Cargar();
+            system("cls");
+            cout << "Se cargo el cliente exitosamente..." << endl << endl;
+            system("pause");
+            system("cls");
+            vendedor.Mostrar();
+            system("pause");
+            archivo.Guardar(vendedor);
+        }
+        break;
+        case 3:
+        {
+            int cant = archivo.Cantidad_vendedores();
+            int cantActiva = archivo.Get_cantidad_Activa(cant);
+            system("cls");
+            cout << "Modificar Vendedor" << endl;
+
+            if (cantActiva == 0)
+            {
+                cout << "No se encuentran guardados vendedores Activos" << endl << endl;
+                system("pause");
+            }
+            else
+            {
+                archivo.Modificar_Vendedor();
+                system("cls");
+                cout << "Se modifico el cliente exitosamente..." << endl;
+                system("pause");
+            }
+
+        }
+        break;
+        case 4:
+        {
+            system("cls");
+            cout << "Eliminar Vendedor" << endl;
+
+            archivo.Baja_Logica();
+            system("pause");
+            system("cls");
+            cout << "Se elimino el vendedor exitosamente..." << endl;
+            system("pause"); }
         break;
         }
     }

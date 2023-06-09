@@ -63,7 +63,7 @@ bool Persona::getEstado()
 {
 	return _estado;
 }
-
+/*
 void Persona::CargarPersona()
 {
 	_estado = true;
@@ -88,4 +88,4 @@ void Persona::MostrarPersona()
 	cout << "Edad: " << _edad << endl;
 	cout << "Direccion: " << _direccion << endl;
 	cout << "Telefono: " << _telefono << endl;
-}
+}*/

@@ -44,7 +44,16 @@ void Cliente::Cargar()
 {
 	cout << "-----------------------" << endl;
 	cout << "Cargue los datos del cliente " << id_cliente << endl;
-	CargarPersona();
+	cout << "Nombre: " << endl;
+	cin >> _nombre;
+	cout << "Apellido: " << endl;
+	cin >> _apellido;
+	cout << "Edad: " << endl;
+	cin >> _edad;
+	cout << "Direccion: " << endl;
+	cin >> _direccion;
+	cout << "Telefono: " << endl;
+	cin >> _telefono;
 	cout << "-----------------------" << endl;
 	
 }
@@ -53,7 +62,11 @@ void Cliente::Mostrar()
 {
 	cout << "-----------------------" << endl;
 	cout << "ID del cliente: " << id_cliente << endl;
-	MostrarPersona();
+	cout << "Nombre: " << getNombre() << endl;
+	cout << "Apellido: " << getApellido() << endl;
+	cout << "Edad: " << getEdad() << endl;
+	cout << "Direccion: " << getDireccion() << endl;
+	cout << "Telefono: " << getTelefono() << endl;
 	cout << "-----------------------" << endl << endl;
 	
 }

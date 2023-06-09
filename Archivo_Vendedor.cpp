@@ -114,7 +114,7 @@ void Archivo_Vendedor::Modificar_Vendedor() {
 		std::cout << "ingrese una opcion correcta: ";
 		std::cin >> op;
 	}
-	if (op != 0)
+	if (op > 0 && op < cant)
 	{
 		vendedor = Leer_vendedores(op - 1);
 		vendedor.Cargar();

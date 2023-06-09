@@ -20,8 +20,8 @@ protected:
 		void setDireccion(string);
 		void setTelefono(string);
 		void setEstado(bool);
-		void CargarPersona();
-		void MostrarPersona();
+		//void CargarPersona();
+		//void MostrarPersona();
 
 		string getNombre();
 		string getApellido();
