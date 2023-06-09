@@ -5,10 +5,8 @@
 
 int main()
 {
-   Menu menu;
+	Menu menu;
 	menu.menuPrincipal();
-	
-
 }
 
 

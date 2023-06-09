@@ -183,13 +183,12 @@ void Archivo_Cliente::baja_Logica() {
 bool Archivo_Cliente::ExisteCliente(int id)
 {
 	int cantidadNoActiva = cantidad_clientes();
-	int cantidadActiva = get_cantidad_Activa(cantidadNoActiva);
 	Cliente cliente;
 
-	for (int i = 0; i < cantidadActiva; i++)
+	for (int i = 0; i < cantidadNoActiva; i++)
 	{
 		cliente = leer_clientes(i);
-		if (cliente.getId_Cliente() == id)
+		if (cliente.getId_Cliente() == id && cliente.getEstado())
 		{
 			return true;
 		}

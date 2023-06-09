@@ -16,7 +16,7 @@ class Cliente: public Persona
 		bool getEstado();
 		int getId_Cliente();
 		
-		bool Cargar();
+		void Cargar();
 		void Mostrar();
 };
 

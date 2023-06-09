@@ -42,13 +42,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -137,6 +137,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="Archivo_Vendedor.cpp" />
     <ClCompile Include="Archivo_Venta.cpp" />
     <ClCompile Include="Cafeteria.cpp" />
     <ClCompile Include="Categoria.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="Archivo_Categoria.h" />
     <ClInclude Include="Archivo_Cliente.h" />
     <ClInclude Include="archivo_producto.h" />
+    <ClInclude Include="Archivo_Vendedor.h" />
     <ClInclude Include="Archivo_Venta.h" />
     <ClInclude Include="Categoria.h" />
     <ClInclude Include="Cliente.h" />

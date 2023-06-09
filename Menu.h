@@ -8,5 +8,6 @@ class Menu
 	void menu_categorias();
 	void menu_ventas();
 	void menu_clientes();
+	void menu_vendedores();
 };
 

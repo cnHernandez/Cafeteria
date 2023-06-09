@@ -4,16 +4,11 @@
 #include "Cliente.h"
 #include "Producto.h"
 #include "Fecha.h"
-#include <vector>
 
 using namespace std;
 class Venta
 {
 private:
-	//vector <Producto> productos;
-	int * cantidades;
-	//vector <Venta> ventas;
-	Producto * productos;
 	int id;
 	Producto producto;
 	int cantidad;
@@ -27,6 +22,7 @@ private:
 	int entrega;
 	float ganancia;
 public:
+	//sets
 	Venta();
 	void setGanancia(float);
 	void setIdCliente(Cliente);
@@ -40,6 +36,8 @@ public:
 	void setTipoPago(int);
 	void setIdVendedor(int);
 	void setEntrega(int);
+
+	//gets
 	float getGanancia();
 	int getEntrega();
 	int getId();
