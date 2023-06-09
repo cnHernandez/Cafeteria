@@ -6,9 +6,10 @@ class Vendedor: public Persona
 	int id_vendedor;
 	
 	public:
+		Vendedor();
 		void setId_Vendedor(int id_vendedor);
 		int getId_Vendedor();
-		bool Cargar();
+		void Cargar();
 		void Mostrar();
 };
 

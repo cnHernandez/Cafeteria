@@ -40,23 +40,20 @@ int Cliente::getId_Cliente()
 	return id_cliente;
 }
 
-bool Cliente::Cargar()
+void Cliente::Cargar()
 {
-	bool estado = false;
+	cout << "-----------------------" << endl;
+	cout << "Cargue los datos del cliente " << id_cliente << endl;
+	CargarPersona();
+	cout << "-----------------------" << endl;
 	
-	cout << "Ingrese el nombre del cliente: ";
-	cin.ignore();
-	cin.getline(_nombre, 50);
-	
-	
-	return estado;
 }
 
 void Cliente::Mostrar()
 {
 	cout << "-----------------------" << endl;
-	cout << "Id: " << id_cliente << endl;
-	cout << "Nombre: " << _nombre << endl;
+	cout << "ID del cliente: " << id_cliente << endl;
+	MostrarPersona();
 	cout << "-----------------------" << endl << endl;
 	
 }

@@ -6,11 +6,12 @@ using namespace std;
 class Persona
 {
 protected:
-	char nombre[30];
-	char apellido [50];
-	int edad;
-	char direccion[50];
-	char telefono[10];
+	char _nombre[30];
+	char _apellido [50];
+	int _edad;
+	char _direccion[50];
+	char _telefono[10];
+	bool _estado;
 	public:
 		
 		void setNombre(string );
@@ -18,10 +19,15 @@ protected:
 		void setEdad(int);
 		void setDireccion(string);
 		void setTelefono(string);
+		void setEstado(bool);
+		void CargarPersona();
+		void MostrarPersona();
+
 		string getNombre();
 		string getApellido();
 		int getEdad();
 		string getDireccion();
 		string getTelefono();		
+		bool getEstado();
 };
 

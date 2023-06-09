@@ -6,51 +6,86 @@ using namespace std;
 
 void Persona::setNombre(string nombre)
 {
-	strcpy(this->nombre, nombre.c_str());
+	strcpy(this->_nombre, nombre.c_str());
 }
 
 void Persona::setApellido(string apellido)
 {
-	strcpy(this->apellido, apellido.c_str());
+	strcpy(this->_apellido, apellido.c_str());
 }
 
 void Persona::setEdad(int edad)
 {
-	this->edad = edad;
+	this->_edad = edad;
 }
 
 void Persona::setDireccion(string direccion)
 {
-	strcpy(this->direccion, direccion.c_str());
+	strcpy(this->_direccion, direccion.c_str());
 }
 
 void Persona::setTelefono(string telefono)
 {
-	strcpy(this->telefono, telefono.c_str());
+	strcpy(this->_telefono, telefono.c_str());
+}
+
+void Persona::setEstado(bool estado)
+{
+	this->_estado = estado;
 }
 
 string Persona::getNombre()
 {
-	return nombre;
+	return _nombre;
 }
 
 string Persona::getApellido()
 {
-	return apellido;
+	return _apellido;
 }
 
 int Persona::getEdad()
 {
-	return edad;
+	return _edad;
 }
 
 string Persona::getDireccion()
 {
-	return direccion;
+	return _direccion;
 }
 
 string Persona::getTelefono()
 {
-	return telefono;
+	return _telefono;
 }
 
+bool Persona::getEstado()
+{
+	return _estado;
+}
+
+void Persona::CargarPersona()
+{
+	_estado = true;
+	cout << "Ingrese el nombre: ";
+	cin.ignore();
+	cin.getline(_nombre, 30);
+	cout << "Ingrese el apellido: ";
+	cin.getline(_apellido, 50);
+	cout << "Ingrese edad: ";
+	cin >> _edad;
+	cin.ignore();
+	cout << "Ingrese direccion: ";
+	cin.getline(_direccion, 50);
+	cout << "Ingrese telefono: ";
+	cin.getline(_telefono, 10);
+}
+
+void Persona::MostrarPersona()
+{
+	cout << "Nombre: " << _nombre << endl;
+	cout << "Apellido: " << _apellido << endl;
+	cout << "Edad: " << _edad << endl;
+	cout << "Direccion: " << _direccion << endl;
+	cout << "Telefono: " << _telefono << endl;
+}
