@@ -25,9 +25,9 @@ void Venta::setId(int id)
 	this->id = id;
 }
 
-void Venta::setIdCliente(Cliente cliente)
+void Venta::setIdCliente(int cliente)
 {
-	this->cliente = cliente;
+	this->idCliente = cliente;
 }
 
 void Venta::setProducto(int producto)
@@ -276,7 +276,7 @@ void Venta::cargar()
 	setEntrega(tipoEntrega);
 	setIdVendedor(idVendedor);
 	setTipoPago(tipoPago);
-	setIdCliente(cliente);
+	setIdCliente(idCliente);
 	setProducto(idProducto);
 	setCantidad(cantidad);
 	setPrecio(precio);
@@ -291,23 +291,30 @@ void Venta::mostrar()
 	Archivo_Vendedor vendedor;
 	Vendedor vende;
 	int cant = vendedor.Cantidad_vendedores();
-
+	Archivo_Cliente cliente;
+	Cliente cli;
+	int cantClientes = cliente.cantidad_clientes();
 	archivo_producto archivo;
 	Producto producto;
 	int cantProd = archivo.cantidad_de_registros();
-		 
-		
-			std::cout << "****************************************** " << std::endl;
-			std::cout << "Fecha: " << getFecha().toString() << std::endl;
-			for (int i = 0; i < cant; i++)
-			{
-					vende = vendedor.Leer_vendedores(i);
-				if (getIdVendedor() == vende.getId_Vendedor())
-				{
-					std::cout << "ID de Vendedor: " << getIdVendedor()<<"  "<< "Nombre: " << vende.getNombre() << std::endl;
-				}
-			}
-			std::cout << "ID de Cliente: " << getIdCliente().getId_Cliente() << std::endl;
+
+
+	std::cout << "****************************************** " << std::endl;
+	std::cout << "Fecha: " << getFecha().toString() << std::endl;
+	for (int i = 0; i < cant; i++)
+	{
+		vende = vendedor.Leer_vendedores(i);
+		if (getIdVendedor() == vende.getId_Vendedor())
+		{
+			std::cout << "ID de Vendedor: " << getIdVendedor() << "  " << "Nombre: " << vende.getNombre() << std::endl;
+		}
+	}
+	for (int i = 0; i < cantClientes; i++) 
+	{
+		cli = cliente.leer_clientes(i);
+		if(getIdCliente()==cli.getId_Cliente())
+	std::cout << "ID de Cliente: " << cli.getId_Cliente() << std::endl;
+     }
 			std::cout << "ID de Venta: " << getId() << std::endl;
 			std::cout << "Cantidad: " << getCantidad() << std::endl;
 			for (int i = 0; i < cant; i++)
@@ -344,9 +351,9 @@ void Venta::mostrar()
 	std::cout << "****************************************** " << std::endl;
 }
 
-Cliente Venta::getIdCliente()
+int Venta::getIdCliente()
 {
-	return cliente;
+	return idCliente;
 }
 void Venta::setEntrega(int tipoEntrega)
 {

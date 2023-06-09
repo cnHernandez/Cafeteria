@@ -149,6 +149,7 @@ void Archivo_Venta::listar_x_cliente()
 	int cant = cantidad_ventas();
 	
 	Archivo_Cliente Clientes;
+
 	int cantClientes = Clientes.cantidad_clientes();
 	Clientes.listar_clientes(cantClientes);
 	
@@ -174,7 +175,14 @@ void Archivo_Venta::listar_x_cliente()
 
 	}
 	std::system("cls");
-
+	for (int i = 0; i < cantClientes; i++)
+	{
+		cliente = Clientes.leer_clientes(i);
+		if (idCliente == cliente.getId_Cliente())
+		{
+			std::cout << "Productos con ID# de Cliente: " << idCliente << "  " << "NOMBRE: " << cliente.getNombre() << endl;
+		}
+	}
 	std::cout << "Productos con ID# de Cliente: " << idCliente << endl << endl;
 	while (idCliente<0 || idCliente>cantClientes)
 	{
@@ -183,15 +191,18 @@ void Archivo_Venta::listar_x_cliente()
 		cin >> idCliente;
 		cliente = Clientes.leer_clientes(idCliente - 1);
 	}
-	
-	for (int i = 0; i < cant; i++)
+	for (int j = 0; j < cantClientes; j++)
 	{
 
-		if (idCliente == ventas[i].getIdCliente().getId_Cliente() && ventas[i].getEstado())
+		for (int i = 0; i < cant; i++)
 		{
-			ventas[i].mostrar();
-		}
 
+			if (idCliente == ventas[i].getIdCliente() && ventas[i].getEstado() && ventas[i].getIdCliente())
+			{
+				ventas[i].mostrar();
+			}
+
+		}
 	}
 	std::cout << endl;
 

@@ -16,7 +16,7 @@ private:
 	float total;
 	bool estado;
 	Fecha fecha;
-	Cliente cliente;
+	int idCliente;
 	int tipoPago;
 	int idVendedor;
 	int entrega;
@@ -25,7 +25,7 @@ public:
 	//sets
 	Venta();
 	void setGanancia(float);
-	void setIdCliente(Cliente);
+	void setIdCliente(int id);
 	void setId(int);
 	void setProducto(int );
 	void setCantidad(int);
@@ -41,7 +41,7 @@ public:
 	float getGanancia();
 	int getEntrega();
 	int getId();
-	Cliente getIdCliente();
+	int getIdCliente();
 	int getProducto();
 	int getCantidad();
 	float getPrecio();
