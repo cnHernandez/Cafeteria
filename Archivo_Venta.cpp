@@ -3,6 +3,8 @@
 #include "Archivo_Categoria.h"
 #include "Archivo_Producto.h"
 #include "Archivo_Cliente.h"
+#include "archivo_Vendedor.h"
+#include "Vendedor.h"
 #include "Cliente.h"
 #include <iostream>
 #include <string>
@@ -408,7 +410,7 @@ void Archivo_Venta::listar_x_producto()
 	}
 	for (int i = 0; i < cant; i++)
 	{
-		if (idProducto == ventas[i].getProducto().getId_Producto() && ventas[i].getEstado())
+		if (idProducto == ventas[i].getProducto() && ventas[i].getEstado())
 		{
 			cout << "-----------------" << endl;
 			ventas[i].mostrar();
@@ -436,11 +438,16 @@ bool Archivo_Venta::guardar_modificado(Venta venta, int pos)
 
 void Archivo_Venta::recaudacion_x_vendedor()
 {
+	Archivo_Vendedor archivo;
 	int cant = cantidad_ventas();
 	Venta* ventas = new Venta[cant];
 	obtener_venta(ventas, cant);
-	int anio;
+
+	int cantVendedor = archivo.Cantidad_vendedores();
+	Vendedor* vendedores = new Vendedor[cantVendedor];
+	archivo.obtener_vendedor(vendedores, cantVendedor);
 	std::cout << "ingrese el anio a listar" << endl;
+	int anio;
 	cin >> anio;
 	while (anio < 2016)
 	{
@@ -449,13 +456,9 @@ void Archivo_Venta::recaudacion_x_vendedor()
 		cin >> anio;
 	}
 	std::cout << "ingrese el ID del Vendedor " << endl;
-	std::cout << "1 - Juan " << endl;
-	std::cout << "2 - Pedro " << endl;
-	std::cout << "3 - Romina " << endl;
-	std::cout << "4 - Carla " << endl;
 	int id;
 	cin >> id;
-	while (id < 0 || id > 4)
+	while (id < 0 || id > cantVendedor)
 	{
 		std::cout << "ID invalido" << endl;
 		std::cout << "ingrese el ID del Vendedor: ";
@@ -522,12 +525,14 @@ void Archivo_Venta::recaudacion_x_vendedor()
 	}
 
 	system("cls");
-	if (id == 1) {std::cout <<"RECAUDACION ANUAL DE JUAN EN EL ANIO : " << anio << endl;
-	}else if(id == 2){ std::cout << "RECAUDACION ANUAL DE PEDRO EN EL ANIO: " << anio << endl; }
-	else if(id == 3){ std::cout << "RECAUDACION ANUAL DE ROMINA EN EL ANIO: " << anio << endl; }
-	else if(id == 4){std::cout << "RECAUDACION ANUAL DE CARLA EN EL ANIO: " << anio << endl; }
-
-	cout << "---------------------------------------" << endl;
+	for (int i = 0; i < cantVendedor; i++)
+	{
+		if (id == vendedores[i].getId_Vendedor())
+		{
+			std::cout << "RECAUDACION ANUAL DE : " << vendedores[i].getNombre() <<"  " << "EN EL ANIO : " << anio << endl;
+			cout << "---------------------------------------" << endl;
+		}
+	}
 	
 	for (int i = 0; i < 12; i++)
 	{
@@ -580,11 +585,11 @@ void Archivo_Venta::recaudacion_x_producto()
 	{
 		for (int j = 0; j < cant; j++)
 		{
-			if (productos[i].getId_Producto() == ventas[j].getProducto().getId_Producto() && anio == ventas[j].getFecha().getAnio() && ventas[j].getEstado() == true)
+			if (productos[i].getId_Producto() == ventas[j].getProducto() && anio == ventas[j].getFecha().getAnio() && ventas[j].getEstado() == true)
 					
 					{
 						total += ventas[j].getTotal();
-						nombreProd = ventas[j].getProducto().getNombre();
+						nombreProd = productos[i].getNombre();
 					}		
 		
 		}
@@ -608,7 +613,11 @@ void Archivo_Venta::recaudacion_x_producto()
 void Archivo_Venta::recaudacion_x_categoria()
 {
 	Archivo_Categoria archiCat;
+	archivo_producto archivoProd;
+	int cantProd = archivoProd.cantidad_de_registros();
 	int cant = cantidad_ventas();
+	Producto* productos = new Producto[cantProd];
+	archivoProd.obtener_productos(productos,cantProd);
 	Venta* ventas = new Venta[cant];
 	obtener_venta(ventas, cant);
 	int cantCat = archiCat.cantidad_categorias();
@@ -631,15 +640,19 @@ void Archivo_Venta::recaudacion_x_categoria()
 	for (int i = 0; i < cantCat; i++)
 	{
 	float total = 0;
-		for (int j = 0; j < cant; j++)
+		for (int j = 0; j < cantProd; j++)
 		{
-			if (categorias[i].get_id() == ventas[j].getProducto().getId_Categoria() && anio == ventas[j].getFecha().getAnio() && ventas[j].getEstado())
+			for (int x = 0; x < cant; x++)
 			{
-				total += ventas[j].getTotal();
-			}
-			if (categorias[i].get_id() == ventas[j].getProducto().getId_Categoria())
-			{
-				nombre= categorias[i].getNombre();
+				if (productos[j].getId_Producto() == ventas[x].getProducto() && anio == ventas[x].getFecha().getAnio() && ventas[x].getEstado())
+				{
+					if (categorias[i].get_id() == productos[j].getId_Categoria())
+					{
+						nombre = categorias[i].getNombre();
+						total += ventas[x].getTotal();
+					}
+				
+				}
 			}
 		}
 		if (nombre == categorias[i].getNombre())

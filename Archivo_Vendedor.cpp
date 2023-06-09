@@ -197,3 +197,15 @@ bool Archivo_Vendedor::ExisteVendedor(int id)
 	}
 	return false;
 }
+
+void Archivo_Vendedor::obtener_vendedor(Vendedor* vendedor, int cant)
+{
+	FILE* p;
+	p = fopen("Vendedores.dat", "rb");
+	if (p == NULL)
+	{
+		std::cout << "Error al abrir el archivo" << endl;
+	}
+	fread(vendedor, sizeof(Vendedor), cant, p);
+	fclose(p);
+}

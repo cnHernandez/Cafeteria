@@ -30,9 +30,9 @@ void Venta::setIdCliente(Cliente cliente)
 	this->cliente = cliente;
 }
 
-void Venta::setProducto(Producto producto)
+void Venta::setProducto(int producto)
 {
-	this->producto = producto;
+	this->id_producto = producto;
 }
 
 void Venta::setCantidad(int cantidad)
@@ -80,9 +80,9 @@ int Venta::getId()
 	return id;
 }
 
-Producto Venta::getProducto()
+int Venta::getProducto()
 {
-	return producto;
+	return id_producto;
 }
 
 int Venta::getCantidad()
@@ -114,10 +114,13 @@ void Venta::cargar()
 	Archivo_Cliente archivoCliente;
 	Cliente cliente;
 	Archivo_Venta venta;
+	Archivo_Vendedor archivoVendedor;
+	Vendedor vend;
 	int cantClientes = archivoCliente.cantidad_clientes();
 	int cantven = venta.cantidad_ventas();
 	int cantProd = archivoProducto.cantidad_de_registros();
 	int idProducto, idCliente, idVendedor;
+	int cantVendedores = archivoVendedor.Cantidad_vendedores();
 	int cantidad;
 	float precio;
 	float total = 0;
@@ -133,15 +136,11 @@ void Venta::cargar()
 	std::cout << "* Ingrese la fecha" << std::endl;
 	fecha.Cargar();
 	std::cout << "-------------------------------------------------------------" << endl;
-	cout << "1- JUAN     " << endl;
-	cout << "2- PEDRO    " << endl;
-	cout << "3- ROMINA   " << endl;
-	cout << "4- CARLA    " << endl;
 
+	archivoVendedor.Listar_Vendedor(cantVendedores);
 	std::cout << "* Ingrese el ID del vendedor que lo asistio: ";
 	std::cin >> idVendedor;
-
-	while (idVendedor <= 0 || idVendedor > 4)
+	while (idVendedor <= 0 || idVendedor > cantVendedores)
 	{
 		std::cout << "El ID ingresado no existe" << std::endl;
 		std::cout << "* Ingrese el ID del vendedor que lo asistio: ";
@@ -278,7 +277,7 @@ void Venta::cargar()
 	setIdVendedor(idVendedor);
 	setTipoPago(tipoPago);
 	setIdCliente(cliente);
-	setProducto(producto);
+	setProducto(idProducto);
 	setCantidad(cantidad);
 	setPrecio(precio);
 	setTotal(totalFinal);
@@ -292,41 +291,39 @@ void Venta::mostrar()
 	Archivo_Vendedor vendedor;
 	Vendedor vende;
 	int cant = vendedor.Cantidad_vendedores();
-	for (int x = 0; x < cant; x++)
-	{
-		if (getIdVendedor() == vende.getId_Vendedor())
-		{
+
+	archivo_producto archivo;
+	Producto producto;
+	int cantProd = archivo.cantidad_de_registros();
+		 
+		
 			std::cout << "****************************************** " << std::endl;
 			std::cout << "Fecha: " << getFecha().toString() << std::endl;
-			std::cout << "ID de Vendedor: " << getIdVendedor() << "Nombre: " << vende.getNombre() << std::endl;
+			for (int i = 0; i < cant; i++)
+			{
+					vende = vendedor.Leer_vendedores(i);
+				if (getIdVendedor() == vende.getId_Vendedor())
+				{
+					std::cout << "ID de Vendedor: " << getIdVendedor()<<"  "<< "Nombre: " << vende.getNombre() << std::endl;
+				}
+			}
 			std::cout << "ID de Cliente: " << getIdCliente().getId_Cliente() << std::endl;
 			std::cout << "ID de Venta: " << getId() << std::endl;
 			std::cout << "Cantidad: " << getCantidad() << std::endl;
-			std::cout << "Producto: " << getProducto().getNombre() << std::endl;
-			std::cout << "Precio: " << getPrecio() << std::endl;
-			std::cout << "Precio Compra: " << getProducto().getPrecioCompra() << std::endl;
+			for (int i = 0; i < cant; i++)
+			{
+				producto = archivo.leer_de_disco(i);
+				if (getProducto() == producto.getId_Producto())
+				{
+					std::cout << "Producto: " << producto.getNombre() << std::endl;
+					std::cout << "Precio Compra: " << producto.getPrecioCompra() << std::endl;
+				}
+			}
+			std::cout << "Precio Venta: " << getPrecio() << std::endl;
 			std::cout << "Ganancia: " << getGanancia() << std::endl;
 			std::cout << "Total: " << getTotal() << std::endl;
-		}
-	}
-/*
-	if (getIdVendedor() == 1)
-	{
-		std::cout <<"Nombre del vendedor : Juan" << std::endl;
-	}
-	if (getIdVendedor() == 2)
-	{
-		std::cout << "Nombre del vendedor : Pedro" << std::endl;
-	}
-	if (getIdVendedor() == 3)
-	{
-		std::cout << "Nombre del vendedor : Romina" << std::endl;
-	}
-	if (getIdVendedor() == 4)
-	{
-		std::cout <<"Nombre del vendedor : Carla" << std::endl;
-	}
-	*/
+		
+	
 	if (getTipoPago() == 1)
 	{
 		std::cout << "Tipo de Pago: " << "EFECTIVO  5 % DESCUENTO" << std::endl;

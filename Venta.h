@@ -10,7 +10,7 @@ class Venta
 {
 private:
 	int id;
-	Producto producto;
+	int id_producto;
 	int cantidad;
 	float precio;
 	float total;
@@ -27,7 +27,7 @@ public:
 	void setGanancia(float);
 	void setIdCliente(Cliente);
 	void setId(int);
-	void setProducto(Producto);
+	void setProducto(int );
 	void setCantidad(int);
 	void setPrecio(float);
 	void setTotal(float);
@@ -42,7 +42,7 @@ public:
 	int getEntrega();
 	int getId();
 	Cliente getIdCliente();
-	Producto getProducto();
+	int getProducto();
 	int getCantidad();
 	float getPrecio();
 	float getTotal();

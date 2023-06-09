@@ -13,5 +13,6 @@ public:
 	void Modificar_Vendedor();
 	void Baja_Logica();
 	bool ExisteVendedor(int id);
+	void obtener_vendedor(Vendedor* vendedor, int cant);
 };
 
