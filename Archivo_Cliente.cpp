@@ -45,7 +45,6 @@ int Archivo_Cliente::cantidad_clientes() {
 	{
 		return 0;
 	}
-
 	fseek(pFile, 0, SEEK_END);
 	cantidad = ftell(pFile) / sizeof(Cliente);
 
@@ -125,6 +124,12 @@ void Archivo_Cliente::modificar_cliente() {
 		if (op2 == 's' || op2 == 'S')
 		{
 			Guardar_Modificado(cliente, op -1);
+			system("cls");
+			cout << "Se modifico el cliente exitosamente..." << endl;
+		}
+		else if (op2 == 'n' || op2 == 'N') {
+			system("cls");
+			cout << "No se pudo modificar..." << endl;
 		}
 	}
 }
@@ -145,7 +150,7 @@ bool Archivo_Cliente::Guardar_Modificado(Cliente cliente, int pos)
 	return true;
 }
 
-void Archivo_Cliente::baja_Logica() {
+void Archivo_Cliente::baja_Logica(){
 	int op;
 	Cliente cliente;
 	int cant = cantidad_clientes();
@@ -154,19 +159,13 @@ void Archivo_Cliente::baja_Logica() {
 	std::cout << "Ingrese de ID del cliente que desea eliminar: ";
 	std::cin >> op;
 
-	while (op<0 || op>cant)
-	{
-		std::cout << "ingrese una opcion correcta: ";
-		std::cin >> op;
-	}
 	cliente = leer_clientes(op - 1);
-	if (cliente.getEstado() == false)
+	while (op<0 || !ExisteCliente(op) || !cliente.getEstado())
 	{
 		std::cout << "ingrese una opcion correcta: ";
 		std::cin >> op;
+		cliente = leer_clientes(op - 1);
 	}
-	else {
-
 		char op2;
 		std::cout << "esta seguro de que desea eliminar el cliente?" << std::endl;
 		std::cout << "[S/N]: ";
@@ -176,8 +175,13 @@ void Archivo_Cliente::baja_Logica() {
 
 			cliente.setEstado(false);
 			Guardar_Modificado(cliente, op -1);
+			system("cls");
+			cout << "Se elimino el cliente exitosamente..." << endl;
 		}
-	}
+		else {
+			system("cls");
+			cout << "No se elimino el cliente..." << endl;
+		}
 }
 
 bool Archivo_Cliente::ExisteCliente(int id)

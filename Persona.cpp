@@ -63,10 +63,9 @@ bool Persona::getEstado()
 {
 	return _estado;
 }
-/*
+
 void Persona::CargarPersona()
 {
-	_estado = true;
 	cout << "Ingrese el nombre: ";
 	cin.ignore();
 	cin.getline(_nombre, 30);
@@ -85,7 +84,7 @@ void Persona::MostrarPersona()
 {
 	cout << "Nombre: " << _nombre << endl;
 	cout << "Apellido: " << _apellido << endl;
-	cout << "Edad: " << _edad << endl;
 	cout << "Direccion: " << _direccion << endl;
+	cout << "Edad: " << _edad << endl;
 	cout << "Telefono: " << _telefono << endl;
-}*/
+}

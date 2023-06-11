@@ -164,7 +164,7 @@ void archivo_producto::baja_Logica(int id)
     }
 }
 
-int archivo_producto::modificar()
+void archivo_producto::modificar()
 {
     int op;
     Producto producto;
@@ -172,28 +172,14 @@ int archivo_producto::modificar()
     listar(cant);
     std::cout << "Ingrese de ID del producto que desea modificar: ";
     std::cin >> op;
-    system("cls");
     producto = leer_de_disco(op - 1);
 
-    while (op<0 || producto.getEstado() == false)
+    while (op<=0 || !Existe(op))
     {
         std::cout << "ingrese una opcion correcta: ";
         std::cin >> op;
     }
-    if (op != 0)
-    {
-        int encontrado = 0;
-        int posicion = 0;
-
-        for (int i = 0; i < cant; i++) {
-            producto = leer_de_disco(i);
-
-            if (producto.getId_Producto() == op && producto.getEstado()) {
-                encontrado = 1;
-                posicion = i;
-                break;
-            }
-        }
+        producto = leer_de_disco(op - 1);
         producto.Cargar();
         char op2;
         std::cout << "esta seguro de que desea modificar al producto?" << std::endl;
@@ -201,11 +187,16 @@ int archivo_producto::modificar()
         std::cin >> op2;
         if (op2 == 's' || op2 == 'S')
         {
-            guardar(producto, posicion);
+            guardar(producto, op -1);
+            system("cls");
+            cout << "Se modifico el producto exitosamente..." << endl;
         }
-        return posicion;
-    }
+        else if (op2 == 'n' || op2 == 'N') {
+            cout << "No se pudo modificar..." << endl;
+        
+        }
 }
+
 void archivo_producto::obtener_productos(Producto* prod, int cantidad)
 {
     FILE* pFile;

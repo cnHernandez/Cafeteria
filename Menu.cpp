@@ -289,13 +289,7 @@ void Menu::menu_productos()
                 system("cls");
                 cout << "Modificar producto" << endl;
                 archivo_producto archivo;
-                int pro = archivo.modificar();
-                system("pause");
-                system("cls");
-                Producto aux = archivo.leer_de_disco(pro - 1);
-                cout << "----------------------------------------" << endl;
-                aux.Mostrar();
-                cout << "----------------------------------------" << endl << endl;
+                archivo.modificar();
                 system("pause");
             }
         }
@@ -717,11 +711,11 @@ void Menu::menu_clientes()
         case 1:
         {
             system("cls");
-            cout << "Lista de clientes" << endl;
             Archivo_Cliente archivo;
             Cliente cliente;
             int cant = archivo.cantidad_clientes();
             int cantActiva = archivo.get_cantidad_Activa(cant);
+            cout << "Lista de clientes" << endl;
             if (cantActiva == 0)
             {
                 char desicion;
@@ -755,27 +749,28 @@ void Menu::menu_clientes()
         break;
         case 2:
         {
+            Archivo_Cliente archivo;
+            Cliente cliente;
             system("cls");
             cout << "Agregar cliente" << endl << endl;
-            Archivo_Cliente ac;
-            Cliente cli;
-            cli.Cargar();
+            cliente.Cargar();
             system("cls");
             cout << "Se cargo el cliente exitosamente..." << endl << endl;
             system("pause");
             system("cls");
-            cli.Mostrar();
+            cliente.Mostrar();
             system("pause");
-            ac.guardar(cli);
+            archivo.guardar(cliente);
         }
         break;
         case 3:
         {
+            Archivo_Cliente archivo;
+            Cliente cliente;
             system("cls");
             cout << "Modificar cliente" << endl;
-            Archivo_Cliente ac;
-            int cant = ac.cantidad_clientes();
-            int cantActiva = ac.get_cantidad_Activa(cant);
+            int cant = archivo.cantidad_clientes();
+            int cantActiva = archivo.get_cantidad_Activa(cant);
             if (cantActiva == 0)
             {
                 cout << "No se encuentran guardados clientes Activos" << endl << endl;
@@ -783,9 +778,7 @@ void Menu::menu_clientes()
             }
             else
             {
-                ac.modificar_cliente();
-                system("cls");
-                cout << "Se modifico el cliente exitosamente..." << endl;
+                archivo.modificar_cliente();
                 system("pause");
             }
         }
@@ -797,9 +790,6 @@ void Menu::menu_clientes()
             Archivo_Cliente cliente;
             cliente.baja_Logica();
             system("pause");
-            system("cls");
-            cout << "Se elimino el cliente exitosamente..." << endl;
-            system("pause");
         }
         break;
         }
@@ -808,8 +798,6 @@ void Menu::menu_clientes()
 
 void Menu::menu_vendedores()
 {
-    Archivo_Vendedor archivo;
-    Vendedor vendedor;
     int op;
     bool menu_activo = true;
     while (menu_activo)
@@ -838,8 +826,10 @@ void Menu::menu_vendedores()
         break;
         case 1:
         {
-    int cant = archivo.Cantidad_vendedores();
-    int cantActiva = archivo.Get_cantidad_Activa(cant);
+            Archivo_Vendedor archivo;
+            Vendedor vendedor;
+            int cant = archivo.Cantidad_vendedores();
+            int cantActiva = archivo.Get_cantidad_Activa(cant);
             system("cls");
             cout << "Lista de Vendedores" << endl;
             if (cantActiva == 0)
@@ -874,6 +864,8 @@ void Menu::menu_vendedores()
         }break;
         case 2:
         {
+            Archivo_Vendedor archivo;
+            Vendedor vendedor;
             system("cls");
             cout << "Agregar Vendedor" << endl << endl;
             vendedor.Cargar();
@@ -888,6 +880,8 @@ void Menu::menu_vendedores()
         break;
         case 3:
         {
+            Archivo_Vendedor archivo;
+            Vendedor vendedor;
             int cant = archivo.Cantidad_vendedores();
             int cantActiva = archivo.Get_cantidad_Activa(cant);
             system("cls");
@@ -901,8 +895,6 @@ void Menu::menu_vendedores()
             else
             {
                 archivo.Modificar_Vendedor();
-                system("cls");
-                cout << "Se modifico el cliente exitosamente..." << endl;
                 system("pause");
             }
 
@@ -910,13 +902,11 @@ void Menu::menu_vendedores()
         break;
         case 4:
         {
+            Archivo_Vendedor archivo;
+            Vendedor vendedor;
             system("cls");
             cout << "Eliminar Vendedor" << endl;
-
             archivo.Baja_Logica();
-            system("pause");
-            system("cls");
-            cout << "Se elimino el vendedor exitosamente..." << endl;
             system("pause"); }
         break;
         }

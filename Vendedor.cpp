@@ -22,29 +22,16 @@ int Vendedor::getId_Vendedor()
 
 void Vendedor::Cargar()
 {
-	cout << "-----------------------" << endl;
+	cout << "-------------------------------" << endl;
 	cout << "Cargue los datos del vendedor " << id_vendedor << endl;
-	cout << "Nombre: " << endl;
-		cin >> _nombre;
-	cout << "Apellido: " << endl;
-	cin >> _apellido;
-	cout << "Edad: " << endl;
-	cin >> _edad;
-	cout << "Direccion: " <<endl;
-	cin >> _direccion;
-	cout << "Telefono: " << endl;
-	cin >> _telefono;
-	cout << "-----------------------" << endl;
+	Persona::CargarPersona();
+	cout << "-------------------------------" << endl;
 }
 
 void Vendedor::Mostrar()
 {
-	cout << "-----------------------" << endl;
+	cout << "-------------------------------" << endl;
 	cout << "ID del vendedor: " << id_vendedor << endl;
-	cout << "Nombre: " << getNombre() << endl;
-	cout << "Apellido: " << getApellido() << endl;
-	cout << "Edad: " << getEdad() << endl;
-	cout << "Direccion: " << getDireccion() << endl;
-	cout << "Telefono: " << getTelefono() << endl;
-	cout << "-----------------------" << endl;
+	Persona::MostrarPersona();
+	cout << "-------------------------------" << endl;
 }

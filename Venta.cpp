@@ -132,15 +132,15 @@ void Venta::cargar()
 	int cant = archivoProducto.cantidad_de_registros();
 
 	std::cout << endl;
-	std::cout << "-------------------------------------------------------------" << endl;
+	std::cout << "-------------------------------" << endl;
 	std::cout << "* Ingrese la fecha" << std::endl;
 	fecha.Cargar();
-	std::cout << "-------------------------------------------------------------" << endl;
+	std::cout << "-------------------------------" << endl;
 
 	archivoVendedor.Listar_Vendedor(cantVendedores);
 	std::cout << "* Ingrese el ID del vendedor que lo asistio: ";
 	std::cin >> idVendedor;
-	while (idVendedor <= 0 || idVendedor > cantVendedores)
+	while (idVendedor <= 0 || !archivoVendedor.ExisteVendedor(idVendedor))
 	{
 		std::cout << "El ID ingresado no existe" << std::endl;
 		std::cout << "* Ingrese el ID del vendedor que lo asistio: ";
