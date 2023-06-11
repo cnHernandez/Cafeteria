@@ -109,13 +109,12 @@ void Archivo_Vendedor::Modificar_Vendedor() {
 
 	vendedor = Leer_vendedores(op - 1);
 
-	while (op<0 || op>cant || vendedor.getEstado() == false)
+	while (op < 0 || !ExisteVendedor(op))
 	{
 		std::cout << "ingrese una opcion correcta: ";
 		std::cin >> op;
 	}
-	if (op > 0 && op < cant)
-	{
+
 		vendedor = Leer_vendedores(op - 1);
 		vendedor.Cargar();
 
@@ -126,8 +125,13 @@ void Archivo_Vendedor::Modificar_Vendedor() {
 		if (op2 == 's' || op2 == 'S')
 		{
 			Guardar_Modificado(vendedor, op - 1);
+			system("cls");
+			cout << "Se modifico el cliente exitosamente..." << endl;
 		}
-	}
+		else if(op2 == 'n' || op2 == 'N') {
+			cout << "No se pudo modificar..." << endl;
+		}
+	
 }
 
 bool Archivo_Vendedor::Guardar_Modificado(Vendedor ven, int pos)
@@ -155,18 +159,12 @@ void Archivo_Vendedor::Baja_Logica() {
 	std::cout << "Ingrese de ID del vendedor que desea eliminar: ";
 	std::cin >> op;
 
-	while (op<0 || op>cant)
+	while (op<0 || !ExisteVendedor(op) || !vendedor.getEstado())
 	{
 		std::cout << "ingrese una opcion correcta: ";
 		std::cin >> op;
 	}
 	vendedor = Leer_vendedores(op - 1);
-	if (vendedor.getEstado() == false)
-	{
-		std::cout << "ingrese una opcion correcta: ";
-		std::cin >> op;
-	}
-	else {
 
 		char op2;
 		std::cout << "esta seguro de que desea eliminar el vendedor?" << std::endl;
@@ -177,20 +175,25 @@ void Archivo_Vendedor::Baja_Logica() {
 
 			vendedor.setEstado(false);
 			Guardar_Modificado(vendedor, op - 1);
+			system("pause");
+			system("cls");
+			cout << "Se elimino el vendedor exitosamente..." << endl;
 		}
-	}
+		else if (op2 == 'n' || op2 == 'N') {
+			cout << "No se pudo eliminar..." << endl;
+		}
+	
 }
 
 bool Archivo_Vendedor::ExisteVendedor(int id)
 {
 	int cantidadNoActiva = Cantidad_vendedores();
-	int cantidadActiva = Get_cantidad_Activa(cantidadNoActiva);
 	Vendedor vendedor;
 
-	for (int i = 0; i < cantidadActiva; i++)
+	for (int i = 0; i < cantidadNoActiva; i++)
 	{
 		vendedor = Leer_vendedores(i);
-		if (vendedor.getId_Vendedor() == id)
+		if (vendedor.getId_Vendedor() == id && vendedor.getEstado())
 		{
 			return true;
 		}

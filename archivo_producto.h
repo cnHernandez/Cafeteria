@@ -11,7 +11,7 @@ public:
     void listar(int cantidad);
     int get_cantidad_Activa(int cantidad);
     void baja_Logica();
-    int modificar();
+    void modificar();
     void obtener_productos(Producto* prod, int cantidad);
     void listaXcategoria();
     void listaXrango();
