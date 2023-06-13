@@ -26,7 +26,7 @@ void Cliente::Cargar()
 {
 	cout << "-------------------------------" << endl;
 	cout << "Cargue los datos del cliente " << id_cliente << endl;
-	Persona::CargarPersona();
+	CargarPersona();
 	cout << "-------------------------------" << endl;
 }
 

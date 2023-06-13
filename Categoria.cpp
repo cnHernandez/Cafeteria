@@ -12,7 +12,7 @@ using namespace std;
 Categoria::Categoria()
 {
     Archivo_Categoria Archivo;
-    id_categoria = Archivo.cantidad_categorias() + 1;
+    id_categoria = Archivo.generar_categoria();
     estado = true;
 }
 
@@ -39,6 +39,14 @@ void Categoria::set_id(int nuevo_id)
 void Categoria::cargar() {
     cout << "Ingrese nombre de la nueva categoria: ";
     cin >> _nombre;
+    for (int i = 0; i < strlen(_nombre); i++)
+    {
+        if (isdigit(_nombre[i])) {
+            cout << "El nombre no puede contener numeros" << endl;
+            cout << "Ingrese el nombre: ";
+            cin.getline(_nombre, 30);
+        }
+    }
 }
 void Categoria::mostrar()
 {

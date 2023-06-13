@@ -128,7 +128,7 @@ void Venta::cargar()
 	float aumento;
 	float descuento;
 	int tipoPago;
-	float ganancia;
+	float ganancia = 0;
 	int cant = archivoProducto.cantidad_de_registros();
 
 	std::cout << endl;

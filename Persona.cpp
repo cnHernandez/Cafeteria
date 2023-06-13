@@ -69,15 +69,45 @@ void Persona::CargarPersona()
 	cout << "Ingrese el nombre: ";
 	cin.ignore();
 	cin.getline(_nombre, 30);
+	for (int i = 0; i < strlen(_nombre); i++)
+	{
+		if (isdigit(_nombre[i])) {
+			cout << "El nombre no puede contener numeros" << endl;
+			cout << "Ingrese el nombre: ";
+			cin.getline(_nombre, 30);
+		}
+	}
 	cout << "Ingrese el apellido: ";
 	cin.getline(_apellido, 50);
+	for (int i = 0; i < strlen(_apellido); i++)
+	{
+		if (isdigit(_apellido[i])) {
+			cout << "El apellido no puede contener numeros" << endl;
+			cout << "Ingrese el apellido: ";
+			cin.getline(_apellido, 50);
+		}
+	}
 	cout << "Ingrese edad: ";
 	cin >> _edad;
+	if (_edad < 15 || _edad > 100)
+	{
+		cout << "La edad debe ser mayor a 12 y menor a 100" << endl;
+		cout << "Ingrese edad: ";
+		cin >> _edad;
+	}
 	cin.ignore();
 	cout << "Ingrese direccion: ";
 	cin.getline(_direccion, 50);
 	cout << "Ingrese telefono: ";
 	cin.getline(_telefono, 10);
+	for (int i = 0; i < strlen(_telefono); i++)
+	{
+		if (!isdigit(_telefono[i])) {
+			cout << "El telefono no puede contener letras" << endl;
+			cout << "Ingrese telefono: ";
+			cin.getline(_telefono, 10);
+		}
+	}
 }
 
 void Persona::MostrarPersona()

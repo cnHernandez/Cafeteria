@@ -97,19 +97,41 @@ bool Producto::Cargar()
     Archivo_Categoria arch;
     if (arch.cantidad_categorias() > 0) {
         CargarCategoria();
-        std::string Nombre;
         std::cout << "Ingrese el nombre del Producto: ";
         std::cin.ignore();
-        getline(std::cin, Nombre);
-        setNombre(Nombre);
+        cin.getline(_nombre , 50);
+        for (int i = 0; i < strlen(_nombre); i++)
+        {
+            if (isdigit(_nombre[i])) {
+                cout << "El nombre no puede contener numeros" << endl;
+                cout << "Ingrese el nombre: ";
+                cin.getline(_nombre, 30);
+            }
+        }
+        setNombre(_nombre);
         std::cout << "Ingrese el precio de compra del Producto: ";
         std::cin >> precio_compra;
+  
         setPrecioCompra(precio_compra);
+       
         std::cout << "Ingrese el precio de venta del Producto: ";
         std::cin >> precio;
+      
+        if (precio < 0 || precio > 100000)
+        {
+            cout<<"ingrese un precio razonable"<<endl;
+            cout << "Ingrese el precio de venta del Producto: ";
+            std::cin >> precio;
+        }
         setPrecio(precio);
         cout << "ingrese la cantidad a Stockear: " << endl;
         cin >> stock;
+        if (stock < 0)
+        {
+            cout<<"ingrese un stock razonable"<<endl;
+            cout << "ingrese la cantidad a Stockear: " << endl;
+            cin >> stock;
+        }
         setStock(stock);
         return true;
     }
