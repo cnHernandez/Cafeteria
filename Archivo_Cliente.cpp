@@ -7,8 +7,6 @@
 #include <string>
 #include <fstream>
 
-
-
 using namespace std;
 
 bool Archivo_Cliente::guardarEnDisco(int pos) {
@@ -60,7 +58,7 @@ Cliente Archivo_Cliente::leer_clientes(int pos) {
 	p = fopen("clientes.dat", "rb");
 
 	if (p == nullptr) {
-		std::cout << "Error al abrir el archivo" << std::endl;
+		cout << "Error al abrir el archivo" << endl;
 	}
 
 	fseek(p, pos * sizeof(Cliente), SEEK_SET);
@@ -101,16 +99,16 @@ void Archivo_Cliente::modificar_cliente() {
 	Cliente cliente;
 	int cant = cantidad_clientes();
 	listar_clientes(cant);
-	std::cout << std::endl;
-	std::cout << "Ingrese de ID del cliente que desea modificar: ";
-	std::cin >> op;
+	cout << endl;
+	cout << "Ingrese de ID del cliente que desea modificar: ";
+	cin >> op;
 
 	cliente = leer_clientes(op - 1);
 
 	while (op<0 || op>cant || cliente.getEstado() == false)
 	{
-		std::cout << "ingrese una opcion correcta: ";
-		std::cin >> op;
+		cout << "ingrese una opcion correcta: ";
+		cin >> op;
 	}
 	if (op != 0)
 	{
@@ -118,9 +116,9 @@ void Archivo_Cliente::modificar_cliente() {
 		cliente.Cargar();
 
 		char op2;
-		std::cout << "esta seguro de que desea modificar el cliente?" << std::endl;
-		std::cout << "[S/N]: ";
-		std::cin >> op2;
+		cout << "esta seguro de que desea modificar el cliente?" << endl;
+		cout << "[S/N]: ";
+		cin >> op2;
 		if (op2 == 's' || op2 == 'S')
 		{
 			Guardar_Modificado(cliente, op -1);
@@ -136,11 +134,10 @@ void Archivo_Cliente::modificar_cliente() {
 
 bool Archivo_Cliente::Guardar_Modificado(Cliente cliente, int pos)
 {
-
 	FILE* p;
 	p = fopen("clientes.dat", "rb+");
 	if (p == nullptr) {
-		std::cout << "No se pudo abrir el archivo" << std::endl;
+		cout << "No se pudo abrir el archivo" << endl;
 		return false;
 	}
 	fseek(p, pos * sizeof(Cliente), SEEK_SET);
@@ -155,21 +152,21 @@ void Archivo_Cliente::baja_Logica(){
 	Cliente cliente;
 	int cant = cantidad_clientes();
 	listar_clientes(cant);
-	std::cout << std::endl;
-	std::cout << "Ingrese de ID del cliente que desea eliminar: ";
-	std::cin >> op;
+	cout << std::endl;
+	cout << "Ingrese de ID del cliente que desea eliminar: ";
+	cin >> op;
 
 	cliente = leer_clientes(op - 1);
 	while (op<0 || !ExisteCliente(op) || !cliente.getEstado())
 	{
-		std::cout << "ingrese una opcion correcta: ";
-		std::cin >> op;
+		cout << "ingrese una opcion correcta: ";
+		cin >> op;
 		cliente = leer_clientes(op - 1);
 	}
 		char op2;
-		std::cout << "esta seguro de que desea eliminar el cliente?" << std::endl;
-		std::cout << "[S/N]: ";
-		std::cin >> op2;
+		cout << "esta seguro de que desea eliminar el cliente?" << endl;
+		cout << "[S/N]: ";
+		cin >> op2;
 		if (op2 == 's' || op2 == 'S')
 		{
 

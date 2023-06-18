@@ -6,6 +6,7 @@
 #include "Archivo_Categoria.h"
 #include "Menu.h"
 
+using namespace std;
 
 Producto::Producto()
 {
@@ -16,7 +17,7 @@ Producto::Producto()
   
 }
 
-void Producto::setNombre(std::string Nombre)
+void Producto::setNombre(string Nombre)
 {
     strcpy_s(_nombre, Nombre.c_str());
 }
@@ -55,7 +56,7 @@ int Producto::getStock()
 	return stock;
 }
 
-std::string Producto::getNombre()
+string Producto::getNombre()
 {
     return _nombre;
 }
@@ -97,8 +98,8 @@ bool Producto::Cargar()
     Archivo_Categoria arch;
     if (arch.cantidad_categorias() > 0) {
         CargarCategoria();
-        std::cout << "Ingrese el nombre del Producto: ";
-        std::cin.ignore();
+        cout << "Ingrese el nombre del Producto: ";
+        cin.ignore();
         cin.getline(_nombre , 50);
         for (int i = 0; i < strlen(_nombre); i++)
         {
@@ -109,19 +110,19 @@ bool Producto::Cargar()
             }
         }
         setNombre(_nombre);
-        std::cout << "Ingrese el precio de compra del Producto: ";
-        std::cin >> precio_compra;
+        cout << "Ingrese el precio de compra del Producto: ";
+        cin >> precio_compra;
   
         setPrecioCompra(precio_compra);
        
-        std::cout << "Ingrese el precio de venta del Producto: ";
-        std::cin >> precio;
+        cout << "Ingrese el precio de venta del Producto: ";
+        cin >> precio;
       
         if (precio < 0 || precio > 100000)
         {
             cout<<"ingrese un precio razonable"<<endl;
             cout << "Ingrese el precio de venta del Producto: ";
-            std::cin >> precio;
+            cin >> precio;
         }
         setPrecio(precio);
         cout << "ingrese la cantidad a Stockear: " << endl;
@@ -136,12 +137,12 @@ bool Producto::Cargar()
         return true;
     }
     else {
-        std::cout << "Primero deben haber Categorias activas" << std::endl;
+        cout << "Primero deben haber Categorias activas" << endl;
         system("pause");
         char desicion;
         Menu menu;
-        std::cout << "¿Desea generar una categoria nueva? (S/N): ";
-        std::cin >> desicion;
+        cout << "¿Desea generar una categoria nueva? (S/N): ";
+        cin >> desicion;
         if (desicion == 'S' || desicion == 's') {
             
             menu.menu_categorias();
@@ -160,14 +161,14 @@ void Producto::CargarCategoria()
     int op;
     Archivo_Categoria ArchivoC;
     ArchivoC.listar_categorias(ArchivoC.cantidad_categorias());
-    std::cout << std::endl;
-    std::cout << "Ingrese de ID de la categoria a la que pertenece el producto: ";
-    std::cin >> op;
+    cout << endl;
+    cout << "Ingrese de ID de la categoria a la que pertenece el producto: ";
+    cin >> op;
 
     while (ArchivoC.Existe(op) == false)
     {
-        std::cout << "ingrese una opcion correcta" << std::endl;
-        std::cin >> op;
+        cout << "ingrese una opcion correcta" << endl;
+        cin >> op;
     }
     if (op != 0)
     {
@@ -178,12 +179,12 @@ void Producto::CargarCategoria()
 
 void Producto::Mostrar()
 {
-    std::cout << "-Nombre del Producto: " << getNombre() << std::endl;
-    std::cout << "#ID del Producto: " << getId_Producto() << std::endl;
-   std::cout << "#ID de la Categoria: " << getId_Categoria()<< std::endl;
-    std::cout << "-Precio de Venta del Producto: " << getPrecio() << std::endl;
-    std::cout << "-Precio de Compra del Producto: " << getPrecioCompra() << std::endl;
-    std::cout << "-Stock del Producto: " << getStock() << std::endl;
+    cout << "-Nombre del Producto: " << getNombre() << endl;
+    cout << "#ID del Producto: " << getId_Producto() << endl;
+    cout << "#ID de la Categoria: " << getId_Categoria()<< endl;
+    cout << "-Precio de Venta del Producto: " << getPrecio() << endl;
+    cout << "-Precio de Compra del Producto: " << getPrecioCompra() << endl;
+    cout << "-Stock del Producto: " << getStock() << endl;
 }
 
 

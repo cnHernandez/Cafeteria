@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cstring>
 using namespace std;
+
 Cliente::Cliente()
 {
 	Archivo_Cliente Archivo;
@@ -37,9 +38,3 @@ void Cliente::Mostrar()
 	MostrarPersona();
 	cout << "-------------------------------" << endl << endl;
 }
-
-
-
-
-
-

@@ -1,12 +1,12 @@
 #ifndef FECHA_H_INCLUDED
 #define FECHA_H_INCLUDED
-
 #include <string>
+
+using namespace std;
 
 class Fecha{
 private:
     int _dia, _mes, _anio;
-
     void establecerFechaPorDefecto();
     bool esBisiesto();
     void agregarDia();
@@ -24,7 +24,7 @@ public:
     void Cargar();
 
     void agregarDias(int cantidadDias);
-    std::string toString(std::string formatoFecha = "DD/MM/YYYY");
+    string toString(string formatoFecha = "DD/MM/YYYY");
 
 };
 #endif // FECHA_H_INCLUDED

@@ -564,7 +564,7 @@ void Menu::menu_ventas()
                 {
                     Archivo_Venta archivo;
                     system("cls");
-                    std::cout << "RECAUDACION ANUAL POR VENDEDOR: " << endl;
+                    cout << "RECAUDACION ANUAL POR VENDEDOR: " << endl;
                     archivo.recaudacion_x_vendedor();
                 }
                 break;
@@ -572,7 +572,7 @@ void Menu::menu_ventas()
                 {
                     Archivo_Venta archivo;
                     system("cls");
-                    std::cout << "RECAUDACION ANUAL POR PRODUCTO: " << endl;
+                    cout << "RECAUDACION ANUAL POR PRODUCTO: " << endl;
                     archivo.recaudacion_x_producto();
                 }
                 break;
@@ -580,7 +580,7 @@ void Menu::menu_ventas()
                 {
                     Archivo_Venta archivo;
                     system("cls");
-                    std::cout << "RECAUDACION ANUAL POR PRODUCTO: " << endl;
+                    cout << "RECAUDACION ANUAL POR PRODUCTO: " << endl;
                     archivo.recaudacion_x_categoria();
                 }
                 break;
@@ -588,7 +588,7 @@ void Menu::menu_ventas()
                 {
                     Archivo_Venta archivo;
                     system("cls");
-                    std::cout << "RECAUDACION ANUAL POR PRODUCTO: " << endl;
+                    cout << "RECAUDACION ANUAL POR PRODUCTO: " << endl;
                     archivo.ganancia_x_mes_Anual();
                 }
                 break;
@@ -598,8 +598,6 @@ void Menu::menu_ventas()
         break;
         case 2:
         {
-            vector <Venta> ventas;
-
             system("cls");
             cout << "2- Agregar venta" << endl;
             Archivo_Venta av;
@@ -608,12 +606,10 @@ void Menu::menu_ventas()
             venta.cargar();
             system("cls");
             cout << "Se cargo la venta exitosamente..." << endl;
-            //ventas.push_back(venta);
             system("pause");
             system("cls");
             venta.mostrar();
             system("pause");
-            //av.guardarVentas(ventas);
             av.guardar(venta);
         }
         break;

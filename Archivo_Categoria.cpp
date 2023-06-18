@@ -6,113 +6,38 @@
 #include <string>
 #include <fstream>
 
-
-
-
 using namespace std;
-
-/*void Archivo_Categoria::baja_Logica()
-{
-    Categoria c;
-    int cant_cat = cantidad_categorias();
-    Categoria* cat = new Categoria[cant_cat];
-
-    obtener_categorias(cat, cant_cat);
-    listar_categorias();
-    int cod;
-    cout << endl << "ingresar el codigo de la Categoria a eliminar" << endl;
-    cin >> cod;
-
-    for (int i = 0; i < cant_cat; i++)
-    {
-        if (cod == cat[i].get_id())
-        {
-            std::cout << "Si elimina la Categoria se borrara/n el/los siguiente/s producto/s y sus precios asociados" << std::endl;
-            Producto prod;
-            archivo_producto aprod;
-            int pos = 0;
-           
-            while (pos < aprod.cantidad_de_registros())
-            {
-                prod = aprod.leer_de_disco(pos);
-                if (prod.getId_Producto() == cod && prod.getEstado())
-                {
-                    prod.Mostrar();
-                    std::cout << std::endl;
-                    pos++;
-                }
-                else {
-                    pos++;
-                }
-            }
-
-            char op2;
-            std::cout << "esta seguro de que desea eliminar la Categoria?" << std::endl;
-            std::cout << "[S/N]" << std::endl;
-            std::cin >> op2;
-            if (op2 == 's' || op2 == 'S')
-            {
-
-                cat[i].setEstado(false);
-                
-                delete[] cat;
-                int posi = 0;
-                while (posi < aprod.cantidad_de_registros())
-                {
-                    prod = aprod.leer_de_disco(posi);
-                    if (prod.getId_Categoria() == cod)
-                    {
-                        
-                        aprod.baja_Logica(prod.getId_Producto());
-                        std::cout << std::endl;
-                        posi++;
-
-                    }
-                    else {
-                        posi++;
-                    }
-                        cat[i].sobreescribir_categoria(c, i);
-
-                }
-            }
-            else {
-                delete[] cat;
-            }
-        }
-    }
-}*/
 
 void Archivo_Categoria::baja_Logica()
 {
-
     int op;
     Categoria categoria;
     Archivo_Categoria cat;
     int cant = cantidad_categorias();
     listar_categorias(cant);
-    std::cout << std::endl;
-    std::cout << "Ingrese de ID del categoria que desea eliminar: ";
-    std::cin >> op;
+    cout << endl;
+    cout << "Ingrese de ID del categoria que desea eliminar: ";
+    cin >> op;
 
     while (op<0 || op>cant)
     {
-        std::cout << "ingrese una opcion correcta" << std::endl;
-        std::cin >> op;
+        cout << "ingrese una opcion correcta" << endl;
+        cin >> op;
     }
     categoria = leer_de_disco(op - 1);
     if (categoria.getEstado() == false)
     {
-        std::cout << "ingrese una opcion correcta" << std::endl;
-        std::cin >> op;
+        cout << "ingrese una opcion correcta" << endl;
+        cin >> op;
     }
     else {
 
         char op2;
         system("cls");
         categoria.mostrar();
-        std::cout << "esta seguro de que desea eliminar la categoria?" << std::endl;
-        std::cout << "[S/N]: ";
-        std::cin >> op2;
+        cout << "esta seguro de que desea eliminar la categoria?" << endl;
+        cout << "[S/N]: ";
+        cin >> op2;
         if (op2 == 's' || op2 == 'S')
         {
 
@@ -127,7 +52,7 @@ bool Archivo_Categoria::guardar_Categorias(Categoria cat, int posicion)
     FILE* p;
     p = fopen("categoria.dat", "rb+");
     if (p == nullptr) {
-        std::cout << "No se pudo abrir el archivo" << std::endl;
+        cout << "No se pudo abrir el archivo" <<endl;
         return false;
     }
     fseek(p, posicion * sizeof(Categoria), SEEK_SET);
@@ -162,7 +87,7 @@ Categoria Archivo_Categoria::leer_de_disco(int posicion)
     p = fopen("categoria.dat", "rb");
 
     if (p == nullptr) {
-        std::cout << "Error al abrir el archivo" << std::endl;
+        cout << "Error al abrir el archivo" <<endl;
     }
 
     fseek(p, posicion * sizeof(Categoria), SEEK_SET);
@@ -230,6 +155,8 @@ FILE* Archivo_Categoria::abrirArchivo()
     }
     return pFile;
 }
+
+
 void Archivo_Categoria::obtener_categorias(Categoria* cat, int cantidad)
 {
     FILE* pFile = abrirArchivo();
@@ -238,6 +165,8 @@ void Archivo_Categoria::obtener_categorias(Categoria* cat, int cantidad)
 
     fclose(pFile);
 }
+
+
 bool Archivo_Categoria::guardarEnDisco(int pos) {
     FILE* p;
     p = fopen("categoria.dat", "rb+");
@@ -288,6 +217,10 @@ void Archivo_Categoria::modificar_categorias()
     Categoria c;
     int cant_cat = ac.cantidad_categorias();
     Categoria* cat = new Categoria[cant_cat];
+    if (cat == nullptr) {
+        cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
+        return;
+    }
    
     ac.obtener_categorias(cat, cant_cat);
     ac.listar_categorias(cant_cat);
@@ -313,10 +246,9 @@ void Archivo_Categoria::modificar_categorias()
             cat[i].mostrar();
             system("pause");
             system("cls");
-            delete[] cat;
         }
     }
-
+delete[] cat;
 }
 void Archivo_Categoria::agregar_categoria()
 {
@@ -350,6 +282,8 @@ int Archivo_Categoria::get_cantidad_Activa(int cantidad)
     }
     return contador;
 }
+
+
 bool Archivo_Categoria::Existe(int op)
 {
     Categoria cat;
@@ -360,12 +294,6 @@ bool Archivo_Categoria::Existe(int op)
         {
             return true;
         }
-
     }
     return false;
-
 }
-
-
-
-
