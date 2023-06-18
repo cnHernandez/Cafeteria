@@ -6,6 +6,7 @@
 #include "Archivo_Categoria.h"
 #include "Producto.h"
 #include "Archivo_Producto.h"
+
 using namespace std;
 
 
@@ -56,14 +57,7 @@ void Categoria::mostrar()
     cout << "------------------------------------" << endl;
 
 }
-/*void categorias::cargar_categias_vector(categorias vec[], int cantidad) {
-    Archivo_Categoria ac;
 
-    for (int i = 0; i < cantidad; i++) {
-        vec[i] = ac.leer_categorias(i);
-    }
-}
-*/
 void Categoria::setEstado(bool nEstado)
 {
     estado = nEstado;
@@ -86,4 +80,3 @@ void Categoria::sobreescribir_categoria(Categoria cat, int pos)
 
     fclose(pFile);
 }
-

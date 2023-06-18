@@ -91,18 +91,18 @@ void Fecha::setAnio(int anio) {
 
 
 
-std::string Fecha::toString(std::string formatoFecha) {
-    std::string fechaFormateada = "";
+string Fecha::toString(string formatoFecha) {
+    string fechaFormateada = "";
 
-    std::string DD = std::to_string(_dia);
-    std::string MM = std::to_string(_mes);
-    std::string YYYY = std::to_string(_anio);
+    string DD = to_string(_dia);
+    string MM = to_string(_mes);
+    string YYYY = to_string(_anio);
     // DD/MM/YYYY
     if (_dia < 10) {
-        DD = "0" + std::to_string(_dia);
+        DD = "0" + to_string(_dia);
     }
     if (_mes < 10) {
-        MM = "0" + std::to_string(_mes);
+        MM = "0" + to_string(_mes);
     }
 
     if (formatoFecha == "DD/MM/YYYY") {
@@ -120,28 +120,28 @@ std::string Fecha::toString(std::string formatoFecha) {
 
 void Fecha::Cargar()
 {
-    std::cout << "Dia: ";
-    std::cin >> _dia;
+    cout << "Dia: ";
+    cin >> _dia;
     if (_dia > 31 || _dia < 0)
     {
         cout << "Ingrese una fecha valida" << endl;
-            std::cout << "Dia: ";
-            std::cin >> _dia;
+            cout << "Dia: ";
+            cin >> _dia;
     }
-    std::cout << "Mes: ";
-    std::cin >> _mes;
+    cout << "Mes: ";
+    cin >> _mes;
     if (_mes > 12 || _mes < 0)
     {
 		cout << "Ingrese una fecha valida " << endl;
-		std::cout << "Mes: ";
-		std::cin >> _mes;
+		cout << "Mes: ";
+		cin >> _mes;
 	}
-    std::cout << "Anio: ";
-    std::cin >> _anio;
+    cout << "Anio: ";
+    cin >> _anio;
     if (_anio < 0)
     {
 		cout << "Ingrese una fecha valida " << endl;
-		std::cout << "Anio: ";
-		std::cin >> _anio;
+		cout << "Anio: ";
+		cin >> _anio;
 	}
 }

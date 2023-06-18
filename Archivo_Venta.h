@@ -6,7 +6,6 @@
 class Archivo_Venta
 {
 	public:
-
 		bool guardarEnDisco(int);
 		bool guardar_modificado(Venta, int);
 		void obtener_venta(Venta * prod, int cantidad);
@@ -26,14 +25,7 @@ class Archivo_Venta
 		void BajaLogica();
 		int Modificar_Venta();
 		void ganancia_x_Venta();
-		void ganancia_x_mes_Anual();
-
-
-
-
-		//void guardarVentas(const vector<Venta>& ventas);
-		//void listar_ventasDin(vector<Venta>ventas);
-		
+		void ganancia_x_mes_Anual();	
 };
 
 		

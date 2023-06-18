@@ -19,6 +19,5 @@ public:
 	void agregar_categoria();
 	bool guardar_Categorias(Categoria cat, int posicion);
 	bool Existe(int opcion);
-	//void borrarPrecios(int idProd);
 };
 

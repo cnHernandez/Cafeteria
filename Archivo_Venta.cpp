@@ -19,7 +19,7 @@ bool Archivo_Venta::guardarEnDisco(int cantidad_ventas)
 	p = fopen("Ventas.dat", "wb");
 	if (p == NULL)
 	{
-		std::cout << "Error al abrir el archivo" << endl;
+		cout << "Error al abrir el archivo" << endl;
 		return false;
 	}
 	guardo = fwrite(this, sizeof(Archivo_Venta), cantidad_ventas, p);
@@ -32,7 +32,8 @@ void Archivo_Venta::obtener_venta(Venta* venta, int cant)
 	p = fopen("Ventas.dat", "rb");
 	if (p == NULL)
 	{
-		std::cout << "Error al abrir el archivo" << endl;
+		cout << "Error al abrir el archivo" << endl;
+		return;
 	}
 	fread(venta, sizeof(Venta), cant, p);
 	fclose(p);
@@ -44,11 +45,10 @@ void Archivo_Venta::guardar(Venta venta)
 	FILE* pFile;
 	pFile = fopen("Ventas.dat", "ab");
 	if (pFile == nullptr) {
-		std::cout << "No se pudo abrir el archivo" << endl;
+		cout << "No se pudo abrir el archivo" << endl;
+		return;
 	}
 	fwrite(&venta, sizeof(Venta), 1, pFile);
-
-	
 	fclose(pFile);
 }
 
@@ -58,7 +58,8 @@ Venta Archivo_Venta::leer_ventas(int pos)
 	FILE* p;
 	p = fopen("Ventas.dat", "rb");
 	if (p == nullptr) {
-		std::cout << "Error al abrir el archivo" << std::endl;
+		cout << "Error al abrir el archivo" << endl;
+		return ventas;
 	}
 	fseek(p, pos * sizeof(Venta), SEEK_SET);
 	fread(&ventas, sizeof(Venta), 1, p);
@@ -72,10 +73,9 @@ Venta Archivo_Venta::leer_ventaBK(Venta * vec, int pos)
 		FILE* p = fopen("ventas.dat", "rb");
 		if (p == NULL)
 		{
-			std::cout << "Error al abrir el archivo" << std::endl;;
+			cout << "Error al abrir el archivo" << endl;;
 			return ventas;
 		}
-
 		fread(vec, sizeof(Venta),pos, p);
 		fclose(p);
 	return ventas;
@@ -116,17 +116,11 @@ void Archivo_Venta::listar_ventas(int pos)
 	for (int i = 0; i < pos; i++) {
 		venta = leer_ventas(i);
 		if (venta.getEstado()== true) {
-		venta.mostrar();	
+		venta.mostrar();
+		cout << endl << endl;
 		}
 	}
 }	
-/*void Archivo_Venta::listar_ventasDin(vector<Venta>ventas)
-{
-	Venta venta;
-	for (int i = 0; i < sizeof(ventas); i++) {
-		ventas[i].mostrar();
-		}
-	}*/
 
 
 int Archivo_Venta::cantidad_ventas()
@@ -154,40 +148,45 @@ void Archivo_Venta::listar_x_cliente()
 	Clientes.listar_clientes(cantClientes);
 	
 	Venta* ventas = new Venta[cant];
+	if (ventas == nullptr) {
+		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
+		return;
+	}
+
 	obtener_venta(ventas, cant);
 	Cliente cliente;
 	int idCliente;
-	std::cout << "ingrese el ID# del cliente a listar: " << endl;
+	cout << "ingrese el ID# del cliente a listar: " << endl;
 	cin >> idCliente;
 	while (idCliente <= 0 || idCliente > cant)
 	{
-		std::cout << "ID# de cliente invalido: " << endl;
-		std::cout << "ingrese el ID# del cliente a listar: " << endl;
+		cout << "ID# de cliente invalido: " << endl;
+		cout << "ingrese el ID# del cliente a listar: " << endl;
 		cin >> idCliente;
 	}
 	cliente=Clientes.leer_clientes(idCliente - 1);
 	while(cliente.getEstado()!= true)
 	{
-		std::cout << "ID# de cliente invalido: " << endl;
-		std::cout << "ingrese el ID# del cliente a listar: " << endl;
+		cout << "ID# de cliente invalido: " << endl;
+		cout << "ingrese el ID# del cliente a listar: " << endl;
 		cin >> idCliente;
 		cliente = Clientes.leer_clientes(idCliente - 1);
 
 	}
-	std::system("cls");
+	system("cls");
 	for (int i = 0; i < cantClientes; i++)
 	{
 		cliente = Clientes.leer_clientes(i);
 		if (idCliente == cliente.getId_Cliente())
 		{
-			std::cout << "Productos con ID# de Cliente: " << idCliente << "  " << "NOMBRE: " << cliente.getNombre() << endl;
+			cout << "Productos con ID# de Cliente: " << idCliente << "  " << "NOMBRE: " << cliente.getNombre() << endl;
 		}
 	}
-	std::cout << "Productos con ID# de Cliente: " << idCliente << endl << endl;
+	cout << "Productos con ID# de Cliente: " << idCliente << endl << endl;
 	while (idCliente<0 || idCliente>cantClientes)
 	{
-		std::cout << "ID# de cliente no posee compras " << endl;
-		std::cout << "ingrese otro ID# del cliente a listar: " << endl;
+		cout << "ID# de cliente no posee compras " << endl;
+		cout << "ingrese otro ID# del cliente a listar: " << endl;
 		cin >> idCliente;
 		cliente = Clientes.leer_clientes(idCliente - 1);
 	}
@@ -204,7 +203,7 @@ void Archivo_Venta::listar_x_cliente()
 
 		}
 	}
-	std::cout << endl;
+	cout << endl;
 
 	delete[] ventas;
 }
@@ -213,24 +212,28 @@ void Archivo_Venta::listar_x_fecha()
 {
 	int cant = cantidad_ventas();
 	Venta* ventas = new Venta[cant];
+	if (ventas == nullptr) {
+		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
+		return;
+	}
 	obtener_venta(ventas, cant);
 	int dia, mes, anio;
 	int op;
 	bool menu_activo = true;
 	while (menu_activo)
 	{
-		std::system("cls");
-		std::cout << "---Fecha de Ventas----" << endl << endl;
-		std::cout << " 1- Mes" << endl;
-		std::cout << " 2- Anio" << endl;
-		std::cout << " 3- Recaudacion anual" << endl;
-		std::cout << "-----------------" << endl;
-		std::cout << " 0- SALIR" << endl;
-		std::cout << "-----------------" << endl;
+		system("cls");
+		cout << "---Fecha de Ventas----" << endl << endl;
+		cout << " 1- Mes" << endl;
+		cout << " 2- Anio" << endl;
+		cout << " 3- Recaudacion anual" << endl;
+		cout << "-----------------" << endl;
+		cout << " 0- SALIR" << endl;
+		cout << "-----------------" << endl;
 		cin >> op;
 		while (op < 0 || op>3)
 		{
-			std::cout << "opcion incorrecta, vuelva a ingresar una opcion" << endl;
+			cout << "opcion incorrecta, vuelva a ingresar una opcion" << endl;
 			cin >> op;
 		}
 		switch (op)
@@ -242,15 +245,15 @@ void Archivo_Venta::listar_x_fecha()
 		break;
 		case 1:
 		{
-			std::cout << "ingrese el Mes a listar: ";
+			cout << "ingrese el Mes a listar: ";
 			cin >> mes;
 			while (mes < 1 || mes > 12)
 			{
-				std::cout << "Mes invalido" << endl;
-				std::cout << "ingrese el Mes a listar: ";
+				cout << "Mes invalido" << endl;
+				cout << "ingrese el Mes a listar: ";
 				cin >> mes;
 			}
-			std::cout << "Ventas con mes: " << mes << endl;
+			cout << "Ventas con mes: " << mes << endl;
 			system("cls");
 			for (int i = 0; i < cant; i++)
 			{
@@ -259,22 +262,22 @@ void Archivo_Venta::listar_x_fecha()
 					ventas[i].mostrar();
 				}
 			}
-			std::system("pause");
-			std::cout << endl;
+			system("pause");
+			cout << endl;
 		}
 		break;
 		case 2:
 		{
-			std::cout << "ingrese el anio a listar" << endl;
+			cout << "ingrese el anio a listar" << endl;
 			cin >> anio;
 			while (anio < 2016)
 			{
-				std::cout << "Anio invalido" << endl;
-				std::cout << "ingrese el Anio a listar: ";
+				cout << "Anio invalido" << endl;
+				cout << "ingrese el Anio a listar: ";
 				cin >> anio;
 			}
 			system("cls");
-			std::cout << "          VENTAS CON ANIO " << anio << endl << endl;
+			cout << "          VENTAS CON ANIO " << anio << endl << endl;
 			for (int i = 0; i < cant; i++)
 			{
 				if (anio == ventas[i].getFecha().getAnio() && ventas[i].getEstado())
@@ -282,18 +285,18 @@ void Archivo_Venta::listar_x_fecha()
 					ventas[i].mostrar();
 				}
 			}
-			std::system("pause");
+			system("pause");
 
 		}
 		break;
 		case 3:
 		{
-			std::cout << "ingrese el anio a listar" << endl;
+			cout << "ingrese el anio a listar" << endl;
 			cin >> anio;
 			while (anio < 2016)
 			{
-				std::cout << "Anio invalido" << endl;
-				std::cout << "ingrese el Anio a listar: ";
+				cout << "Anio invalido" << endl;
+			    cout << "ingrese el Anio a listar: ";
 				cin >> anio;
 			}
 			float total = 0;
@@ -363,37 +366,42 @@ void Archivo_Venta::listar_x_fecha()
 				}
 			}
 			system("cls");
-			std::cout << "	RECAUDACION ANUAL: " << anio << endl;
+			cout << "	RECAUDACION ANUAL: " << anio << endl;
 			cout << "---------------------------------------" << endl;
 			for (int i = 0; i < 12; i++)
 			{
 				if (mes[i].size() < 7) {
-					std::cout << mes[i] << "\t\t\t" << "$" << ventasMensuales[i] << endl;
+					cout << mes[i] << "\t\t\t" << "$" << ventasMensuales[i] << endl;
 				}
 				else {
-					std::cout << mes[i] << "  \t\t" << "$" << ventasMensuales[i] << endl;
+					cout << mes[i] << "  \t\t" << "$" << ventasMensuales[i] << endl;
 				}
 			}
 			cout << "----------------------------------------" << endl;
-			std::cout << "       RECAUDACION TOTAL: $" << total << endl << endl;
-			std::system("pause");
+			cout << "       RECAUDACION TOTAL: $" << total << endl << endl;
+			system("pause");
 		}break;
 
 		}
 	}
-			delete[] ventas;
-		}
+delete[] ventas;
+}
 
 void Archivo_Venta::listar_x_producto()
 {
 	int cant = cantidad_ventas();
 	Venta* ventas = new Venta[cant];
+	if (ventas == nullptr) {
+		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
+		return;
+	}
 	obtener_venta(ventas, cant);
 	archivo_producto productos;
 	int cantProductos = productos.cantidad_de_registros();
 	productos.listar(cantProductos);
 	Producto producto;
 	int idProducto;
+
 	cout << "ingrese el ID# del producto a listar: " << endl;
 	cin >> idProducto;
 	while (idProducto <= 0 || idProducto > cant)
@@ -437,7 +445,7 @@ bool Archivo_Venta::guardar_modificado(Venta venta, int pos)
 	FILE* p;
 	p = fopen("ventas.dat", "rb+");
 	if (p == nullptr) {
-		std::cout << "No se pudo abrir el archivo" << std::endl;
+		cout << "No se pudo abrir el archivo" <<endl;
 		return false;
 	}
 	fseek(p, pos * sizeof(Venta), SEEK_SET);
@@ -452,27 +460,35 @@ void Archivo_Venta::recaudacion_x_vendedor()
 	Archivo_Vendedor archivo;
 	int cant = cantidad_ventas();
 	Venta* ventas = new Venta[cant];
+	if (ventas == nullptr) {
+		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
+		return;
+	}
 	obtener_venta(ventas, cant);
 
 	int cantVendedor = archivo.Cantidad_vendedores();
 	Vendedor* vendedores = new Vendedor[cantVendedor];
+	if (vendedores == nullptr) {
+		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
+		return;
+	}
 	archivo.obtener_vendedor(vendedores, cantVendedor);
-	std::cout << "ingrese el anio a listar" << endl;
+	cout << "ingrese el anio a listar" << endl;
 	int anio;
 	cin >> anio;
 	while (anio < 2016)
 	{
-		std::cout << "Anio invalido" << endl;
-		std::cout << "ingrese el Anio a listar: ";
+		cout << "Anio invalido" << endl;
+		cout << "ingrese el Anio a listar: ";
 		cin >> anio;
 	}
-	std::cout << "ingrese el ID del Vendedor " << endl;
+	cout << "ingrese el ID del Vendedor " << endl;
 	int id;
 	cin >> id;
 	while (id < 0 || id > cantVendedor)
 	{
-		std::cout << "ID invalido" << endl;
-		std::cout << "ingrese el ID del Vendedor: ";
+		cout << "ID invalido" << endl;
+		cout << "ingrese el ID del Vendedor: ";
 		cin >> id;
 	}
 	float total = 0;
@@ -540,7 +556,7 @@ void Archivo_Venta::recaudacion_x_vendedor()
 	{
 		if (id == vendedores[i].getId_Vendedor())
 		{
-			std::cout << "RECAUDACION ANUAL DE : " << vendedores[i].getNombre() <<"  " << "EN EL ANIO : " << anio << endl;
+			cout << "RECAUDACION ANUAL DE : " << vendedores[i].getNombre() <<"  " << "EN EL ANIO : " << anio << endl;
 			cout << "---------------------------------------" << endl;
 		}
 	}
@@ -548,18 +564,19 @@ void Archivo_Venta::recaudacion_x_vendedor()
 	for (int i = 0; i < 12; i++)
 	{
 		if (mes[i].size() < 7) {
-			std::cout << mes[i] << "\t\t\t" << "$" << ventasMensuales[i] << endl;
+			cout << mes[i] << "\t\t\t" << "$" << ventasMensuales[i] << endl;
 			
 		}
 		else {
-			std::cout << mes[i] << "  \t\t" << "$" << ventasMensuales[i] << endl;
+			cout << mes[i] << "  \t\t" << "$" << ventasMensuales[i] << endl;
 			
 		}
 	}
 	cout << "----------------------------------------" << endl;
-	std::cout << "       RECAUDACION TOTAL: $" << total << endl << endl;
-	std::system("pause");	
+	cout << "       RECAUDACION TOTAL: $" << total << endl << endl;
+	system("pause");	
 	delete[] ventas;	
+	delete[] vendedores;
 }
 
 void Archivo_Venta::recaudacion_x_producto()
@@ -567,29 +584,43 @@ void Archivo_Venta::recaudacion_x_producto()
 	archivo_producto archiProd;
 	int cant = cantidad_ventas();
 	Venta* ventas = new Venta[cant];
+	if (ventas == nullptr) {
+		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
+		return;
+	}
 	obtener_venta(ventas, cant);
 	Archivo_Categoria archiCat;
 	int cantProd = archiProd.cantidad_de_registros();
 	Producto* productos = new Producto[cantProd];
+	if (productos == nullptr) {
+		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
+		return;
+	}
+
 	archiProd.obtener_productos(productos, cantProd);
 	int cantCat= archiCat.cantidad_categorias();
 	Categoria* categorias = new Categoria[cantCat];
+	if (categorias == nullptr) {
+		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
+		return;
+	}
 	archiCat.obtener_categorias(categorias, cantCat);
 	int anio;
-	std::cout << "ingrese el anio a listar" << endl;
+
+	cout << "ingrese el anio a listar" << endl;
 	cin >> anio;
 	while (anio < 2016)
 	{
-		std::cout << "Anio invalido" << endl;
-		std::cout << "ingrese el Anio a listar: ";
+		cout << "Anio invalido" << endl;
+		cout << "ingrese el Anio a listar: ";
 		cin >> anio;
 	}
-	std::system("cls");
+	system("cls");
 	string nombre;
 	string nombreProd;
 	
-	std::cout << "-------------------------- " << anio << " ----------------------------" << endl << endl;
-	std::cout << "PRODUCTO""  \t\t""CATEGORIA""  \t\t" "RECAUDADO" "  \t\t" << endl << endl;
+	cout << "-------------------------- " << anio << " ----------------------------" << endl << endl;
+	cout << "PRODUCTO""  \t\t""CATEGORIA""  \t\t" "RECAUDADO" "  \t\t" << endl << endl;
 		float total = 0;
 		
 	for (int i = 0; i < cantProd; i++)
@@ -611,14 +642,17 @@ void Archivo_Venta::recaudacion_x_producto()
 		     }
 			if (nombreProd == productos[i].getNombre())
 			{
-				std::cout << setw(28) << setiosflags(ios::left) << productos[i].getNombre() << setw(22) << setiosflags(ios::left) << nombre << "$" << total << endl;
-				std::cout << endl;
+				cout << setw(28) << setiosflags(ios::left) << productos[i].getNombre() << setw(22) << setiosflags(ios::left) << nombre << "$" << total << endl;
+				cout << endl;
 			}
 		
 	}
-	std::cout << "-------------------------------------------------------------" << endl << endl;
-	std::cout << endl;
-	std::system("pause");
+	cout << "-------------------------------------------------------------" << endl << endl;
+	cout << endl;
+	system("pause");
+	delete[] ventas;
+	delete[] productos;
+	delete[] categorias;
 }
 
 void Archivo_Venta::recaudacion_x_categoria()
@@ -628,19 +662,31 @@ void Archivo_Venta::recaudacion_x_categoria()
 	int cantProd = archivoProd.cantidad_de_registros();
 	int cant = cantidad_ventas();
 	Producto* productos = new Producto[cantProd];
+	if (productos == nullptr) {
+		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
+		return;
+	}
 	archivoProd.obtener_productos(productos,cantProd);
 	Venta* ventas = new Venta[cant];
+	if (ventas == nullptr) {
+		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
+		return;
+	}
 	obtener_venta(ventas, cant);
 	int cantCat = archiCat.cantidad_categorias();
 	Categoria* categorias = new Categoria[cantCat];
+	if (categorias == nullptr) {
+		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
+		return;
+	}
 	archiCat.obtener_categorias(categorias, cantCat);
 	int anio;
-	std::cout << "ingrese el anio a listar" << endl;
+	cout << "ingrese el anio a listar" << endl;
 	cin >> anio;
 	while (anio < 2016)
 	{
-		std::cout << "Anio invalido" << endl;
-		std::cout << "ingrese el Anio a listar: ";
+		cout << "Anio invalido" << endl;
+		cout << "ingrese el Anio a listar: ";
 		cin >> anio;
 	}
 	system("cls");
@@ -675,22 +721,10 @@ void Archivo_Venta::recaudacion_x_categoria()
 	cout << "-------------------------------------------------------------" << endl << endl;
 	cout << endl;
 	system("pause");
+	delete[] productos;
+	delete[] ventas;
+	delete[] categorias;
 }
-
-/*void Archivo_Venta::guardarVentas(const vector<Venta>& ventas)
-{
-	FILE* pFile;
-	pFile = fopen("Ventas.dat", "wb");
-	if (pFile == nullptr) {
-		std::cout << "No se pudo abrir el archivo" << endl;
-	}
-	//for (int i = 0; i < ventas.size(); i++)
-	
-		fwrite(&ventas, sizeof(Venta), ventas.size(), pFile);
-	
-	fclose(pFile);
-
-}*/
 
 
 void Archivo_Venta::BajaLogica()
@@ -699,16 +733,16 @@ void Archivo_Venta::BajaLogica()
 	Venta venta;
 	int cant = cantidad_ventas();
 	listar_ventas(cant);
-	std::cout << std::endl;
+	cout << endl;
 
-	std::cout << "Ingrese de ID de la venta que desea eliminar: ";
-	std::cin >> op;
+	cout << "Ingrese de ID de la venta que desea eliminar: ";
+	cin >> op;
 	venta = leer_ventas(op - 1);
 
 	while (op<0 || op>cant || !venta.getEstado())
 	{
-		std::cout << "ingrese una opcion correcta" << std::endl;
-		std::cin >> op;
+		cout << "ingrese una opcion correcta" << endl;
+		cin >> op;
 	}
 	venta = leer_ventas(op - 1);
 
@@ -719,9 +753,9 @@ void Archivo_Venta::BajaLogica()
 		venta.mostrar();
 		cout << "----------------------------------------" << endl << endl;
 		cout << endl;
-		std::cout << "esta seguro de que desea eliminar la venta?" << std::endl;
-		std::cout << "[S/N]: ";
-		std::cin >> op2;
+		cout << "esta seguro de que desea eliminar la venta?" <<endl;
+		cout << "[S/N]: ";
+		cin >> op2;
 		if (op2 == 's' || op2 == 'S')
 		{
 			venta.setEstado(false);
@@ -737,23 +771,23 @@ int Archivo_Venta::Modificar_Venta()
 	Venta venta;
 	int cant = cantidad_ventas();
 	listar_ventas(cant);
-	std::cout << "Ingrese de ID de la venta que desea modificar: ";
-	std::cin >> op;
+	cout << "Ingrese de ID de la venta que desea modificar: ";
+	cin >> op;
 	system("cls");
 	venta = leer_ventas(op - 1);
 
 	while (op<0 || op>cant || !venta.getEstado())
 	{
-		std::cout << "ingrese una opcion correcta: ";
-		std::cin >> op;
+		cout << "ingrese una opcion correcta: ";
+		cin >> op;
 	}
 	if (op != 0)
 	{
 		venta.cargar();
 		char op2;
-		std::cout << "esta seguro de que desea modificar la venta?" << std::endl;
-		std::cout << "[S/N]: ";
-		std::cin >> op2;
+		cout << "esta seguro de que desea modificar la venta?" <<endl;
+		cout << "[S/N]: ";
+		cin >> op2;
 		if (op2 == 's' || op2 == 'S')
 		{
 			guardar_modificado(venta, op - 1);
@@ -761,30 +795,43 @@ int Archivo_Venta::Modificar_Venta()
 	}
 	return op;
 }
+
+
 void Archivo_Venta::ganancia_x_Venta()
 {
 	Archivo_Categoria archiCat;
 	int cant = cantidad_ventas();
 	Venta* ventas = new Venta[cant];
+	if (ventas == nullptr) {
+		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
+		return;
+	}
 	obtener_venta(ventas, cant);
 
 	for (int i = 0; i < cant; i++)
 	{
 		cout<< "ID VENTA: "<<ventas[i].getId()<<"  "<<"GANANCIA: "<<ventas[i].getGanancia()<<endl;
 	}
+	delete[]ventas;
 }
+
+
 void Archivo_Venta::ganancia_x_mes_Anual()
 {
 	int cant = cantidad_ventas();
 	Venta* ventas = new Venta[cant];
+	if (ventas == nullptr) {
+		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
+		return;
+	}
 	obtener_venta(ventas, cant);
 	int anio;
-	std::cout << "ingrese el anio a listar" << endl;
+	cout << "ingrese el anio a listar" << endl;
 	cin >> anio;
 	while (anio < 2016)
 	{
-		std::cout << "Anio invalido" << endl;
-		std::cout << "ingrese el Anio a listar: ";
+		cout << "Anio invalido" << endl;
+		cout << "ingrese el Anio a listar: ";
 		cin >> anio;
 	}
 	
@@ -853,17 +900,16 @@ void Archivo_Venta::ganancia_x_mes_Anual()
 	for (int i = 0; i < 12; i++)
 	{
 		if (mes[i].size() < 7) {
-			std::cout << mes[i] << "\t\t\t" << "$" << ventasMensuales[i] << endl;
+			cout << mes[i] << "\t\t\t" << "$" << ventasMensuales[i] << endl;
 
 		}
 		else {
-			std::cout << mes[i] << "  \t\t" << "$" << ventasMensuales[i] << endl;
+			cout << mes[i] << "  \t\t" << "$" << ventasMensuales[i] << endl;
 
 		}
 	}
 	cout << "----------------------------------------" << endl;
-	std::cout << "       RECAUDACION TOTAL: $" << total << endl << endl;
-	std::system("pause");
+	cout << "       RECAUDACION TOTAL: $" << total << endl << endl;
+	system("pause");
 	delete[] ventas;
 }
-

@@ -1,10 +1,11 @@
 #include "Archivo_bkp.h"
 #include "Venta.h"
 #include "Archivo_Venta.h"
-
 #include <iostream>
 
-Archivo_bkp::Archivo_bkp(std::string ruta)
+using namespace std;
+
+Archivo_bkp::Archivo_bkp(string ruta)
 {
 	ruta = "ventas.bpk";
 	_ruta = ruta;
@@ -12,6 +13,7 @@ Archivo_bkp::Archivo_bkp(std::string ruta)
 
 Archivo_bkp::Archivo_bkp()
 {
+	_ruta = "ventas.bpk";
 }
 
 void Archivo_bkp::HacerCopiaDeSeguridad()

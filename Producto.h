@@ -1,15 +1,12 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include <vector>
-
 
 using namespace std;
 
 class Producto
 {
 private:
-   
     int id_producto;
     int id_categoria;
     char _nombre[50];
@@ -17,12 +14,13 @@ private:
     float precio;
     int stock;
     float precio_compra;
+
 public:
     Producto();
     void setPrecioCompra(float precio_compra);
     void setStock(int nStock);
     void setPrecio(float nPrecio);
-    void setNombre(std::string _nombre);
+    void setNombre(string _nombre);
     void setId_Categoria(int id_categoria);
     void setId_Producto(int id_producto);
     void setEstado(bool nEstado);
@@ -30,7 +28,7 @@ public:
     int getStock();
     void AgregarStock(int can);
     void RestarStock(int cantidad);
-    std::string getNombre();
+    string getNombre();
     int getId_Categoria();
     float getPrecio();
     int getId_Producto();

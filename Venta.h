@@ -4,6 +4,7 @@
 #include "Cliente.h"
 #include "Producto.h"
 #include "Fecha.h"
+#include "DetalleVenta.h"
 
 using namespace std;
 class Venta
@@ -15,12 +16,15 @@ private:
 	float precio;
 	float total;
 	bool estado;
+	DetalleVenta detalles[10];
+	int numeroDetalles;
 	Fecha fecha;
 	int idCliente;
 	int tipoPago;
 	int idVendedor;
 	int entrega;
 	float ganancia;
+
 public:
 	//sets
 	Venta();

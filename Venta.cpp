@@ -1,6 +1,5 @@
 #include "Venta.h"
 #include <iostream>
-#include <string>
 #include "Cliente.h"
 #include "Producto.h"
 #include "Archivo_Cliente.h"
@@ -10,8 +9,8 @@
 #include "Menu.h"
 #include "Vendedor.h"
 #include "Archivo_Vendedor.h"
-using namespace std;
 
+using namespace std;
 
 Venta::Venta()
 {
@@ -122,6 +121,7 @@ void Venta::cargar()
 	int idProducto, idCliente, idVendedor;
 	int cantVendedores = archivoVendedor.Cantidad_vendedores();
 	int cantidad;
+	int cantidadT = 0;
 	float precio;
 	float total = 0;
 	float totalFinal = 0;
@@ -130,29 +130,30 @@ void Venta::cargar()
 	int tipoPago;
 	float ganancia = 0;
 	int cant = archivoProducto.cantidad_de_registros();
+	numeroDetalles = 0;
 
-	std::cout << endl;
-	std::cout << "-------------------------------" << endl;
-	std::cout << "* Ingrese la fecha" << std::endl;
+	cout << endl;
+	cout << "-------------------------------" << endl;
+	cout << "* Ingrese la fecha" << endl;
 	fecha.Cargar();
-	std::cout << "-------------------------------" << endl;
+	cout << "-------------------------------" << endl;
 
 	archivoVendedor.Listar_Vendedor(cantVendedores);
-	std::cout << "* Ingrese el ID del vendedor que lo asistio: ";
-	std::cin >> idVendedor;
+	cout << "* Ingrese el ID del vendedor que lo asistio: ";
+	cin >> idVendedor;
 	while (idVendedor <= 0 || !archivoVendedor.ExisteVendedor(idVendedor))
 	{
-		std::cout << "El ID ingresado no existe" << std::endl;
-		std::cout << "* Ingrese el ID del vendedor que lo asistio: ";
-		std::cin >> idVendedor;
+		cout << "El ID ingresado no existe" << endl;
+		cout << "* Ingrese el ID del vendedor que lo asistio: ";
+		cin >> idVendedor;
 	}
-
+	system("cls");
 	while (archivoCliente.cantidad_clientes() == 0)
 	{
 		string desicion;
-		std::cout << "No hay clientes cargados" << std::endl;
-		std::cout << "¿Desea cargar uno? (S/N)" << std::endl;
-		std::cin >> desicion;
+		cout << "No hay clientes cargados" << endl;
+		cout << "¿Desea cargar uno? (S/N)" << endl;
+		cin >> desicion;
 		if (desicion == "S" || desicion == "s")
 		{
 			cliente.Cargar();
@@ -164,81 +165,109 @@ void Venta::cargar()
 		}
 		else
 		{
-			std::cout << "Opcion incorrecta" << std::endl;
-			std::cout << "¿Desea cargar uno? (S/N)" << std::endl;
-			std::cin >> desicion;
+			cout << "Opcion incorrecta" << endl;
+			cout << "¿Desea cargar uno? (S/N)" << endl;
+			cin >> desicion;
 		}
 	}
+	system("cls");
 	archivoCliente.listar_clientes(cantClientes);
-	std::cout << "* Ingrese el ID del cliente que realiza la compra: ";
-	std::cin >> idCliente;
+	cout << "* Ingrese el ID del cliente que realiza la compra: ";
+	cin >> idCliente;
 	while (!archivoCliente.ExisteCliente(idCliente))
 	{
-		std::cout << "El ID ingresado no existe" << std::endl;
-		std::cout << "* Ingrese el ID del cliente que realiza la comprar: ";
-		std::cin >> idCliente;
+		cout << "El ID ingresado no existe" << endl;
+		cout << "* Ingrese el ID del cliente que realiza la comprar: ";
+		cin >> idCliente;
 	}
 	cliente = archivoCliente.leer_clientes(idCliente - 1);
+	system("cls");
 
-	archivoProducto.listar(cantProd);
-	std::cout << "* Ingrese el ID del producto que desea comprar: ";
-	std::cin >> idProducto;
-	while (!archivoProducto.Existe(idProducto))
-	{
-		std::cout << "El ID ingresado no existe" << std::endl;
-		std::cout << "* Ingrese el ID del producto que desea comprar: ";
-		std::cin >> idProducto;
-	}
-	int pos = archivoProducto.PosicionEnDisco(idProducto);
-	producto = archivoProducto.leer_de_disco(pos);
 
-	std::cout << "* Ingrese la cantidad que desea comprar: ";
-	std::cin >> cantidad;
-	if (cantidad < 0)
-	{
-		cout << "ingrese una cantidad valida" << endl;
-		std::cout << "* Ingrese la cantidad que desea comprar: ";
-		std::cin >> cantidad;
-	}
+	///////////////// EMPIEZA LA CARGA DE VARIOS PRODUCTOS
+	int cantDet;
+	cout << "Ingrese cantidad de productos: ";
+	cin >> cantDet;
 
-	if (producto.getStock() == 0) {
-		cout << "* No hay stock suficiente" << endl;
-		std::cout << "* Quiere ingresar un ID de un producto nuevo?: ";
-		std::cin >> idProducto;
-		std::cout << "* Ingrese la cantidad que desea comprar: ";
-		std::cin >> cantidad;
-		pos = archivoProducto.PosicionEnDisco(idProducto);
+	for (int i = 0; i < cantDet; i++) {
+
+		archivoProducto.listar(cantProd);
+		cout << "* Ingrese el ID del producto que desea comprar: ";
+		cin >> idProducto;
+		while (!archivoProducto.Existe(idProducto))
+		{
+			cout << "El ID ingresado no existe" << endl;
+			cout << "* Ingrese el ID del producto que desea comprar: ";
+			cin >> idProducto;
+		}
+		int pos = archivoProducto.PosicionEnDisco(idProducto);
 		producto = archivoProducto.leer_de_disco(pos);
-		if (cantidad > producto.getStock()) {
-			cout << "ingrese una cantidad valida: ";
-			std::cin >> cantidad;
-			if (cantidad > producto.getStock() || producto.getStock() == 0 || !archivoProducto.Existe(idProducto)) {
-				system("cls");
-				cout << "COMPRA CANCELADA POR FALTA DE STOCK" << endl;
-				exit(-1);
+
+		cout << "* Ingrese la cantidad que desea comprar: ";
+		cin >> cantidad;
+		if (cantidad < 0)
+		{
+			cout << "ingrese una cantidad valida" << endl;
+			cout << "* Ingrese la cantidad que desea comprar: ";
+			cin >> cantidad;
+		}
+
+		if (producto.getStock() == 0 || producto.getStock() < cantidad) {
+			cout << "* No hay stock suficiente" << endl;
+			cout << "* Quiere ingresar un ID de un producto nuevo?: ";
+			cin >> idProducto;
+			while (!archivoProducto.Existe(idProducto)) {
+				cout << "* El producto no existe..., ingrese uno nuevo: ";
+				cin >> idProducto;
+			}
+			cout << "* Ingrese la cantidad que desea comprar: ";
+			cin >> cantidad;
+			pos = archivoProducto.PosicionEnDisco(idProducto);
+			producto = archivoProducto.leer_de_disco(pos);
+			if (cantidad > producto.getStock()) {
+				cout << "ingrese una cantidad valida: ";
+				cin >> cantidad;
+				if (cantidad > producto.getStock() || producto.getStock() == 0 || !archivoProducto.Existe(idProducto)) {
+					system("cls");
+					cout << "COMPRA CANCELADA POR FALTA DE STOCK" << endl;
+					exit(-1);
+				}
 			}
 		}
-	}
 		producto = archivoProducto.leer_de_disco(pos);
+		producto.setStock(producto.getStock() - cantidad);
+		archivoProducto.guardar(producto, pos);
+
+		DetalleVenta detalle;
+		detalle.setId_Categoria(producto.getId_Categoria());
+		detalle.setId_Producto(producto.getId_Producto());
+		detalle.setNombre(producto.getNombre());
+		detalle.setPrecio(producto.getPrecio());
+		detalle.setPrecioCompra(producto.getPrecioCompra());
+		detalle.setCantidad(cantidad);
+
+		detalles[numeroDetalles] = detalle;
+		numeroDetalles++;
+		precio = producto.getPrecio();
+		total += precio * cantidad;
+		cantidadT += cantidad;
+		system("cls");
+	}
 		
-	producto.setStock(producto.getStock() - cantidad);
-	
-	archivoProducto.guardar(producto, pos);
-	precio = producto.getPrecio();
-	total = precio * cantidad;
-	
-	std::cout << "* 1- Efectivo 5 % Descuento  //  2 - Tarjeta 8 % Aumento: " ;
-	std::cin >> tipoPago;
-	float porcentajeEfectivo = 0.05;
-	float porcentajeTarjeta = 0.08;
+	///////////////// TERMINA LA CARGA DE VARIOS PRODUCTOS
+
+		cout << "* 1- Efectivo 5 % Descuento  //  2 - Tarjeta 8 % Aumento: ";
+		cin >> tipoPago;
+		float porcentajeEfectivo = 0.05;
+		float porcentajeTarjeta = 0.08;
 		if (tipoPago != 1 && tipoPago != 2)
 		{
-			std::cout << "Opcion incorrecta" << std::endl;
-			std::cout << "1- Efectivo 5 % Descuento" << std::endl;
-			std::cout << "2- Tarjeta 8 % Aumento: " ;
-			std::cin >> tipoPago;
+			cout << "Opcion incorrecta" << endl;
+			cout << "1- Efectivo 5 % Descuento ";
+			cout << "2- Tarjeta 8 % Aumento: ";
+			cin >> tipoPago;
 		}
-		descuento  = total * porcentajeEfectivo;
+		descuento = total * porcentajeEfectivo;
 		aumento = total * porcentajeTarjeta;
 		if (tipoPago == 1)
 		{
@@ -248,39 +277,41 @@ void Venta::cargar()
 		else if (tipoPago == 2)
 		{
 			totalFinal = total + aumento;
-			ganancia= total - producto.getPrecioCompra() * cantidad;
+			ganancia = total - producto.getPrecioCompra() * cantidad;
 		}
 
-		std::cout << "* 1- Retiro del local  //  2 - Entrega a domicilio: ";
+		cout << "* 1- Retiro del local  //  2 - Entrega a domicilio: ";
 		int tipoEntrega;
 		cin >> tipoEntrega;
 		if (tipoEntrega != 1 && tipoEntrega != 2)
 		{
-			std::cout << "Opcion incorrecta" << std::endl;
-			std::cout << "Ingrese la forma de entrega" << std::endl;
-			std::cout << "1- Retiro del local  //  2 - Entrega a domicilio " << endl;
+			cout << "Opcion incorrecta" << endl;
+			cout << "Ingrese la forma de entrega" << endl;
+			cout << "1- Retiro del local  //  2 - Entrega a domicilio ";
 			cin >> tipoEntrega;
 		}
 		if (tipoEntrega == 2)
 		{
-			cout<<"El envio cuesta $200"<<endl;
+			cout << "El envio cuesta $200" << endl;
 			totalFinal = totalFinal + 200;
 			ganancia = total - producto.getPrecioCompra() * cantidad;
 		}
 		else if (tipoEntrega == 1) {
 			cout << "Retiro en local, no hay costo de envio" << endl;
 			ganancia = totalFinal - producto.getPrecioCompra() * cantidad;
-		
+
 		}
-	setGanancia(ganancia);
-	setEntrega(tipoEntrega);
-	setIdVendedor(idVendedor);
-	setTipoPago(tipoPago);
-	setIdCliente(idCliente);
-	setProducto(idProducto);
-	setCantidad(cantidad);
-	setPrecio(precio);
-	setTotal(totalFinal);
+
+		setGanancia(ganancia);
+		setEntrega(tipoEntrega);
+		setIdVendedor(idVendedor);
+		setTipoPago(tipoPago);
+		setIdCliente(idCliente);
+		setProducto(idProducto);
+		setPrecio(precio);
+		setTotal(totalFinal);
+		setCantidad(cantidadT);
+	
 	cout << "Se cargo la venta exitosamente..." << endl;
 	cout << "-------------------------------------------------------------" << endl << endl;
 	}
@@ -299,56 +330,55 @@ void Venta::mostrar()
 	int cantProd = archivo.cantidad_de_registros();
 
 
-	std::cout << "****************************************** " << std::endl;
-	std::cout << "Fecha: " << getFecha().toString() << std::endl;
+	cout << "****************************************** " << endl;
+	cout << "Fecha: " << getFecha().toString() << endl;
 	for (int i = 0; i < cant; i++)
 	{
 		vende = vendedor.Leer_vendedores(i);
 		if (getIdVendedor() == vende.getId_Vendedor())
 		{
-			std::cout << "ID de Vendedor: " << getIdVendedor() << "  " << "Nombre: " << vende.getNombre() << std::endl;
+			cout << "ID de Vendedor: " << getIdVendedor() << "  " << "Nombre: " << vende.getNombre() << endl;
 		}
 	}
 	for (int i = 0; i < cantClientes; i++) 
 	{
 		cli = cliente.leer_clientes(i);
 		if(getIdCliente()==cli.getId_Cliente())
-	std::cout << "ID de Cliente: " << cli.getId_Cliente() << std::endl;
+		cout << "ID de Cliente: " << cli.getId_Cliente() << endl;
      }
-			std::cout << "ID de Venta: " << getId() << std::endl;
-			std::cout << "Cantidad: " << getCantidad() << std::endl;
-			for (int i = 0; i < cant; i++)
-			{
-				producto = archivo.leer_de_disco(i);
-				if (getProducto() == producto.getId_Producto())
-				{
-					std::cout << "Producto: " << producto.getNombre() << std::endl;
-					std::cout << "Precio Compra: " << producto.getPrecioCompra() << std::endl;
-				}
-			}
-			std::cout << "Precio Venta: " << getPrecio() << std::endl;
-			std::cout << "Ganancia: " << getGanancia() << std::endl;
-			std::cout << "Total: " << getTotal() << std::endl;
+	cout << "ID de Venta: " << getId() << endl;
+	cout << "Cantidad de productos: " << getCantidad() << endl;
+	cout << "*******************************************" << endl;
+	
+	for (int i = 0; i < numeroDetalles; i++) {
+	DetalleVenta detalle = detalles[i];
+	cout << detalle.getCantidad()<<"x " << detalle.getNombre() << endl;
+	cout << detalle.getNombre() <<" ID: " << detalle.getId_Producto() << endl;
+	cout <<"Categoria " << detalle.getNombre() <<": " << detalle.getId_Categoria() << endl;
+	cout << "Precio: " << detalle.getPrecio() << endl;
+	cout << "Precio compra: " << detalle.getPrecioCompra() << endl;
+	cout << "*******************************************" << endl;
+	}
 		
 	
 	if (getTipoPago() == 1)
 	{
-		std::cout << "Tipo de Pago: " << "EFECTIVO  5 % DESCUENTO" << std::endl;
+		cout << "Tipo de Pago: " << "EFECTIVO  5 % DESCUENTO" <<endl;
 	}
 	else if (getTipoPago() == 2)
 	{
-		std::cout << "Tipo de Pago: " << "TARJETA  8 % AUMENTO" << std::endl;
+		cout << "Tipo de Pago: " << "TARJETA  8 % AUMENTO" << endl;
 	}
 	if (getEntrega() == 2)
 	{
-		std::cout << "ENTREGA A DOMICILIO" << std::endl;
-	}
-	if (getEntrega() == 1)
+		cout << "ENTREGA A DOMICILIO" << endl;
+	}else if (getEntrega() == 1)
 	{
-		std::cout << "RETIRA DEL LOCAL" << std::endl;
+		cout << "RETIRA DEL LOCAL" <<endl;
 	}
-	std::cout << "Total a Pagar: " << getTotal() << std::endl;
-	std::cout << "****************************************** " << std::endl;
+	cout << "Total a Pagar por el cliente: " << getTotal() << endl;
+	cout << "Ganancia total de la cafeteria: " << getGanancia() << endl;
+	cout << "****************************************** " << endl;
 }
 
 int Venta::getIdCliente()

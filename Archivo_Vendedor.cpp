@@ -62,7 +62,7 @@ Vendedor Archivo_Vendedor::Leer_vendedores(int pos) {
 	p = fopen("Vendedores.dat", "rb");
 
 	if (p == nullptr) {
-		std::cout << "Error al abrir el archivo" << std::endl;
+		cout << "Error al abrir el archivo" << endl;
 	}
 
 	fseek(p, pos * sizeof(Vendedor), SEEK_SET);
@@ -103,25 +103,25 @@ void Archivo_Vendedor::Modificar_Vendedor() {
 	Vendedor vendedor;
 	int cant = Cantidad_vendedores();
 	Listar_Vendedor(cant);
-	std::cout << std::endl;
-	std::cout << "Ingrese de ID del vendedor que desea modificar: ";
-	std::cin >> op;
+	cout << endl;
+	cout << "Ingrese de ID del vendedor que desea modificar: ";
+	cin >> op;
 
 	vendedor = Leer_vendedores(op - 1);
 
 	while (op < 0 || !ExisteVendedor(op))
 	{
-		std::cout << "ingrese una opcion correcta: ";
-		std::cin >> op;
+		cout << "ingrese una opcion correcta: ";
+		cin >> op;
 	}
 
 		vendedor = Leer_vendedores(op - 1);
 		vendedor.Cargar();
 
 		char op2;
-		std::cout << "esta seguro de que desea modificar el vendedor" << std::endl;
-		std::cout << "[S/N]: ";
-		std::cin >> op2;
+		cout << "esta seguro de que desea modificar el vendedor" << endl;
+		cout << "[S/N]: ";
+		cin >> op2;
 		if (op2 == 's' || op2 == 'S')
 		{
 			Guardar_Modificado(vendedor, op - 1);
@@ -140,7 +140,7 @@ bool Archivo_Vendedor::Guardar_Modificado(Vendedor ven, int pos)
 	FILE* p;
 	p = fopen("Vendedores.dat", "rb+");
 	if (p == nullptr) {
-		std::cout << "No se pudo abrir el archivo" << std::endl;
+		cout << "No se pudo abrir el archivo" << endl;
 		return false;
 	}
 	fseek(p, pos * sizeof(Vendedor), SEEK_SET);
@@ -155,21 +155,21 @@ void Archivo_Vendedor::Baja_Logica() {
 	Vendedor vendedor;
 	int cant = Cantidad_vendedores();
 	Listar_Vendedor(cant);
-	std::cout << std::endl;
-	std::cout << "Ingrese de ID del vendedor que desea eliminar: ";
-	std::cin >> op;
+	cout << std::endl;
+	cout << "Ingrese de ID del vendedor que desea eliminar: ";
+	cin >> op;
 
 	while (op<0 || !ExisteVendedor(op) || !vendedor.getEstado())
 	{
-		std::cout << "ingrese una opcion correcta: ";
-		std::cin >> op;
+		cout << "ingrese una opcion correcta: ";
+		cin >> op;
 	}
 	vendedor = Leer_vendedores(op - 1);
 
 		char op2;
-		std::cout << "esta seguro de que desea eliminar el vendedor?" << std::endl;
-		std::cout << "[S/N]: ";
-		std::cin >> op2;
+		cout << "esta seguro de que desea eliminar el vendedor?" << endl;
+		cout << "[S/N]: ";
+		cin >> op2;
 		if (op2 == 's' || op2 == 'S')
 		{
 
@@ -207,7 +207,7 @@ void Archivo_Vendedor::obtener_vendedor(Vendedor* vendedor, int cant)
 	p = fopen("Vendedores.dat", "rb");
 	if (p == NULL)
 	{
-		std::cout << "Error al abrir el archivo" << endl;
+		cout << "Error al abrir el archivo" << endl;
 	}
 	fread(vendedor, sizeof(Vendedor), cant, p);
 	fclose(p);
