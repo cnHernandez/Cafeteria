@@ -6,6 +6,7 @@
 #include "Archivo_Categoria.h"
 #include "Producto.h"
 #include "Archivo_Producto.h"
+#include "rlutil.h"
 
 using namespace std;
 
@@ -43,7 +44,9 @@ void Categoria::cargar() {
     for (int i = 0; i < strlen(_nombre); i++)
     {
         if (isdigit(_nombre[i])) {
+            rlutil::setColor(rlutil::RED);
             cout << "El nombre no puede contener numeros" << endl;
+rlutil::setColor(rlutil::WHITE);
             cout << "Ingrese el nombre: ";
             cin.getline(_nombre, 30);
         }
@@ -72,7 +75,8 @@ void Categoria::sobreescribir_categoria(Categoria cat, int pos)
     FILE* pFile;
     pFile = fopen("Categoria.dat", "rb+");
     if (pFile == nullptr) {
-        cout << "error al abrir el archivo" << endl;
+        return ;
+        //cout << "error al abrir el archivo" << endl;
     }
 
     fseek(pFile, pos * sizeof(Categoria), 0);

@@ -1,6 +1,7 @@
 #include "Persona.h"
 #include <iostream>
 #include <cstring>
+#include "rlutil.h"
 
 using namespace std;
 
@@ -72,7 +73,9 @@ void Persona::CargarPersona()
 	for (int i = 0; i < strlen(_nombre); i++)
 	{
 		if (isdigit(_nombre[i])) {
+			rlutil::setColor(rlutil::RED);
 			cout << "El nombre no puede contener numeros" << endl;
+rlutil::setColor(rlutil::WHITE);
 			cout << "Ingrese el nombre: ";
 			cin.getline(_nombre, 30);
 		}
@@ -82,7 +85,9 @@ void Persona::CargarPersona()
 	for (int i = 0; i < strlen(_apellido); i++)
 	{
 		if (isdigit(_apellido[i])) {
+			rlutil::setColor(rlutil::RED);
 			cout << "El apellido no puede contener numeros" << endl;
+rlutil::setColor(rlutil::WHITE);
 			cout << "Ingrese el apellido: ";
 			cin.getline(_apellido, 50);
 		}
@@ -91,7 +96,9 @@ void Persona::CargarPersona()
 	cin >> _edad;
 	if (_edad < 15 || _edad > 100)
 	{
+		rlutil::setColor(rlutil::RED);
 		cout << "La edad debe ser mayor a 12 y menor a 100" << endl;
+rlutil::setColor(rlutil::WHITE);
 		cout << "Ingrese edad: ";
 		cin >> _edad;
 	}
@@ -103,7 +110,9 @@ void Persona::CargarPersona()
 	for (int i = 0; i < strlen(_telefono); i++)
 	{
 		if (!isdigit(_telefono[i])) {
+rlutil::setColor(rlutil::RED);
 			cout << "El telefono no puede contener letras" << endl;
+rlutil::setColor(rlutil::WHITE);
 			cout << "Ingrese telefono: ";
 			cin.getline(_telefono, 10);
 		}

@@ -5,6 +5,7 @@
 #include "archivo_producto.h"
 #include "Archivo_Categoria.h"
 #include "Menu.h"
+#include "rlutil.h"
 
 using namespace std;
 
@@ -104,7 +105,9 @@ bool Producto::Cargar()
         for (int i = 0; i < strlen(_nombre); i++)
         {
             if (isdigit(_nombre[i])) {
+               rlutil::setColor(rlutil::RED);
                 cout << "El nombre no puede contener numeros" << endl;
+rlutil::setColor(rlutil::WHITE);
                 cout << "Ingrese el nombre: ";
                 cin.getline(_nombre, 30);
             }
@@ -120,7 +123,9 @@ bool Producto::Cargar()
       
         if (precio < 0 || precio > 100000)
         {
+            rlutil::setColor(rlutil::RED);
             cout<<"ingrese un precio razonable"<<endl;
+rlutil::setColor(rlutil::WHITE);
             cout << "Ingrese el precio de venta del Producto: ";
             cin >> precio;
         }
@@ -129,7 +134,9 @@ bool Producto::Cargar()
         cin >> stock;
         if (stock < 0)
         {
+rlutil::setColor(rlutil::RED);
             cout<<"ingrese un stock razonable"<<endl;
+rlutil::setColor(rlutil::WHITE);
             cout << "ingrese la cantidad a Stockear: " << endl;
             cin >> stock;
         }
@@ -137,8 +144,10 @@ bool Producto::Cargar()
         return true;
     }
     else {
+        rlutil::setColor(rlutil::RED);
         cout << "Primero deben haber Categorias activas" << endl;
         system("pause");
+rlutil::setColor(rlutil::WHITE);
         char desicion;
         Menu menu;
         cout << "¿Desea generar una categoria nueva? (S/N): ";
@@ -167,7 +176,9 @@ void Producto::CargarCategoria()
 
     while (ArchivoC.Existe(op) == false)
     {
+        rlutil::setColor(rlutil::RED);
         cout << "ingrese una opcion correcta" << endl;
+        rlutil::setColor(rlutil::WHITE);
         cin >> op;
     }
     if (op != 0)
@@ -179,11 +190,17 @@ void Producto::CargarCategoria()
 
 void Producto::Mostrar()
 {
+    rlutil::locate(45, 11);
     cout << "-Nombre del Producto: " << getNombre() << endl;
+    rlutil::locate(45, 12);
     cout << "#ID del Producto: " << getId_Producto() << endl;
+    rlutil::locate(45, 13);
     cout << "#ID de la Categoria: " << getId_Categoria()<< endl;
+    rlutil::locate(45, 14);
     cout << "-Precio de Venta del Producto: " << getPrecio() << endl;
+    rlutil::locate(45, 15);
     cout << "-Precio de Compra del Producto: " << getPrecioCompra() << endl;
+    rlutil::locate(45, 16);
     cout << "-Stock del Producto: " << getStock() << endl;
 }
 

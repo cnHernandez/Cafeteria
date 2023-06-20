@@ -5,7 +5,7 @@
 #include "Menu.h"
 #include <iostream>
 #include <string>
-#include <fstream>
+#include "rlutil.h"
 
 using namespace std;
 
@@ -80,13 +80,13 @@ void archivo_producto::listar(int cantidad)
         cat=acat.leer_de_disco(producto.getId_Categoria()-1);
         if(cat.getEstado())
         {
-
-        cout<<"------------------------------------------------"<<endl;
+            rlutil::locate(45, 11);
+        //cout<<"------------------------------------------------"<<endl;
         producto.Mostrar();
         }
         }
     }
-        cout << "------------------------------------------------" << endl;
+        
 }
 
 int archivo_producto::get_cantidad_Activa(int cantidad)

@@ -9,6 +9,7 @@
 #include "Menu.h"
 #include "Vendedor.h"
 #include "Archivo_Vendedor.h"
+#include "rlutil.h"
 
 using namespace std;
 
@@ -120,14 +121,14 @@ void Venta::cargar()
 	int cantProd = archivoProducto.cantidad_de_registros();
 	int idProducto, idCliente, idVendedor;
 	int cantVendedores = archivoVendedor.Cantidad_vendedores();
-	int cantidad;
+	int cantidad = 0;
 	int cantidadT = 0;
-	float precio;
+	float precio = 0;
 	float total = 0;
 	float totalFinal = 0;
-	float aumento;
-	float descuento;
-	int tipoPago;
+	float aumento = 0;
+	float descuento = 0;
+	int tipoPago = 0;
 	float ganancia = 0;
 	int cant = archivoProducto.cantidad_de_registros();
 	numeroDetalles = 0;
@@ -143,7 +144,9 @@ void Venta::cargar()
 	cin >> idVendedor;
 	while (idVendedor <= 0 || !archivoVendedor.ExisteVendedor(idVendedor))
 	{
+		rlutil::setColor(rlutil::RED);
 		cout << "El ID ingresado no existe" << endl;
+        rlutil::setColor(rlutil::WHITE);
 		cout << "* Ingrese el ID del vendedor que lo asistio: ";
 		cin >> idVendedor;
 	}
@@ -151,7 +154,9 @@ void Venta::cargar()
 	while (archivoCliente.cantidad_clientes() == 0)
 	{
 		string desicion;
+		rlutil::setColor(rlutil::RED);
 		cout << "No hay clientes cargados" << endl;
+	    rlutil::setColor(rlutil::WHITE);
 		cout << "¿Desea cargar uno? (S/N)" << endl;
 		cin >> desicion;
 		if (desicion == "S" || desicion == "s")
@@ -165,7 +170,9 @@ void Venta::cargar()
 		}
 		else
 		{
+rlutil::setColor(rlutil::RED);
 			cout << "Opcion incorrecta" << endl;
+rlutil::setColor(rlutil::WHITE);
 			cout << "¿Desea cargar uno? (S/N)" << endl;
 			cin >> desicion;
 		}
@@ -176,7 +183,9 @@ void Venta::cargar()
 	cin >> idCliente;
 	while (!archivoCliente.ExisteCliente(idCliente))
 	{
+rlutil::setColor(rlutil::RED);
 		cout << "El ID ingresado no existe" << endl;
+rlutil::setColor(rlutil::WHITE);
 		cout << "* Ingrese el ID del cliente que realiza la comprar: ";
 		cin >> idCliente;
 	}
@@ -196,7 +205,9 @@ void Venta::cargar()
 		cin >> idProducto;
 		while (!archivoProducto.Existe(idProducto))
 		{
+			rlutil::setColor(rlutil::RED);
 			cout << "El ID ingresado no existe" << endl;
+            rlutil::setColor(rlutil::WHITE);
 			cout << "* Ingrese el ID del producto que desea comprar: ";
 			cin >> idProducto;
 		}
@@ -207,16 +218,21 @@ void Venta::cargar()
 		cin >> cantidad;
 		if (cantidad < 0)
 		{
+			rlutil::setColor(rlutil::RED);
 			cout << "ingrese una cantidad valida" << endl;
+			rlutil::setColor(rlutil::WHITE);
 			cout << "* Ingrese la cantidad que desea comprar: ";
 			cin >> cantidad;
 		}
 
 		if (producto.getStock() == 0 || producto.getStock() < cantidad) {
+rlutil::setColor(rlutil::RED);
 			cout << "* No hay stock suficiente" << endl;
+rlutil::setColor(rlutil::WHITE);
 			cout << "* Quiere ingresar un ID de un producto nuevo?: ";
 			cin >> idProducto;
 			while (!archivoProducto.Existe(idProducto)) {
+
 				cout << "* El producto no existe..., ingrese uno nuevo: ";
 				cin >> idProducto;
 			}
@@ -225,12 +241,15 @@ void Venta::cargar()
 			pos = archivoProducto.PosicionEnDisco(idProducto);
 			producto = archivoProducto.leer_de_disco(pos);
 			if (cantidad > producto.getStock()) {
+				rlutil::setColor(rlutil::RED);
 				cout << "ingrese una cantidad valida: ";
 				cin >> cantidad;
 				if (cantidad > producto.getStock() || producto.getStock() == 0 || !archivoProducto.Existe(idProducto)) {
 					system("cls");
+					rlutil::setColor(rlutil::RED);
 					cout << "COMPRA CANCELADA POR FALTA DE STOCK" << endl;
 					exit(-1);
+
 				}
 			}
 		}
@@ -255,14 +274,16 @@ void Venta::cargar()
 	}
 		
 	///////////////// TERMINA LA CARGA DE VARIOS PRODUCTOS
-
+	rlutil::setColor(rlutil::WHITE);
 		cout << "* 1- Efectivo 5 % Descuento  //  2 - Tarjeta 8 % Aumento: ";
 		cin >> tipoPago;
 		float porcentajeEfectivo = 0.05;
 		float porcentajeTarjeta = 0.08;
 		if (tipoPago != 1 && tipoPago != 2)
 		{
+			rlutil::setColor(rlutil::RED);
 			cout << "Opcion incorrecta" << endl;
+			rlutil::setColor(rlutil::RED);
 			cout << "1- Efectivo 5 % Descuento ";
 			cout << "2- Tarjeta 8 % Aumento: ";
 			cin >> tipoPago;
@@ -285,7 +306,9 @@ void Venta::cargar()
 		cin >> tipoEntrega;
 		if (tipoEntrega != 1 && tipoEntrega != 2)
 		{
+			rlutil::setColor(rlutil::RED);
 			cout << "Opcion incorrecta" << endl;
+			rlutil::setColor(rlutil::WHITE);
 			cout << "Ingrese la forma de entrega" << endl;
 			cout << "1- Retiro del local  //  2 - Entrega a domicilio ";
 			cin >> tipoEntrega;
@@ -352,7 +375,7 @@ void Venta::mostrar()
 	
 	for (int i = 0; i < numeroDetalles; i++) {
 	DetalleVenta detalle = detalles[i];
-	cout << detalle.getCantidad()<<"x " << detalle.getNombre() << endl;
+	cout << detalle.getCantidad()<<"unidades de " <<" " << detalle.getNombre() << endl;
 	cout << detalle.getNombre() <<" ID: " << detalle.getId_Producto() << endl;
 	cout <<"Categoria " << detalle.getNombre() <<": " << detalle.getId_Categoria() << endl;
 	cout << "Precio: " << detalle.getPrecio() << endl;
