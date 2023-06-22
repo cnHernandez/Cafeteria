@@ -28,26 +28,18 @@ void Menu::menuPrincipal()
     while (menu_activo)
     {
         system("cls");
-        rlutil::locate(30, 10);
         cout<<"-*-*-Bienvenido al sistema de gestion-*-*-"<<endl<<endl;
        
-        rlutil::locate(45, 11);
-        cout <<"Menu Principal" << endl << endl;
-        rlutil::locate(45, 12);
-        cout << " 1- Productos " << endl;
-        rlutil::locate(45, 13);
-        cout << " 2- Categorias " << endl;
-        rlutil::locate(45, 14);
-        cout << " 3- Ventas " << endl;
-        rlutil::locate(45, 15);
-        cout << " 4- Clientes " << endl;
-        rlutil::locate(45, 16);
-        cout << " 5- Vendedores " << endl;
-        rlutil::locate(45, 17);
+        cout <<"Menu Principal" << endl;
         cout << "----------------" << endl;
-        rlutil::locate(45, 18);
+        cout << " 1- Productos " << endl;
+        cout << " 2- Categorias " << endl;
+        cout << " 3- Ventas " << endl;
+        cout << " 4- Clientes " << endl;
+        cout << " 5- Vendedores " << endl;
+        cout << "----------------" << endl;
         cout << " 0- SALIR" << endl;
-       
+
         cin >> op;
         while (op < 0 || op>5)
         {
@@ -99,19 +91,12 @@ void Menu::menu_productos()
     while (menu_activo)
     {
         system("cls");
-        rlutil::locate(45, 11);
         cout << "----Productos----" << endl;
-rlutil::locate(45, 12);
         cout << " 1- Listar" << endl;
-rlutil::locate(45, 13);
         cout << " 2- Agregar" << endl;
-rlutil::locate(45, 14);
         cout << " 3- Modificar" << endl;
-rlutil::locate(45, 15);
         cout << " 4- Eliminar" << endl;
-rlutil::locate(45, 16);
         cout << "-----------------" << endl;
-            rlutil::locate(45, 17);
         cout << " 0- SALIR" << endl;
        
 
@@ -120,9 +105,8 @@ rlutil::locate(45, 16);
         while (op < 0 || op>4)
         {
             rlutil::setColor(rlutil::RED);
-            rlutil::locate(45, 11);
             cout << "opcion incorrecta, vuelva a ingresar una opcion: ";
-rlutil::setColor(rlutil::WHITE);
+            rlutil::setColor(rlutil::WHITE);
             cin >> op;
         }
         switch (op)
@@ -139,19 +123,12 @@ rlutil::setColor(rlutil::WHITE);
             while (menu2activo)
             {
                 system("cls");
-                rlutil::locate(45, 11);
                 cout << "Listar Productos" << endl;
-                rlutil::locate(45, 11);
                 cout << "-------------------------" << endl;
-rlutil::locate(45, 12);
                 cout << "1- Todos" << endl;
-rlutil::locate(45, 13);
                 cout << "2- Listar por categorias" << endl;
-rlutil::locate(45, 14);
                 cout << "3- Por rango de precio " << endl;
-rlutil::locate(45, 15);
                 cout << "-------------------------" << endl;
-rlutil::locate(45, 16);
                 cout << "0- Volver" << endl;
                 cin >> op;
 
@@ -159,7 +136,7 @@ rlutil::locate(45, 16);
                 {
                     rlutil::setColor(rlutil::RED);
                     cout << "opcion incorrecta, vuelva a ingresar una opcion: ";
-rlutil::setColor(rlutil::WHITE);
+                    rlutil::setColor(rlutil::WHITE);
                     cin >> op;
                 }
 
@@ -169,33 +146,46 @@ rlutil::setColor(rlutil::WHITE);
                 case 1:
                 {
                     system("cls");
-                    rlutil::locate(45, 11);
                     cout << "Lista de todos los productos" << endl;
                     archivo_producto archivo;
                     int cant = archivo.cantidad_de_registros();
                     int cantActiva = archivo.get_cantidad_Activa(cant);
                     if (cantActiva == 0)
                     {
+                        Producto producto;
+                        archivo_producto ar;
                         rlutil::setColor(rlutil::RED);
                         cout << "No se encuentran guardados Productos Activos" << endl << endl;
+                        rlutil::setColor(rlutil::WHITE);
+                        char desicion;
+                        cout << "¿Desea cargar un producto nuevo? (S/N): ";
+                        cin >> desicion;
+                        if (desicion == 's' || desicion == 'S')
+                        {
+                            producto.Cargar();
+                            ar.guardar(producto);
+                            system("cls");
+                            cout << "-----------------------------------" << endl;
+                            producto.Mostrar();
+                            cout << "-----------------------------------" << endl;
+                            cout << "Se cargo exitosamente..." << endl;
+                        }
+                        else if (desicion == 'n' || desicion == 'N')
+                        {
+                            return;
+                        }
                     }
                     else
                     {
-                       
                         archivo.listar(cant);
-                        rlutil::locate(45, 17);
-                        cout<<"-------------------------"<<endl;
                     }
-                    rlutil::locate(45, 18);
                     system("pause");
-
                 }
-
                 break;
                 case 2:
                 {
                     system("cls");
-                    cout << " Lista por categoria" << endl;
+                    cout << "Lista por categoria" << endl;
                     archivo_producto archivo;
                     int cant = archivo.cantidad_de_registros();
                     int cantActiva = archivo.get_cantidad_Activa(cant);
@@ -203,6 +193,7 @@ rlutil::setColor(rlutil::WHITE);
                     {
                         rlutil::setColor(rlutil::RED);
                         cout << "No se encuentran guardados Categorias Activas" << endl << endl;
+                        rlutil::setColor(rlutil::WHITE);
                     }
                     else
                     {
@@ -215,7 +206,7 @@ rlutil::setColor(rlutil::WHITE);
                 case 3:
                 {
                     system("cls");
-                    cout << " Lista por rango de precio" << endl << endl;
+                    cout << "Lista por rango de precio" << endl << endl;
                     archivo_producto archivo;
                     int cant = archivo.cantidad_de_registros();
                     int cantActiva = archivo.get_cantidad_Activa(cant);
@@ -223,6 +214,7 @@ rlutil::setColor(rlutil::WHITE);
                     {
                         rlutil::setColor(rlutil::RED);
                         cout << "No se encuentran guardados Productos Activos" << endl << endl;
+                        rlutil::setColor(rlutil::WHITE);
                     }
                     else
                     {
@@ -259,7 +251,7 @@ rlutil::setColor(rlutil::WHITE);
                 {
                     rlutil::setColor(rlutil::RED);
                     cout << "opcion incorrecta, vuelva a ingresar una opcion: ";
-rlutil::setColor(rlutil::WHITE);
+                    rlutil::setColor(rlutil::WHITE);
                     cin >> op;
                 }
 
@@ -273,20 +265,50 @@ rlutil::setColor(rlutil::WHITE);
                 case 1:
                 {
                     system("cls");
-                    cout << "Eliga categoria del producto" << endl;
-                    Producto producto;
-                    bool leyo = producto.Cargar();
-                    if (leyo)
-                    {
-                        archivo_producto archivo;
-                        archivo.guardar(producto);
-                        system("cls");
-                        cout << "Producto cargado" << endl;
-                        cout << "-----------------------------------" << endl;
-                        producto.Mostrar();
-                        cout << "-----------------------------------" << endl << endl;
+                    Archivo_Categoria archivo;
+                    int cant = archivo.cantidad_categorias();
+                    int cantActiva = archivo.get_cantidad_Activa(cant);
+
+                    if (cantActiva == 0) {
+                        char desicion;
+                        Categoria categoria;
+                        Archivo_Categoria ar;
+
+                        rlutil::setColor(rlutil::RED);
+                        cout << "No se encuentran guardadas categorias Activas" << endl << endl;
+                        rlutil::setColor(rlutil::WHITE);
+                        cout << "¿Desea ingresar una categoria nueva? (S/N): ";
+                        cin >> desicion;
+                        if (desicion == 's' || desicion == 'S')
+                        {
+                            categoria.cargar();
+                            ar.guardar(categoria);
+                            system("cls");
+                            categoria.mostrar();
+                            cout << "Se cargo exitosamente..." << endl;
+                        }
+                        else if (desicion == 'n' || desicion == 'N')
+                        {
+                            return;
+                        }
                         system("pause");
-                        cout << endl;
+                    }
+                    else {
+                        cout << "Eliga categoria del producto" << endl;
+                        Producto producto;
+                        bool leyo = producto.Cargar();
+                        if (leyo)
+                        {
+                            archivo_producto archivo;
+                            archivo.guardar(producto);
+                            system("cls");
+                            cout << "Producto cargado" << endl;
+                            cout << "-----------------------------------" << endl;
+                            producto.Mostrar();
+                            cout << "-----------------------------------" << endl << endl;
+                            system("pause");
+                            cout << endl;
+                        }
                     }
                 }
 
@@ -297,15 +319,25 @@ rlutil::setColor(rlutil::WHITE);
                     cout << "AGREGAR STOCK" << endl;
                     archivo_producto ar;
                     int cant = ar.cantidad_de_registros();
+                    int cantA = ar.get_cantidad_Activa(cant);
                     ar.listar(cant);
                     int id;
                     archivo_producto archivo;
                     Producto producto, aux;
-                    cout << "Ingrese ID del producto al que desea agregarle stock: " ;
-                    cin >> id;
-                    system("cls");
-                    if (archivo.Existe(id)) {
-                        archivo.Stock(id);
+                    if (cantA == 0) {
+                        system("cls");
+                        rlutil::setColor(rlutil::RED);
+                        cout << "ERROR, no hay productos cargados" << endl;
+                        rlutil::setColor(rlutil::WHITE);
+                        system("pause");
+                    }
+                    else {
+                        cout << "Ingrese ID del producto al que desea agregarle stock: ";
+                        cin >> id;
+                        system("cls");
+                        if (archivo.Existe(id)) {
+                            archivo.Stock(id);
+                        }
                     }
                 }
                 break;
@@ -324,7 +356,7 @@ rlutil::setColor(rlutil::WHITE);
             {
                 rlutil::setColor(rlutil::RED);
                 cout << "No se encuentran guardados Productos Activos" << endl << endl;
-rlutil::setColor(rlutil::WHITE);
+                rlutil::setColor(rlutil::WHITE);
                 system("pause");
             }
             else {
@@ -346,7 +378,7 @@ rlutil::setColor(rlutil::WHITE);
             {
                 rlutil::setColor(rlutil::RED);
                 cout << "No se encuentran guardados Productos Activos" << endl << endl;
-rlutil::setColor(rlutil::WHITE);
+                rlutil::setColor(rlutil::WHITE);
                 system("pause");
 
             }
@@ -385,7 +417,7 @@ void Menu::menu_categorias()
         {
             rlutil::setColor(rlutil::RED);
             cout << "opcion incorrecta, vuelva a ingresar una opcion: ";
-rlutil::setColor(rlutil::WHITE);
+            rlutil::setColor(rlutil::WHITE);
             cin >> op;
         }
         switch (op)
@@ -406,6 +438,7 @@ rlutil::setColor(rlutil::WHITE);
             {
                 rlutil::setColor(rlutil::RED);
                 cout << "No se encuentran guardadas categorias Activas" << endl << endl;
+                rlutil::setColor(rlutil::WHITE);
                 system("pause");
 
             }
@@ -438,13 +471,12 @@ rlutil::setColor(rlutil::WHITE);
             {
                 rlutil::setColor(rlutil::RED);
                 cout << "No se encuentran guardadas categorias Activas" << endl << endl;
-                system("pause");
                 rlutil::setColor(rlutil::WHITE);
+                system("pause");
             }
             else {
                 archivo.modificar_categorias();
             }
-
         }
         break;
         case 4:
@@ -457,7 +489,7 @@ rlutil::setColor(rlutil::WHITE);
             int cantActiva = archivo.get_cantidad_Activa(cant);
             if (cantActiva == 0)
             {
-rlutil::setColor(rlutil::RED);
+                rlutil::setColor(rlutil::RED);
                 cout << "No se encuentran guardadas categorias Activas" << endl << endl;
                 rlutil::setColor(rlutil::WHITE);
                 system("pause");
@@ -501,7 +533,7 @@ void Menu::menu_ventas()
         {
             rlutil::setColor(rlutil::RED);
             cout << "opcion incorrecta, vuelva a ingresar una opcion" << endl;
-rlutil::setColor(rlutil::WHITE);
+            rlutil::setColor(rlutil::WHITE);
             cin >> op;
         }
         switch (op)
@@ -537,7 +569,7 @@ rlutil::setColor(rlutil::WHITE);
                 {
                     rlutil::setColor(rlutil::RED);
                     cout << "opcion incorrecta, vuelva a ingresar una opcion" << endl;
-rlutil::setColor(rlutil::WHITE);
+                    rlutil::setColor(rlutil::WHITE);
                     cin >> op;
                 }
 
@@ -552,7 +584,7 @@ rlutil::setColor(rlutil::WHITE);
                 {
 
                     system("cls");
-                    cout << " 1- Lista de ventas" << endl;
+                    cout << "Lista de ventas" << endl;
                     Archivo_Venta archivo;
 
 
@@ -562,7 +594,7 @@ rlutil::setColor(rlutil::WHITE);
                     {
                         rlutil::setColor(rlutil::RED);
                         cout << "No se encuentran guardadas ventas Activas" << endl << endl;
-rlutil::setColor(rlutil::WHITE);
+                        rlutil::setColor(rlutil::WHITE);
                         system("pause");
                     }
                     else
@@ -578,7 +610,7 @@ rlutil::setColor(rlutil::WHITE);
                 case 2:
                 {
                     system("cls");
-                    cout << " 2- Lista de ventas por cliente" << endl << endl;
+                    cout << "Lista de ventas por cliente" << endl << endl;
                     Archivo_Venta archivo;
                     Archivo_Cliente cliente;
                     int cant = archivo.cantidad_ventas();
@@ -588,7 +620,7 @@ rlutil::setColor(rlutil::WHITE);
                     {
                         rlutil::setColor(rlutil::RED);
                         cout << "No se encuentran guardadas ventas Activas" << endl << endl;
-rlutil::setColor(rlutil::WHITE);
+                        rlutil::setColor(rlutil::WHITE);
                         system("pause");
                     }
 
@@ -603,7 +635,7 @@ rlutil::setColor(rlutil::WHITE);
                 case 3:
                 {
                     system("cls");
-                    cout << " 3- Lista de ventas por fecha" << endl;
+                    cout << "Lista de ventas por fecha" << endl;
 
                     Archivo_Venta archivo;
                     int cant = archivo.cantidad_ventas();
@@ -612,7 +644,7 @@ rlutil::setColor(rlutil::WHITE);
                     {
                         rlutil::setColor(rlutil::RED);
                         cout << "No se encuentran guardadas ventas Activas" << endl << endl;
-rlutil::setColor(rlutil::WHITE);
+                        rlutil::setColor(rlutil::WHITE);
                         system("pause");
                     }
                     else
@@ -661,7 +693,7 @@ rlutil::setColor(rlutil::WHITE);
         case 2:
         {
             system("cls");
-            cout << "2- Agregar venta" << endl;
+            cout << "Agregar venta" << endl;
             Archivo_Venta av;
             Venta venta;
 
@@ -685,7 +717,7 @@ rlutil::setColor(rlutil::WHITE);
             {
                 rlutil::setColor(rlutil::RED);
                 cout << "No se encuentran guardadas ventas activas" << endl << endl;
-rlutil::setColor(rlutil::WHITE);
+                rlutil::setColor(rlutil::WHITE);
                 system("pause");
             }
             else {
@@ -705,7 +737,7 @@ rlutil::setColor(rlutil::WHITE);
         case 4:
         {
             system("cls");
-            cout << "4- Eliminar venta" << endl;
+            cout << "Eliminar venta" << endl;
             Archivo_Venta venta;
             venta.BajaLogica();
             system("cls");
@@ -716,7 +748,7 @@ rlutil::setColor(rlutil::WHITE);
         case 5:
         {
             system("cls");
-            cout << "5- Hacer copia de seguridad" << endl;
+            cout << "Hacer copia de seguridad" << endl;
             Archivo_bkp Backup;
             Backup.HacerCopiaDeSeguridad();
             cout << "Se realizo la copia de seguridad exitosamente..." << endl;
@@ -727,7 +759,7 @@ rlutil::setColor(rlutil::WHITE);
         case 6:
         {
             system("cls");
-            cout << "6- Restaurar copia de seguridad" << endl;
+            cout << "Restaurar copia de seguridad" << endl;
             Archivo_bkp Backup;
             Backup.RestaurarCopiaDeSeguridad();
             cout << "Se restauro la copia de seguridad exitosamente..." << endl;
@@ -781,7 +813,7 @@ void Menu::menu_clientes()
                 char desicion;
                 rlutil::setColor(rlutil::RED);
                 cout << "No se encuentran guardados clientes Activos" << endl << endl;
-rlutil::setColor(rlutil::WHITE);
+                rlutil::setColor(rlutil::WHITE);
                 cout << "¿Desea ingresar un cliente nuevo? (S/N): ";
                 cin >> desicion;
                 if (desicion == 's' || desicion == 'S')
@@ -797,7 +829,7 @@ rlutil::setColor(rlutil::WHITE);
                 {
                     rlutil::setColor(rlutil::RED);
                     cout << "Opcion incorrecta" << endl << endl;
-rlutil::setColor(rlutil::WHITE);
+                    rlutil::setColor(rlutil::WHITE);
                     system("pause");
                 }
                 system("pause");
@@ -839,7 +871,7 @@ rlutil::setColor(rlutil::WHITE);
             {
                 rlutil::setColor(rlutil::RED);
                 cout << "No se encuentran guardados clientes Activos" << endl << endl;
-rlutil::setColor(rlutil::WHITE);
+                rlutil::setColor(rlutil::WHITE);
                 system("pause");
             }
             else
@@ -882,7 +914,7 @@ void Menu::menu_vendedores()
         {
             rlutil::setColor(rlutil::RED);
             cout << "opcion incorrecta, vuelva a ingresar una opcion" << endl;
-rlutil::setColor(rlutil::WHITE);
+            rlutil::setColor(rlutil::WHITE);
             cin >> op;
         }
         switch (op)
@@ -905,7 +937,7 @@ rlutil::setColor(rlutil::WHITE);
                 char desicion;
                 rlutil::setColor(rlutil::RED);
                 cout << "No se encuentran guardados vendedores Activos" << endl << endl;
-rlutil::setColor(rlutil::WHITE);
+                rlutil::setColor(rlutil::WHITE);
                 cout << "¿Desea ingresar un vendedor nuevo? (S/N): ";
                 cin >> desicion;
                 if (desicion == 's' || desicion == 'S')
@@ -921,7 +953,7 @@ rlutil::setColor(rlutil::WHITE);
                 {
                     rlutil::setColor(rlutil::RED);
                     cout << "Opcion incorrecta" << endl << endl;
-rlutil::setColor(rlutil::WHITE);
+                    rlutil::setColor(rlutil::WHITE);
                     system("pause");
                 }
                 system("pause");
@@ -963,7 +995,7 @@ rlutil::setColor(rlutil::WHITE);
             {
                 rlutil::setColor(rlutil::RED);
                 cout << "No se encuentran guardados vendedores Activos" << endl << endl;
-rlutil::setColor(rlutil::WHITE);
+                rlutil::setColor(rlutil::WHITE);
                 system("pause");
             }
             else

@@ -170,9 +170,9 @@ void Venta::cargar()
 		}
 		else
 		{
-rlutil::setColor(rlutil::RED);
+			rlutil::setColor(rlutil::RED);
 			cout << "Opcion incorrecta" << endl;
-rlutil::setColor(rlutil::WHITE);
+			rlutil::setColor(rlutil::WHITE);
 			cout << "¿Desea cargar uno? (S/N)" << endl;
 			cin >> desicion;
 		}
@@ -183,9 +183,9 @@ rlutil::setColor(rlutil::WHITE);
 	cin >> idCliente;
 	while (!archivoCliente.ExisteCliente(idCliente))
 	{
-rlutil::setColor(rlutil::RED);
+		rlutil::setColor(rlutil::RED);
 		cout << "El ID ingresado no existe" << endl;
-rlutil::setColor(rlutil::WHITE);
+		rlutil::setColor(rlutil::WHITE);
 		cout << "* Ingrese el ID del cliente que realiza la comprar: ";
 		cin >> idCliente;
 	}
@@ -226,9 +226,9 @@ rlutil::setColor(rlutil::WHITE);
 		}
 
 		if (producto.getStock() == 0 || producto.getStock() < cantidad) {
-rlutil::setColor(rlutil::RED);
+			rlutil::setColor(rlutil::RED);
 			cout << "* No hay stock suficiente" << endl;
-rlutil::setColor(rlutil::WHITE);
+			rlutil::setColor(rlutil::WHITE);
 			cout << "* Quiere ingresar un ID de un producto nuevo?: ";
 			cin >> idProducto;
 			while (!archivoProducto.Existe(idProducto)) {
@@ -345,13 +345,6 @@ void Venta::mostrar()
 	Archivo_Vendedor vendedor;
 	Vendedor vende;
 	int cant = vendedor.Cantidad_vendedores();
-	Archivo_Cliente cliente;
-	Cliente cli;
-	int cantClientes = cliente.cantidad_clientes();
-	archivo_producto archivo;
-	Producto producto;
-	int cantProd = archivo.cantidad_de_registros();
-
 
 	cout << "****************************************** " << endl;
 	cout << "Fecha: " << getFecha().toString() << endl;
@@ -363,26 +356,21 @@ void Venta::mostrar()
 			cout << "ID de Vendedor: " << getIdVendedor() << "  " << "Nombre: " << vende.getNombre() << endl;
 		}
 	}
-	for (int i = 0; i < cantClientes; i++) 
-	{
-		cli = cliente.leer_clientes(i);
-		if(getIdCliente()==cli.getId_Cliente())
-		cout << "ID de Cliente: " << cli.getId_Cliente() << endl;
-     }
+	
+	cout << "ID de Cliente: " << getIdCliente() << endl;
 	cout << "ID de Venta: " << getId() << endl;
 	cout << "Cantidad de productos: " << getCantidad() << endl;
-	cout << "*******************************************" << endl;
 	
 	for (int i = 0; i < numeroDetalles; i++) {
+	cout << "-" << endl;
 	DetalleVenta detalle = detalles[i];
-	cout << detalle.getCantidad()<<"unidades de " <<" " << detalle.getNombre() << endl;
+	cout << detalle.getCantidad()<<" unidades de " <<" " << detalle.getNombre() << endl;
 	cout << detalle.getNombre() <<" ID: " << detalle.getId_Producto() << endl;
 	cout <<"Categoria " << detalle.getNombre() <<": " << detalle.getId_Categoria() << endl;
-	cout << "Precio: " << detalle.getPrecio() << endl;
-	cout << "Precio compra: " << detalle.getPrecioCompra() << endl;
-	cout << "*******************************************" << endl;
+	cout << "Precio: $" << detalle.getPrecio() << endl;
+	cout << "Precio compra: $" << detalle.getPrecioCompra() << endl;
 	}
-		
+	cout << "-" << endl;
 	
 	if (getTipoPago() == 1)
 	{
@@ -399,8 +387,8 @@ void Venta::mostrar()
 	{
 		cout << "RETIRA DEL LOCAL" <<endl;
 	}
-	cout << "Total a Pagar por el cliente: " << getTotal() << endl;
-	cout << "Ganancia total de la cafeteria: " << getGanancia() << endl;
+	cout << "Total a Pagar por el cliente: $" << getTotal() << endl;
+	cout << "Ganancia total de la cafeteria: $" << getGanancia() << endl;
 	cout << "****************************************** " << endl;
 }
 

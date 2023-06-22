@@ -58,6 +58,7 @@ Producto archivo_producto::leer_de_disco(int posicion)
 
     if (p == nullptr) {
         cout << "Error al abrir el archivo" <<endl;
+        return producto;
     }
 
     fseek(p, posicion * sizeof(Producto), SEEK_SET);
@@ -80,12 +81,12 @@ void archivo_producto::listar(int cantidad)
         cat=acat.leer_de_disco(producto.getId_Categoria()-1);
         if(cat.getEstado())
         {
-            rlutil::locate(45, 11);
-        //cout<<"------------------------------------------------"<<endl;
+        cout<<"------------------------------------------------"<<endl;
         producto.Mostrar();
         }
         }
     }
+        cout << "------------------------------------------------" << endl;
         
 }
 
