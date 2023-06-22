@@ -107,7 +107,7 @@ bool Producto::Cargar()
             if (isdigit(_nombre[i])) {
                rlutil::setColor(rlutil::RED);
                 cout << "El nombre no puede contener numeros" << endl;
-rlutil::setColor(rlutil::WHITE);
+                rlutil::setColor(rlutil::WHITE);
                 cout << "Ingrese el nombre: ";
                 cin.getline(_nombre, 30);
             }
@@ -115,6 +115,15 @@ rlutil::setColor(rlutil::WHITE);
         setNombre(_nombre);
         cout << "Ingrese el precio de compra del Producto: ";
         cin >> precio_compra;
+
+        if (precio_compra < 0 || precio_compra > 100000)
+        {
+            rlutil::setColor(rlutil::RED);
+            cout << "ingrese un precio razonable" << endl;
+            rlutil::setColor(rlutil::WHITE);
+            cout << "Ingrese el precio de compra del Producto: ";
+            cin >> precio;
+        }
   
         setPrecioCompra(precio_compra);
        
@@ -125,18 +134,18 @@ rlutil::setColor(rlutil::WHITE);
         {
             rlutil::setColor(rlutil::RED);
             cout<<"ingrese un precio razonable"<<endl;
-rlutil::setColor(rlutil::WHITE);
+            rlutil::setColor(rlutil::WHITE);
             cout << "Ingrese el precio de venta del Producto: ";
             cin >> precio;
         }
         setPrecio(precio);
-        cout << "ingrese la cantidad a Stockear: " << endl;
+        cout << "ingrese la cantidad a Stockear: ";
         cin >> stock;
         if (stock < 0)
         {
-rlutil::setColor(rlutil::RED);
+            rlutil::setColor(rlutil::RED);
             cout<<"ingrese un stock razonable"<<endl;
-rlutil::setColor(rlutil::WHITE);
+            rlutil::setColor(rlutil::WHITE);
             cout << "ingrese la cantidad a Stockear: " << endl;
             cin >> stock;
         }
@@ -147,7 +156,7 @@ rlutil::setColor(rlutil::WHITE);
         rlutil::setColor(rlutil::RED);
         cout << "Primero deben haber Categorias activas" << endl;
         system("pause");
-rlutil::setColor(rlutil::WHITE);
+        rlutil::setColor(rlutil::WHITE);
         char desicion;
         Menu menu;
         cout << "¿Desea generar una categoria nueva? (S/N): ";
@@ -190,17 +199,11 @@ void Producto::CargarCategoria()
 
 void Producto::Mostrar()
 {
-    rlutil::locate(45, 11);
     cout << "-Nombre del Producto: " << getNombre() << endl;
-    rlutil::locate(45, 12);
     cout << "#ID del Producto: " << getId_Producto() << endl;
-    rlutil::locate(45, 13);
     cout << "#ID de la Categoria: " << getId_Categoria()<< endl;
-    rlutil::locate(45, 14);
     cout << "-Precio de Venta del Producto: " << getPrecio() << endl;
-    rlutil::locate(45, 15);
     cout << "-Precio de Compra del Producto: " << getPrecioCompra() << endl;
-    rlutil::locate(45, 16);
     cout << "-Stock del Producto: " << getStock() << endl;
 }
 
