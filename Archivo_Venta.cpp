@@ -291,6 +291,7 @@ void Archivo_Venta::listar_x_fecha()
 		break;
 		case 3:
 		{
+			system("cls");
 			cout << "ingrese el anio a listar" << endl;
 			cin >> anio;
 			while (anio < 2016)
@@ -304,7 +305,7 @@ void Archivo_Venta::listar_x_fecha()
 			{
 				if (anio == ventas[i].getFecha().getAnio() && ventas[i].getEstado())
 				{
-					total += ventas[i].getTotal();
+					total += ventas[i].getGanancia();
 				}
 			}
 			string mes[12] = { "Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"
@@ -315,54 +316,7 @@ void Archivo_Venta::listar_x_fecha()
 			{
 				if (anio == ventas[i].getFecha().getAnio() && ventas[i].getEstado())
 				{
-					if (ventas[i].getFecha().getMes() == 1)
-					{
-						ventasMensuales[0] += ventas[i].getTotal();
-					}
-					else if (ventas[i].getFecha().getMes() == 2)
-					{
-						ventasMensuales[1] += ventas[i].getTotal();
-					}
-					else if (ventas[i].getFecha().getMes() == 3)
-					{
-						ventasMensuales[2] += ventas[i].getTotal();
-					}
-					else if (ventas[i].getFecha().getMes() == 4)
-					{
-						ventasMensuales[3] += ventas[i].getTotal();
-					}
-					else if (ventas[i].getFecha().getMes() == 5)
-					{
-						ventasMensuales[4] += ventas[i].getTotal();
-					}
-					else if (ventas[i].getFecha().getMes() == 6)
-					{
-						ventasMensuales[5] += ventas[i].getTotal();
-					}
-					else if (ventas[i].getFecha().getMes() == 7)
-					{
-						ventasMensuales[6] += ventas[i].getTotal();
-					}
-					else if (ventas[i].getFecha().getMes() == 8)
-					{
-						ventasMensuales[7] += ventas[i].getTotal();
-					}
-					else if (ventas[i].getFecha().getMes() == 9)
-					{
-						ventasMensuales[8] += ventas[i].getTotal();
-					}
-					else if (ventas[i].getFecha().getMes() == 10)
-					{
-						ventasMensuales[9] += ventas[i].getTotal();
-					}
-					else if (ventas[i].getFecha().getMes() == 11)
-					{
-						ventasMensuales[10] += ventas[i].getTotal();
-					}
-					else if (ventas[i].getFecha().getMes() == 12)
-					{
-						ventasMensuales[11] += ventas[i].getTotal();
-					}
+					ventasMensuales[ventas[i].getFecha().getMes() - 1] += ventas[i].getGanancia();	
 				}
 			}
 			system("cls");
