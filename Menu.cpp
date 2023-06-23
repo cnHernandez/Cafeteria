@@ -23,25 +23,26 @@ void Menu::menuPrincipal()
 {
     rlutil::setBackgroundColor(rlutil::LIGHTMAGENTA);
     rlutil::setColor(rlutil::WHITE);
-    int op,y=0;
+    int op, y = 0;
     bool menu_activo = true;
     while (menu_activo)
     {
         system("cls");
-        cout<<"-*-*-Bienvenido al sistema de gestion-*-*-"<<endl<<endl;
-       
-        cout <<"Menu Principal" << endl;
+        cout << "-*-*-Bienvenido al sistema de gestion-*-*-" << endl << endl;
+
+        cout << "Menu Principal" << endl;
         cout << "----------------" << endl;
         cout << " 1- Productos " << endl;
         cout << " 2- Categorias " << endl;
         cout << " 3- Ventas " << endl;
         cout << " 4- Clientes " << endl;
         cout << " 5- Vendedores " << endl;
+        cout << " 6- Informes " << endl;
         cout << "----------------" << endl;
         cout << " 0- SALIR" << endl;
 
         cin >> op;
-        while (op < 0 || op>5)
+        while (op < 0 || op>6)
         {
             rlutil::setColor(rlutil::RED);
             cout << "opcion incorrecta, vuelva a ingresar una opcion: ";
@@ -80,10 +81,69 @@ void Menu::menuPrincipal()
             menu_vendedores();
         }
         break;
+        case 6:
+        {
+            system("cls");
+            cout << "****INFORMES****" << endl << endl;
+            cout << "1- Recaudacion anual por vendedor" << endl;
+            cout << "2- Recaudacion anual por Productos" << endl;
+            cout << "3- Recaudacion anual por Categorias" << endl;
+            cout << "4- Ganancia neta mensual por anio" << endl;
+
+            cin >> op;
+            while (op < 0 || op>5)
+            {
+                rlutil::setColor(rlutil::RED);
+                cout << "opcion incorrecta, vuelva a ingresar una opcion: ";
+                rlutil::setColor(rlutil::WHITE);
+                cin >> op;
+            }
+            switch (op)
+            {
+            case 0:
+            {
+                menu_activo = false;
+            }
+            break;
+            case 1:
+            {
+                Archivo_Venta archivo;
+                system("cls");
+                cout << "RECAUDACION ANUAL POR VENDEDOR: " << endl;
+                archivo.recaudacion_x_vendedor();
+            }
+            break;
+            case 2:
+            {
+                Archivo_Venta archivo;
+                system("cls");
+                cout << "RECAUDACION ANUAL POR PRODUCTO: " << endl;
+                archivo.recaudacion_x_producto();
+            }
+            break;
+            case 3:
+            {
+                Archivo_Venta archivo;
+                system("cls");
+                cout << "RECAUDACION ANUAL POR CATEGORIA: " << endl;
+                archivo.recaudacion_x_categoria();
+            }
+            break;
+            case 4:
+            {
+                Archivo_Venta archivo;
+                system("cls");
+                cout << "GANANCIA MENSUAL POR ANIO: " << endl;
+                archivo.ganancia_x_mes_Anual();
+            }
+            break;
+
+            }
+            break;
+        }
         }
     }
 }
-
 void Menu::menu_productos()
 {
     int op;
@@ -556,16 +616,12 @@ void Menu::menu_ventas()
                 cout << "1- Todos" << endl;
                 cout << "2- Listar por Cliente" << endl;
                 cout << "3- Listar por Fecha" << endl;
-                cout << "4- Recaudacion anual por vendedor" << endl;
-                cout << "5- Recaudacion anual por Productos" << endl;
-                cout << "6- Recaudacion anual por Categorias" << endl;
-                cout << "7- Ganancia neta mensual por anio" << endl;
                 cout << "-----------------------" << endl;
                 cout << "0- volver" << endl;
                 cout << "-----------------------" << endl;
                 cin >> op;
 
-                while (op < 0 || op>7)
+                while (op < 0 || op>3)
                 {
                     rlutil::setColor(rlutil::RED);
                     cout << "opcion incorrecta, vuelva a ingresar una opcion" << endl;
@@ -653,39 +709,7 @@ void Menu::menu_ventas()
                         cout << endl << endl;
                     }
                 }
-                break;
-                case 4:
-                {
-                    Archivo_Venta archivo;
-                    system("cls");
-                    cout << "RECAUDACION ANUAL POR VENDEDOR: " << endl;
-                    archivo.recaudacion_x_vendedor();
-                }
-                break;
-                case 5:
-                {
-                    Archivo_Venta archivo;
-                    system("cls");
-                    cout << "RECAUDACION ANUAL POR PRODUCTO: " << endl;
-                    archivo.recaudacion_x_producto();
-                }
-                break;
-                case 6:
-                {
-                    Archivo_Venta archivo;
-                    system("cls");
-                    cout << "RECAUDACION ANUAL POR PRODUCTO: " << endl;
-                    archivo.recaudacion_x_categoria();
-                }
-                break;
-                case 7:
-                {
-                    Archivo_Venta archivo;
-                    system("cls");
-                    cout << "RECAUDACION ANUAL POR PRODUCTO: " << endl;
-                    archivo.ganancia_x_mes_Anual();
-                }
-                break;
+                break;              
                 }
             }
         }
@@ -739,10 +763,22 @@ void Menu::menu_ventas()
             system("cls");
             cout << "Eliminar venta" << endl;
             Archivo_Venta venta;
-            venta.BajaLogica();
-            system("cls");
-            cout << "Se elimino la venta correctamente..." << endl;
-            system("pause");
+            int cant = venta.cantidad_ventas();
+            int cantActiva = venta.get_cantidad_Activa(cant);
+            if (cantActiva == 0)
+            {
+                rlutil::setColor(rlutil::RED);
+                cout << "No se encuentran ventas cargadas" << endl << endl;
+                rlutil::setColor(rlutil::WHITE);
+                system("pause");
+
+            }
+            else {
+                venta.BajaLogica();
+                system("cls");
+                cout << "Se elimino la venta correctamente..." << endl;
+                system("pause");
+            }
         }
         break;
         case 5:
@@ -885,9 +921,21 @@ void Menu::menu_clientes()
         {
             system("cls");
             cout << "Eliminar cliente" << endl;
-            Archivo_Cliente cliente;
+            Archivo_Cliente cliente;  
+            int cant = cliente.cantidad_clientes();
+            int cantAct = cliente.get_cantidad_Activa(cant);
+            if (cantAct == 0)
+            {
+                rlutil::setColor(rlutil::RED);
+                cout << "No se encuentran clientes cargados" << endl << endl;
+                rlutil::setColor(rlutil::WHITE);
+                system("pause");
+            }
+            else
+            {
             cliente.baja_Logica();
-            system("pause");
+            system("pause");   
+            }
         }
         break;
         }
@@ -1012,8 +1060,20 @@ void Menu::menu_vendedores()
             Vendedor vendedor;
             system("cls");
             cout << "Eliminar Vendedor" << endl;
+            int cant = archivo.Cantidad_vendedores();
+            int cantActiva = archivo.Get_cantidad_Activa(cant);
+            if (cantActiva == 0)
+            {
+                rlutil::setColor(rlutil::RED);
+                cout << "No se encuentran guardados vendedores Activos" << endl << endl;
+                rlutil::setColor(rlutil::WHITE);
+                system("pause");
+            }
+            else
+            {
             archivo.Baja_Logica();
-            system("pause"); }
+            system("pause"); }     
+            }
         break;
         }
     }

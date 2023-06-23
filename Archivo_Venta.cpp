@@ -458,125 +458,140 @@ bool Archivo_Venta::guardar_modificado(Venta venta, int pos)
 void Archivo_Venta::recaudacion_x_vendedor()
 {
 	Archivo_Vendedor archivo;
+	int cantVendedor = archivo.Cantidad_vendedores();
 	int cant = cantidad_ventas();
 	Venta* ventas = new Venta[cant];
 	if (ventas == nullptr) {
 		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
 		return;
 	}
-	obtener_venta(ventas, cant);
+	if (cant == 0)
+	{
+		cout << "No existen Ventas cargadas" << endl;
+	}
+	else {
+		obtener_venta(ventas, cant);
+	}
 
-	int cantVendedor = archivo.Cantidad_vendedores();
 	Vendedor* vendedores = new Vendedor[cantVendedor];
 	if (vendedores == nullptr) {
 		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
 		return;
 	}
-	archivo.obtener_vendedor(vendedores, cantVendedor);
-	cout << "ingrese el anio a listar" << endl;
-	int anio;
-	cin >> anio;
-	while (anio < 2016)
+	if (cantVendedor == 0)
 	{
-		cout << "Anio invalido" << endl;
-		cout << "ingrese el Anio a listar: ";
-		cin >> anio;
+		cout << "No existen Vendedores cargados" << endl;
+		system("pause");
 	}
-	cout << "ingrese el ID del Vendedor " << endl;
-	int id;
-	cin >> id;
-	while (id < 0 || id > cantVendedor)
+	else
 	{
-		cout << "ID invalido" << endl;
-		cout << "ingrese el ID del Vendedor: ";
-		cin >> id;
-	}
-	float total = 0;
-	float ventasMensuales[12] = {};
-	string mes[12] = { "Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"
-	};
-	for (int i = 0; i < cant; i++)
-	{
-		if (anio == ventas[i].getFecha().getAnio() && ventas[i].getEstado() && ventas[i].getIdVendedor()==id)
-		{
-			total += ventas[i].getTotal();
-			if (ventas[i].getFecha().getMes() == 1)
-			{
-				ventasMensuales[0] += ventas[i].getTotal();
-			}
-			else if (ventas[i].getFecha().getMes() == 2)
-			{
-				ventasMensuales[1] += ventas[i].getTotal();
-			}
-			else if (ventas[i].getFecha().getMes() == 3)
-			{
-				ventasMensuales[2] += ventas[i].getTotal();
-			}
-			else if (ventas[i].getFecha().getMes() == 4)
-			{
-				ventasMensuales[3] += ventas[i].getTotal();
-			}
-			else if (ventas[i].getFecha().getMes() == 5)
-			{
-				ventasMensuales[4] += ventas[i].getTotal();
-			}
-			else if (ventas[i].getFecha().getMes() == 6)
-			{
-				ventasMensuales[5] += ventas[i].getTotal();
-			}
-			else if (ventas[i].getFecha().getMes() == 7)
-			{
-				ventasMensuales[6] += ventas[i].getTotal();
-			}
-			else if (ventas[i].getFecha().getMes() == 8)
-			{
-				ventasMensuales[7] += ventas[i].getTotal();
-			}
-			else if (ventas[i].getFecha().getMes() == 9)
-			{
-				ventasMensuales[8] += ventas[i].getTotal();
-			}
-			else if (ventas[i].getFecha().getMes() == 10)
-			{
-				ventasMensuales[9] += ventas[i].getTotal();
-			}
-			else if (ventas[i].getFecha().getMes() == 11)
-			{
-				ventasMensuales[10] += ventas[i].getTotal();
-			}
-			else if (ventas[i].getFecha().getMes() == 12)
-			{
-				ventasMensuales[11] += ventas[i].getTotal();
-			}
-		}
-	}
+		archivo.obtener_vendedor(vendedores, cantVendedor);
 
-	system("cls");
-	for (int i = 0; i < cantVendedor; i++)
-	{
-		if (id == vendedores[i].getId_Vendedor())
+		cout << "ingrese el anio a listar" << endl;
+		int anio;
+		cin >> anio;
+		while (anio < 2016)
 		{
-			cout << "RECAUDACION ANUAL DE : " << vendedores[i].getNombre() <<"  " << "EN EL ANIO : " << anio << endl;
-			cout << "---------------------------------------" << endl;
+			cout << "Anio invalido" << endl;
+			cout << "ingrese el Anio a listar: ";
+			cin >> anio;
 		}
+		cout << "ingrese el ID del Vendedor " << endl;
+		int id;
+		cin >> id;
+		while (id < 0 || id > cantVendedor)
+		{
+			cout << "ID invalido" << endl;
+			cout << "ingrese el ID del Vendedor: ";
+			cin >> id;
+		}
+		float total = 0;
+		float ventasMensuales[12] = {};
+		string mes[12] = { "Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"
+		};
+		for (int i = 0; i < cant; i++)
+		{
+			if (anio == ventas[i].getFecha().getAnio() && ventas[i].getEstado() && ventas[i].getIdVendedor() == id)
+			{
+				total += ventas[i].getTotal();
+				if (ventas[i].getFecha().getMes() == 1)
+				{
+					ventasMensuales[0] += ventas[i].getTotal();
+				}
+				else if (ventas[i].getFecha().getMes() == 2)
+				{
+					ventasMensuales[1] += ventas[i].getTotal();
+				}
+				else if (ventas[i].getFecha().getMes() == 3)
+				{
+					ventasMensuales[2] += ventas[i].getTotal();
+				}
+				else if (ventas[i].getFecha().getMes() == 4)
+				{
+					ventasMensuales[3] += ventas[i].getTotal();
+				}
+				else if (ventas[i].getFecha().getMes() == 5)
+				{
+					ventasMensuales[4] += ventas[i].getTotal();
+				}
+				else if (ventas[i].getFecha().getMes() == 6)
+				{
+					ventasMensuales[5] += ventas[i].getTotal();
+				}
+				else if (ventas[i].getFecha().getMes() == 7)
+				{
+					ventasMensuales[6] += ventas[i].getTotal();
+				}
+				else if (ventas[i].getFecha().getMes() == 8)
+				{
+					ventasMensuales[7] += ventas[i].getTotal();
+				}
+				else if (ventas[i].getFecha().getMes() == 9)
+				{
+					ventasMensuales[8] += ventas[i].getTotal();
+				}
+				else if (ventas[i].getFecha().getMes() == 10)
+				{
+					ventasMensuales[9] += ventas[i].getTotal();
+				}
+				else if (ventas[i].getFecha().getMes() == 11)
+				{
+					ventasMensuales[10] += ventas[i].getTotal();
+				}
+				else if (ventas[i].getFecha().getMes() == 12)
+				{
+					ventasMensuales[11] += ventas[i].getTotal();
+				}
+			}
+		}
+
+		system("cls");
+		for (int i = 0; i < cantVendedor; i++)
+		{
+			if (id == vendedores[i].getId_Vendedor())
+			{
+				cout << "RECAUDACION ANUAL DE : " << vendedores[i].getNombre() << "  " << "EN EL ANIO : " << anio << endl;
+				cout << "---------------------------------------" << endl;
+			}
+		}
+
+		for (int i = 0; i < 12; i++)
+		{
+			if (mes[i].size() < 7) {
+				cout << mes[i] << "\t\t\t" << "$" << ventasMensuales[i] << endl;
+
+			}
+			else {
+				cout << mes[i] << "  \t\t" << "$" << ventasMensuales[i] << endl;
+
+			}
+		}
+		cout << "----------------------------------------" << endl;
+		cout << "       RECAUDACION TOTAL: $" << total << endl << endl;
+		system("pause");
+		delete[] ventas;
+		delete[] vendedores;
 	}
-	
-	for (int i = 0; i < 12; i++)
-	{
-		if (mes[i].size() < 7) {
-			cout << mes[i] << "\t\t\t" << "$" << ventasMensuales[i] << endl;
-			
-		}
-		else {
-			cout << mes[i] << "  \t\t" << "$" << ventasMensuales[i] << endl;
-			
-		}
-	}
-	cout << "----------------------------------------" << endl;
-	cout << "       RECAUDACION TOTAL: $" << total << endl << endl;
-	system("pause");	
-	delete[] ventas;	
-	delete[] vendedores;
 }
 
 void Archivo_Venta::recaudacion_x_producto()
@@ -588,7 +603,13 @@ void Archivo_Venta::recaudacion_x_producto()
 		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
 		return;
 	}
-	obtener_venta(ventas, cant);
+	if (cant == 0)
+	{
+		cout << "No se encuentran ventas cargadas" << endl;
+	}
+	else {
+		obtener_venta(ventas, cant);
+	}
 	Archivo_Categoria archiCat;
 	int cantProd = archiProd.cantidad_de_registros();
 	Producto* productos = new Producto[cantProd];
@@ -596,63 +617,69 @@ void Archivo_Venta::recaudacion_x_producto()
 		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
 		return;
 	}
-
-	archiProd.obtener_productos(productos, cantProd);
-	int cantCat= archiCat.cantidad_categorias();
-	Categoria* categorias = new Categoria[cantCat];
-	if (categorias == nullptr) {
-		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
-		return;
-	}
-	archiCat.obtener_categorias(categorias, cantCat);
-	int anio;
-
-	cout << "ingrese el anio a listar" << endl;
-	cin >> anio;
-	while (anio < 2016)
+	if (cantProd == 0)
 	{
-		cout << "Anio invalido" << endl;
-		cout << "ingrese el Anio a listar: ";
-		cin >> anio;
+		cout << "No se encuentran productos cargados" << endl;
+		system("pause");
 	}
-	system("cls");
-	string nombre;
-	string nombreProd;
-	
-	cout << "-------------------------- " << anio << " ----------------------------" << endl << endl;
-	cout << "PRODUCTO""  \t\t""CATEGORIA""  \t\t" "RECAUDADO" "  \t\t" << endl << endl;
-		float total = 0;
-		
-	for (int i = 0; i < cantProd; i++)
-	{
-		for (int j = 0; j < cant; j++)
-		{
-			if (productos[i].getId_Producto() == ventas[j].getProducto() && anio == ventas[j].getFecha().getAnio() && ventas[j].getEstado() == true)
-					
-					{
-						total += ventas[j].getTotal();
-						nombreProd = productos[i].getNombre();
-					}		
-		
+	else {
+		archiProd.obtener_productos(productos, cantProd);
+		int cantCat = archiCat.cantidad_categorias();
+		Categoria* categorias = new Categoria[cantCat];
+		if (categorias == nullptr) {
+			cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
+			return;
 		}
-		
+		archiCat.obtener_categorias(categorias, cantCat);
+		int anio;
+
+		cout << "ingrese el anio a listar" << endl;
+		cin >> anio;
+		while (anio < 2016)
+		{
+			cout << "Anio invalido" << endl;
+			cout << "ingrese el Anio a listar: ";
+			cin >> anio;
+		}
+		system("cls");
+		string nombre;
+		string nombreProd;
+
+		cout << "-------------------------- " << anio << " ----------------------------" << endl << endl;
+		cout << "PRODUCTO""  \t\t""CATEGORIA""  \t\t" "RECAUDADO" "  \t\t" << endl << endl;
+		float total = 0;
+
+		for (int i = 0; i < cantProd; i++)
+		{
+			for (int j = 0; j < cant; j++)
+			{
+				if (productos[i].getId_Producto() == ventas[j].getProducto() && anio == ventas[j].getFecha().getAnio() && ventas[j].getEstado() == true)
+
+				{
+					total += ventas[j].getTotal();
+					nombreProd = productos[i].getNombre();
+				}
+
+			}
+
 			if (categorias[i].get_id() == productos[i].getId_Categoria())
 			{
-			nombre = categorias[i].getNombre();
-		     }
+				nombre = categorias[i].getNombre();
+			}
 			if (nombreProd == productos[i].getNombre())
 			{
 				cout << setw(28) << setiosflags(ios::left) << productos[i].getNombre() << setw(22) << setiosflags(ios::left) << nombre << "$" << total << endl;
 				cout << endl;
 			}
-		
+
+		}
+		cout << "-------------------------------------------------------------" << endl << endl;
+		cout << endl;
+		system("pause");
+		delete[] ventas;
+		delete[] productos;
+		delete[] categorias;
 	}
-	cout << "-------------------------------------------------------------" << endl << endl;
-	cout << endl;
-	system("pause");
-	delete[] ventas;
-	delete[] productos;
-	delete[] categorias;
 }
 
 void Archivo_Venta::recaudacion_x_categoria()
@@ -666,64 +693,83 @@ void Archivo_Venta::recaudacion_x_categoria()
 		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
 		return;
 	}
-	archivoProd.obtener_productos(productos,cantProd);
+	if (cantProd == 0)
+	{
+		cout << "No se encuentran productos cargados" << endl;
+	}
+	else {
+		archivoProd.obtener_productos(productos, cantProd);
+	}
 	Venta* ventas = new Venta[cant];
 	if (ventas == nullptr) {
 		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
 		return;
 	}
-	obtener_venta(ventas, cant);
+	if (cant == 0)
+	{
+		cout << "No se encuentran ventas cargadas" << endl;
+	}
+	else {
+		obtener_venta(ventas, cant);
+	}
 	int cantCat = archiCat.cantidad_categorias();
 	Categoria* categorias = new Categoria[cantCat];
 	if (categorias == nullptr) {
 		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
 		return;
 	}
-	archiCat.obtener_categorias(categorias, cantCat);
-	int anio;
-	cout << "ingrese el anio a listar" << endl;
-	cin >> anio;
-	while (anio < 2016)
+	if (cant == 0)
 	{
-		cout << "Anio invalido" << endl;
-		cout << "ingrese el Anio a listar: ";
-		cin >> anio;
+		cout << "No se encuentran categorias cargadas" << endl;
+		system("pause");
 	}
-	system("cls");
-	
-	string nombre;
-	cout << "-------------------------- " << anio << " ----------------------------" << endl << endl;
-	cout << "CATEGORIA""  \t\t" "RECAUDADO" "  \t\t" << endl << endl;
-	for (int i = 0; i < cantCat; i++)
-	{
-	float total = 0;
-		for (int j = 0; j < cantProd; j++)
+	else {
+		archiCat.obtener_categorias(categorias, cantCat);
+		int anio;
+		cout << "ingrese el anio a listar" << endl;
+		cin >> anio;
+		while (anio < 2016)
 		{
-			for (int x = 0; x < cant; x++)
+			cout << "Anio invalido" << endl;
+			cout << "ingrese el Anio a listar: ";
+			cin >> anio;
+		}
+		system("cls");
+
+		string nombre;
+		cout << "-------------------------- " << anio << " ----------------------------" << endl << endl;
+		cout << "CATEGORIA""  \t\t" "RECAUDADO" "  \t\t" << endl << endl;
+		for (int i = 0; i < cantCat; i++)
+		{
+			float total = 0;
+			for (int j = 0; j < cantProd; j++)
 			{
-				if (productos[j].getId_Producto() == ventas[x].getProducto() && anio == ventas[x].getFecha().getAnio() && ventas[x].getEstado())
+				for (int x = 0; x < cant; x++)
 				{
-					if (categorias[i].get_id() == productos[j].getId_Categoria())
+					if (productos[j].getId_Producto() == ventas[x].getProducto() && anio == ventas[x].getFecha().getAnio() && ventas[x].getEstado())
 					{
-						nombre = categorias[i].getNombre();
-						total += ventas[x].getTotal();
+						if (categorias[i].get_id() == productos[j].getId_Categoria())
+						{
+							nombre = categorias[i].getNombre();
+							total += ventas[x].getTotal();
+						}
+
 					}
-				
 				}
 			}
+			if (nombre == categorias[i].getNombre())
+			{
+				cout << setw(28) << setiosflags(ios::left) << nombre << "$" << total << endl;
+			}
 		}
-		if (nombre == categorias[i].getNombre())
-		{
-			cout << setw(28) << setiosflags(ios::left) << nombre << "$" << total << endl;
-		}
+		cout << endl;
+		cout << "-------------------------------------------------------------" << endl << endl;
+		cout << endl;
+		system("pause");
+		delete[] productos;
+		delete[] ventas;
+		delete[] categorias;
 	}
-	cout << endl;
-	cout << "-------------------------------------------------------------" << endl << endl;
-	cout << endl;
-	system("pause");
-	delete[] productos;
-	delete[] ventas;
-	delete[] categorias;
 }
 
 
@@ -824,92 +870,99 @@ void Archivo_Venta::ganancia_x_mes_Anual()
 		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
 		return;
 	}
-	obtener_venta(ventas, cant);
-	int anio;
-	cout << "ingrese el anio a listar" << endl;
-	cin >> anio;
-	while (anio < 2016)
+	if (cant == 0)
 	{
-		cout << "Anio invalido" << endl;
-		cout << "ingrese el Anio a listar: ";
+		cout << "No se encuentran ventas cargadas" << endl;
+		system("pause");
+	}
+	else {
+		obtener_venta(ventas, cant);
+		int anio;
+		cout << "ingrese el anio a listar" << endl;
 		cin >> anio;
-	}
-	
-	float total = 0;
-	float ventasMensuales[12] = {};
-	string mes[12] = { "Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"
-	};
-	for (int i = 0; i < cant; i++)
-	{
-		if (anio == ventas[i].getFecha().getAnio() && ventas[i].getEstado())
+		while (anio < 2016)
 		{
-			total += ventas[i].getGanancia();
-			if (ventas[i].getFecha().getMes() == 1)
+			cout << "Anio invalido" << endl;
+			cout << "ingrese el Anio a listar: ";
+			cin >> anio;
+		}
+
+		float total = 0;
+		float ventasMensuales[12] = {};
+		string mes[12] = { "Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"
+		};
+		for (int i = 0; i < cant; i++)
+		{
+			if (anio == ventas[i].getFecha().getAnio() && ventas[i].getEstado())
 			{
-				ventasMensuales[0] += ventas[i].getGanancia();
-			}
-			else if (ventas[i].getFecha().getMes() == 2)
-			{
-				ventasMensuales[1] += ventas[i].getGanancia();
-			}
-			else if (ventas[i].getFecha().getMes() == 3)
-			{
-				ventasMensuales[2] += ventas[i].getGanancia();
-			}
-			else if (ventas[i].getFecha().getMes() == 4)
-			{
-				ventasMensuales[3] += ventas[i].getGanancia();
-			}
-			else if (ventas[i].getFecha().getMes() == 5)
-			{
-				ventasMensuales[4] += ventas[i].getGanancia();
-			}
-			else if (ventas[i].getFecha().getMes() == 6)
-			{
-				ventasMensuales[5] += ventas[i].getGanancia();
-			}
-			else if (ventas[i].getFecha().getMes() == 7)
-			{
-				ventasMensuales[6] += ventas[i].getGanancia();
-			}
-			else if (ventas[i].getFecha().getMes() == 8)
-			{
-				ventasMensuales[7] += ventas[i].getGanancia();
-			}
-			else if (ventas[i].getFecha().getMes() == 9)
-			{
-				ventasMensuales[8] += ventas[i].getGanancia();
-			}
-			else if (ventas[i].getFecha().getMes() == 10)
-			{
-				ventasMensuales[9] += ventas[i].getGanancia();
-			}
-			else if (ventas[i].getFecha().getMes() == 11)
-			{
-				ventasMensuales[10] += ventas[i].getGanancia();
-			}
-			else if (ventas[i].getFecha().getMes() == 12)
-			{
-				ventasMensuales[11] += ventas[i].getGanancia();
+				total += ventas[i].getGanancia();
+				if (ventas[i].getFecha().getMes() == 1)
+				{
+					ventasMensuales[0] += ventas[i].getGanancia();
+				}
+				else if (ventas[i].getFecha().getMes() == 2)
+				{
+					ventasMensuales[1] += ventas[i].getGanancia();
+				}
+				else if (ventas[i].getFecha().getMes() == 3)
+				{
+					ventasMensuales[2] += ventas[i].getGanancia();
+				}
+				else if (ventas[i].getFecha().getMes() == 4)
+				{
+					ventasMensuales[3] += ventas[i].getGanancia();
+				}
+				else if (ventas[i].getFecha().getMes() == 5)
+				{
+					ventasMensuales[4] += ventas[i].getGanancia();
+				}
+				else if (ventas[i].getFecha().getMes() == 6)
+				{
+					ventasMensuales[5] += ventas[i].getGanancia();
+				}
+				else if (ventas[i].getFecha().getMes() == 7)
+				{
+					ventasMensuales[6] += ventas[i].getGanancia();
+				}
+				else if (ventas[i].getFecha().getMes() == 8)
+				{
+					ventasMensuales[7] += ventas[i].getGanancia();
+				}
+				else if (ventas[i].getFecha().getMes() == 9)
+				{
+					ventasMensuales[8] += ventas[i].getGanancia();
+				}
+				else if (ventas[i].getFecha().getMes() == 10)
+				{
+					ventasMensuales[9] += ventas[i].getGanancia();
+				}
+				else if (ventas[i].getFecha().getMes() == 11)
+				{
+					ventasMensuales[10] += ventas[i].getGanancia();
+				}
+				else if (ventas[i].getFecha().getMes() == 12)
+				{
+					ventasMensuales[11] += ventas[i].getGanancia();
+				}
 			}
 		}
+
+		system("cls");
+
+		for (int i = 0; i < 12; i++)
+		{
+			if (mes[i].size() < 7) {
+				cout << mes[i] << "\t\t\t" << "$" << ventasMensuales[i] << endl;
+
+			}
+			else {
+				cout << mes[i] << "  \t\t" << "$" << ventasMensuales[i] << endl;
+
+			}
+		}
+		cout << "----------------------------------------" << endl;
+		cout << "       RECAUDACION TOTAL: $" << total << endl << endl;
+		system("pause");
+		delete[] ventas;
 	}
-
-	system("cls");
-	
-	for (int i = 0; i < 12; i++)
-	{
-		if (mes[i].size() < 7) {
-			cout << mes[i] << "\t\t\t" << "$" << ventasMensuales[i] << endl;
-
-		}
-		else {
-			cout << mes[i] << "  \t\t" << "$" << ventasMensuales[i] << endl;
-
-		}
-	}
-	cout << "----------------------------------------" << endl;
-	cout << "       RECAUDACION TOTAL: $" << total << endl << endl;
-	system("pause");
-	delete[] ventas;
 }
