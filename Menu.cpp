@@ -16,10 +16,8 @@
 #include "rlutil.h"
 #include <iomanip>
 
-#include <iostream>
-
 using namespace std;
-void Menu::menuPrincipal()
+void Menu::menu_Principal()
 {
     rlutil::setBackgroundColor(rlutil::LIGHTMAGENTA);
     rlutil::setColor(rlutil::WHITE);
@@ -58,93 +56,37 @@ void Menu::menuPrincipal()
         break;
         case 1:
         {
-            menu_productos();
+            menu_Productos();
         }
         break;
         case 2:
         {
-            menu_categorias();
+            menu_Categorias();
         }
         break;
         case 3:
         {
-            menu_ventas();
+            menu_Ventas();
         }
         break;
         case 4:
         {
-            menu_clientes();
+            menu_Clientes();
         }
         break;
         case 5:
         {
-            menu_vendedores();
+            menu_Vendedores();
         }
         break;
         case 6:
         {
-            system("cls");
-            cout << "****INFORMES****" << endl << endl;
-            cout << "1- Recaudacion anual por vendedor" << endl;
-            cout << "2- Recaudacion anual por Productos" << endl;
-            cout << "3- Recaudacion anual por Categorias" << endl;
-            cout << "4- Ganancia neta mensual por anio" << endl;
-
-            cin >> op;
-            while (op < 0 || op>5)
-            {
-                rlutil::setColor(rlutil::RED);
-                cout << "opcion incorrecta, vuelva a ingresar una opcion: ";
-                rlutil::setColor(rlutil::WHITE);
-                cin >> op;
-            }
-            switch (op)
-            {
-            case 0:
-            {
-                menu_activo = false;
-            }
-            break;
-            case 1:
-            {
-                Archivo_Venta archivo;
-                system("cls");
-                cout << "RECAUDACION ANUAL POR VENDEDOR: " << endl;
-                archivo.recaudacion_x_vendedor();
-            }
-            break;
-            case 2:
-            {
-                Archivo_Venta archivo;
-                system("cls");
-                cout << "RECAUDACION ANUAL POR PRODUCTO: " << endl;
-                archivo.recaudacion_x_producto();
-            }
-            break;
-            case 3:
-            {
-                Archivo_Venta archivo;
-                system("cls");
-                cout << "RECAUDACION ANUAL POR CATEGORIA: " << endl;
-                archivo.recaudacion_x_categoria();
-            }
-            break;
-            case 4:
-            {
-                Archivo_Venta archivo;
-                system("cls");
-                cout << "GANANCIA MENSUAL POR ANIO: " << endl;
-                archivo.ganancia_x_mes_Anual();
-            }
-            break;
-
-            }
-            break;
+            menu_Informes();
         }
         }
     }
 }
-void Menu::menu_productos()
+void Menu::menu_Productos()
 {
     int op;
     bool menu_activo = true;
@@ -232,7 +174,7 @@ void Menu::menu_productos()
                         }
                         else if (desicion == 'n' || desicion == 'N')
                         {
-                            return;
+                            exit(-1);
                         }
                     }
                     else
@@ -349,7 +291,7 @@ void Menu::menu_productos()
                         }
                         else if (desicion == 'n' || desicion == 'N')
                         {
-                            return;
+                            exit(-1);
                         }
                         system("pause");
                     }
@@ -455,7 +397,7 @@ void Menu::menu_productos()
     }
 }
 
-void Menu::menu_categorias()
+void Menu::menu_Categorias()
 {
     int op;
     bool menu_activo = true;
@@ -571,7 +513,7 @@ void Menu::menu_categorias()
 
 }
 
-void Menu::menu_ventas()
+void Menu::menu_Ventas()
 {
     int op;
     bool menu_activo = true;
@@ -788,7 +730,6 @@ void Menu::menu_ventas()
             Archivo_bkp Backup;
             Backup.HacerCopiaDeSeguridad();
             cout << "Se realizo la copia de seguridad exitosamente..." << endl;
-
             system("pause");
         }
         break;
@@ -807,7 +748,7 @@ void Menu::menu_ventas()
 }
 
 
-void Menu::menu_clientes()
+void Menu::menu_Clientes()
 {
 
     int op;
@@ -859,7 +800,7 @@ void Menu::menu_clientes()
                 }
                 else if (desicion == 'n' || desicion == 'N')
                 {
-                    return;
+                    exit(-1);
                 }
                 else
                 {
@@ -942,7 +883,7 @@ void Menu::menu_clientes()
     }
 }
 
-void Menu::menu_vendedores()
+void Menu::menu_Vendedores()
 {
     int op;
     bool menu_activo = true;
@@ -995,7 +936,7 @@ void Menu::menu_vendedores()
                 }
                 else if (desicion == 'n' || desicion == 'N')
                 {
-                    return;
+                    exit(-1);
                 }
                 else
                 {
@@ -1076,5 +1017,70 @@ void Menu::menu_vendedores()
             }
         break;
         }
+    }
+}
+
+void Menu::menu_Informes()
+{
+    int op;
+    bool menu_activo = true;
+    system("cls");
+    cout << "****INFORMES****" << endl ;
+    cout << "-----------------------------------" << endl;
+    cout << "1- Recaudacion anual por vendedor" << endl;
+    cout << "2- Recaudacion anual por Productos" << endl;
+    cout << "3- Recaudacion anual por Categorias" << endl;
+    cout << "4- Ganancia neta mensual por anio" << endl;
+    cout << "-----------------------------------" << endl;
+    cout << "0- SALIR" << endl;
+
+    cin >> op;
+    while (op < 0 || op>5)
+    {
+        rlutil::setColor(rlutil::RED);
+        cout << "opcion incorrecta, vuelva a ingresar una opcion: ";
+        rlutil::setColor(rlutil::WHITE);
+        cin >> op;
+    }
+    switch (op)
+    {
+    case 0:
+    {
+        menu_activo = false;
+    }
+    break;
+    case 1:
+    {
+        Archivo_Venta archivo;
+        system("cls");
+        cout << "RECAUDACION ANUAL POR VENDEDOR: " << endl;
+        archivo.recaudacion_x_vendedor();
+    }
+    break;
+    case 2:
+    {
+        Archivo_Venta archivo;
+        system("cls");
+        cout << "RECAUDACION ANUAL POR PRODUCTO: " << endl;
+        archivo.recaudacion_x_producto();
+    }
+    break;
+    case 3:
+    {
+        Archivo_Venta archivo;
+        system("cls");
+        cout << "RECAUDACION ANUAL POR CATEGORIA: " << endl;
+        archivo.recaudacion_x_categoria();
+    }
+    break;
+    case 4:
+    {
+        Archivo_Venta archivo;
+        system("cls");
+        cout << "GANANCIA MENSUAL POR ANIO: " << endl;
+        archivo.ganancia_x_mes_Anual();
+    }
+    break;
+
     }
 }

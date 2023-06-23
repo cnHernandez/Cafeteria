@@ -181,17 +181,17 @@ bool Archivo_Categoria::guardarEnDisco(int pos) {
 }
 
 int Archivo_Categoria::buscarCategoria(int ID) {
-    Archivo_Categoria ac;
     Categoria c;
-    int i, cant = ac.cantidad_categorias();
+    int i, cant = cantidad_categorias();
     for (i = 0; i < cant; i++) {
-        ac.leer_categorias(i);
+        c = leer_categorias(i);
         if (ID == c.get_id()) {
             return i;
         }
     }
     return -1;
 }
+
 void Archivo_Categoria::listar_categorias(int cantidad)
 {
 

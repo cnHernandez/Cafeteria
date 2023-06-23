@@ -277,7 +277,7 @@ void archivo_producto::listaXcategoria()
             system("cls");
             if (desicion == 'S' || desicion == 's')
             {
-                menu.menu_productos();
+                menu.menu_Productos();
             }
             else if(desicion == 'N' || desicion == 'n'){
                 return;

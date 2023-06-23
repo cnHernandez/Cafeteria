@@ -20,7 +20,6 @@ private:
 	int numeroDetalles;
 	Fecha fecha;
 	int idCliente;
-	int tipoPago;
 	int idVendedor;
 	int entrega;
 	float ganancia;
@@ -37,7 +36,6 @@ public:
 	void setTotal(float);
 	void setEstado(bool);
 	void setFecha(int,int,int);
-	void setTipoPago(int);
 	void setIdVendedor(int);
 	void setEntrega(int);
 
@@ -52,10 +50,11 @@ public:
 	float getTotal();
 	bool getEstado();
 	Fecha getFecha();
-	int getTipoPago();
 	int getIdVendedor();
 	void cargar();
 	void mostrar();
+	DetalleVenta getDetalle(int);
+	int getNumerodetalles();
 	
 	
 

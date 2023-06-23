@@ -105,8 +105,15 @@ bool Venta::getEstado()
 	return estado;
 }
 
+DetalleVenta Venta::getDetalle(int i)
+{
+	return detalles[i];
+}
 
-
+int Venta::getNumerodetalles()
+{
+	return numeroDetalles;
+}
 void Venta::cargar()
 {
 	archivo_producto archivoProducto;
@@ -124,8 +131,9 @@ void Venta::cargar()
 	int cantidad = 0;
 	int cantidadT = 0;
 	float precio = 0;
+	float precioCompra = 0;
 	float total = 0;
-	float totalFinal = 0;
+	float totalCompra = 0;
 	float aumento = 0;
 	float descuento = 0;
 	int tipoPago = 0;
@@ -140,6 +148,32 @@ void Venta::cargar()
 	cout << "-------------------------------" << endl;
 
 	archivoVendedor.Listar_Vendedor(cantVendedores);
+	while (archivoVendedor.Cantidad_vendedores() == 0)
+	{
+		string desicion;
+		rlutil::setColor(rlutil::RED);
+		cout << "No hay vendedores cargados" << endl;
+		rlutil::setColor(rlutil::WHITE);
+		cout << "¿Desea cargar uno? (S/N)" << endl;
+		cin >> desicion;
+		if (desicion == "S" || desicion == "s")
+		{
+			vend.Cargar();
+			archivoVendedor.Guardar(vend);
+		}
+		else if (desicion == "N" || desicion == "n")
+		{
+			exit(-1);
+		}
+		else
+		{
+			rlutil::setColor(rlutil::RED);
+			cout << "Opcion incorrecta" << endl;
+			rlutil::setColor(rlutil::WHITE);
+			cout << "¿Desea cargar uno? (S/N)" << endl;
+			cin >> desicion;
+		}
+	}
 	cout << "* Ingrese el ID del vendedor que lo asistio: ";
 	cin >> idVendedor;
 	while (idVendedor <= 0 || !archivoVendedor.ExisteVendedor(idVendedor))
@@ -166,7 +200,7 @@ void Venta::cargar()
 		}
 		else if (desicion == "N" || desicion == "n")
 		{
-			return;
+			exit(-1);
 		}
 		else
 		{
@@ -268,39 +302,17 @@ void Venta::cargar()
 		detalles[numeroDetalles] = detalle;
 		numeroDetalles++;
 		precio = producto.getPrecio();
+		precioCompra = producto.getPrecioCompra();
 		total += precio * cantidad;
+		totalCompra += precioCompra * cantidad;
 		cantidadT += cantidad;
 		system("cls");
 	}
 		
 	///////////////// TERMINA LA CARGA DE VARIOS PRODUCTOS
-	rlutil::setColor(rlutil::WHITE);
-		cout << "* 1- Efectivo 5 % Descuento  //  2 - Tarjeta 8 % Aumento: ";
-		cin >> tipoPago;
-		float porcentajeEfectivo = 0.05;
-		float porcentajeTarjeta = 0.08;
-		if (tipoPago != 1 && tipoPago != 2)
-		{
-			rlutil::setColor(rlutil::RED);
-			cout << "Opcion incorrecta" << endl;
-			rlutil::setColor(rlutil::RED);
-			cout << "1- Efectivo 5 % Descuento ";
-			cout << "2- Tarjeta 8 % Aumento: ";
-			cin >> tipoPago;
-		}
-		descuento = total * porcentajeEfectivo;
-		aumento = total * porcentajeTarjeta;
-		if (tipoPago == 1)
-		{
-			totalFinal = total - descuento;
-			ganancia = totalFinal - producto.getPrecioCompra() * cantidad;
-		}
-		else if (tipoPago == 2)
-		{
-			totalFinal = total + aumento;
-			ganancia = total - producto.getPrecioCompra() * cantidad;
-		}
+			rlutil::setColor(rlutil::WHITE);
 
+		ganancia = total - totalCompra;
 		cout << "* 1- Retiro del local  //  2 - Entrega a domicilio: ";
 		int tipoEntrega;
 		cin >> tipoEntrega;
@@ -316,23 +328,19 @@ void Venta::cargar()
 		if (tipoEntrega == 2)
 		{
 			cout << "El envio cuesta $200" << endl;
-			totalFinal = totalFinal + 200;
-			ganancia = total - producto.getPrecioCompra() * cantidad;
+			total = total + 200;
 		}
 		else if (tipoEntrega == 1) {
 			cout << "Retiro en local, no hay costo de envio" << endl;
-			ganancia = totalFinal - producto.getPrecioCompra() * cantidad;
-
 		}
 
 		setGanancia(ganancia);
 		setEntrega(tipoEntrega);
 		setIdVendedor(idVendedor);
-		setTipoPago(tipoPago);
 		setIdCliente(idCliente);
 		setProducto(idProducto);
 		setPrecio(precio);
-		setTotal(totalFinal);
+		setTotal(total);
 		setCantidad(cantidadT);
 	
 	cout << "Se cargo la venta exitosamente..." << endl;
@@ -372,14 +380,6 @@ void Venta::mostrar()
 	}
 	cout << "-" << endl;
 	
-	if (getTipoPago() == 1)
-	{
-		cout << "Tipo de Pago: " << "EFECTIVO  5 % DESCUENTO" <<endl;
-	}
-	else if (getTipoPago() == 2)
-	{
-		cout << "Tipo de Pago: " << "TARJETA  8 % AUMENTO" << endl;
-	}
 	if (getEntrega() == 2)
 	{
 		cout << "ENTREGA A DOMICILIO" << endl;
@@ -404,16 +404,6 @@ int Venta::getEntrega()
 {
 	return entrega;
 
-}
-void Venta::setTipoPago(int tipoPago)
-{
-	this->tipoPago = tipoPago;
-}
-
-int Venta::getTipoPago()
-{
-	return tipoPago;
-	
 }
 
 void Venta::setIdVendedor(int vendedor)

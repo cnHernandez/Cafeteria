@@ -163,11 +163,11 @@ bool Producto::Cargar()
         cin >> desicion;
         if (desicion == 'S' || desicion == 's') {
             
-            menu.menu_categorias();
+            menu.menu_Categorias();
         }
         else if (desicion == 'N' || desicion == 'n')
         {
-            menu.menu_productos();
+            menu.menu_Productos();
         }
 
         return false;
