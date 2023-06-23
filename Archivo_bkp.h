@@ -7,7 +7,7 @@ using namespace std;
 class Archivo_bkp
 {
 private: 
-string _ruta;
+	string _ruta;
 
 public:
 	void HacerCopiaDeSeguridad();

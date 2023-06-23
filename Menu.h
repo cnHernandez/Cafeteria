@@ -2,11 +2,12 @@
 class Menu
 {
 public:
-	void menuPrincipal();
-	void menu_productos();
-	void menu_categorias();
-	void menu_ventas();
-	void menu_clientes();
-	void menu_vendedores();
+	void menu_Principal();
+	void menu_Productos();
+	void menu_Categorias();
+	void menu_Ventas();
+	void menu_Clientes();
+	void menu_Vendedores();
+	void menu_Informes();
 };
 

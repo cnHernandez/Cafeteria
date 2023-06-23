@@ -6,7 +6,7 @@
 int main()
 {
 	Menu menu;
-	menu.menuPrincipal();
+	menu.menu_Principal();
 }
 
 
