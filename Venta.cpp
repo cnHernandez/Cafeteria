@@ -163,7 +163,7 @@ void Venta::cargar()
 		}
 		else if (desicion == "N" || desicion == "n")
 		{
-			exit(-1);
+			return;
 		}
 		else
 		{
@@ -176,6 +176,7 @@ void Venta::cargar()
 	}
 	cout << "* Ingrese el ID del vendedor que lo asistio: ";
 	cin >> idVendedor;
+	
 	while (idVendedor <= 0 || !archivoVendedor.ExisteVendedor(idVendedor))
 	{
 		rlutil::setColor(rlutil::RED);
@@ -200,7 +201,7 @@ void Venta::cargar()
 		}
 		else if (desicion == "N" || desicion == "n")
 		{
-			exit(-1);
+			return;
 		}
 		else
 		{
@@ -247,7 +248,7 @@ void Venta::cargar()
 		}
 		int pos = archivoProducto.PosicionEnDisco(idProducto);
 		producto = archivoProducto.leer_de_disco(pos);
-
+		cout<<"STOCK del producto seleccionado: "<<producto.getStock()<<endl;
 		cout << "* Ingrese la cantidad que desea comprar: ";
 		cin >> cantidad;
 		if (cantidad < 0)
@@ -263,30 +264,46 @@ void Venta::cargar()
 			rlutil::setColor(rlutil::RED);
 			cout << "* No hay stock suficiente" << endl;
 			rlutil::setColor(rlutil::WHITE);
-			cout << "* Quiere ingresar un ID de un producto nuevo?: ";
-			cin >> idProducto;
-			while (!archivoProducto.Existe(idProducto)) {
 
-				cout << "* El producto no existe..., ingrese uno nuevo: ";
+			string decision;
+			cout << "* desea elegir otro producto? (S/N): ";
+			cin >> decision;
+			if (decision == "S" || decision == "s")
+			{
+				cout << "ingrese el id del producto:" << endl;
 				cin >> idProducto;
-			}
-			cout << "* Ingrese la cantidad que desea comprar: ";
-			cin >> cantidad;
-			pos = archivoProducto.PosicionEnDisco(idProducto);
-			producto = archivoProducto.leer_de_disco(pos);
-			if (cantidad > producto.getStock()) {
-				rlutil::setColor(rlutil::RED);
-				cout << "ingrese una cantidad valida: ";
-				cin >> cantidad;
-				if (cantidad > producto.getStock() || producto.getStock() == 0 || !archivoProducto.Existe(idProducto)) {
-					system("cls");
-					rlutil::setColor(rlutil::RED);
-					cout << "COMPRA CANCELADA POR FALTA DE STOCK" << endl;
-					exit(-1);
+				while (!archivoProducto.Existe(idProducto)) {
 
+					cout << "* El producto no existe..., ingrese uno nuevo: ";
+					cin >> idProducto;
+				}
+				cout << "STOCK del producto seleccionado: " << producto.getStock() << endl;
+				cout << "* Ingrese la cantidad que desea comprar: ";
+				cin >> cantidad;
+
+				pos = archivoProducto.PosicionEnDisco(idProducto);
+				producto = archivoProducto.leer_de_disco(pos);
+				
+				if (cantidad > producto.getStock()) {
+					rlutil::setColor(rlutil::RED);
+					cout << "ingrese una cantidad valida: ";
+					cin >> cantidad;
+					if (cantidad > producto.getStock() || producto.getStock() == 0 || !archivoProducto.Existe(idProducto)) {
+						system("cls");
+						rlutil::setColor(rlutil::RED);
+						cout << "COMPRA CANCELADA POR FALTA DE STOCK" << endl;
+						return;
+					}
 				}
 			}
+			
+			else if (decision == "N" || decision == "n")
+			{
+				return;
+			}
+
 		}
+	
 		producto = archivoProducto.leer_de_disco(pos);
 		producto.setStock(producto.getStock() - cantidad);
 		archivoProducto.guardar(producto, pos);

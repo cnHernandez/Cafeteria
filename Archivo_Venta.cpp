@@ -807,7 +807,7 @@ void Archivo_Venta::ganancia_x_mes_Anual()
 		int anio;
 		cout << "ingrese el anio a listar" << endl;
 		cin >> anio;
-		while (anio < 2016)
+		if (anio < 2016)
 		{
 			cout << "Anio invalido" << endl;
 			cout << "ingrese el Anio a listar: ";

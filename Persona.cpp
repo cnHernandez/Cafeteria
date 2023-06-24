@@ -94,6 +94,11 @@ rlutil::setColor(rlutil::WHITE);
 	}
 	cout << "Ingrese edad: ";
 	cin >> _edad;
+	if (!isdigit(_edad))
+	{
+		rlutil::setColor(rlutil::RED);
+		cout << "La edad debe ser un numero" << endl;
+	}
 	if (_edad < 15 || _edad > 100)
 	{
 		rlutil::setColor(rlutil::RED);

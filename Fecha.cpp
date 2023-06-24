@@ -122,7 +122,8 @@ void Fecha::Cargar()
 {
     cout << "Dia: ";
     cin >> _dia;
-    if (_dia > 31 || _dia < 0)
+  
+    if (_dia > 31 || _dia < 0 )
     {
         cout << "Ingrese una fecha valida" << endl;
             cout << "Dia: ";
@@ -130,7 +131,8 @@ void Fecha::Cargar()
     }
     cout << "Mes: ";
     cin >> _mes;
-    if (_mes > 12 || _mes < 0)
+  
+    if (_mes > 12 || _mes < 0 )
     {
 		cout << "Ingrese una fecha valida " << endl;
 		cout << "Mes: ";
@@ -138,7 +140,8 @@ void Fecha::Cargar()
 	}
     cout << "Anio: ";
     cin >> _anio;
-    if (_anio < 0)
+    
+    if (_anio < 0 )
     {
 		cout << "Ingrese una fecha valida " << endl;
 		cout << "Anio: ";

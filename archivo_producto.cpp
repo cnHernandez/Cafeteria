@@ -357,7 +357,7 @@ void archivo_producto::Stock(int id)
     system("cls");
     producto = leer_de_disco(id - 1);
 
-    while (id<0 || producto.getEstado() == false)
+    while (id<0 || id > cant || producto.getEstado() == false)
     {
         cout << "ingrese una opcion correcta: ";
         cin >> id;
@@ -417,4 +417,19 @@ int archivo_producto::PosicionEnDisco(int id)
     }
 
     return -1;
+}
+
+void archivo_producto::stock_de_productos()
+{
+    int cant = cantidad_de_registros();
+Producto producto;
+	for (int i = 0; i < cant; i++)
+	{
+		producto = leer_de_disco(i);
+		if (producto.getEstado())
+		{
+			cout << "PRODUCTO :"<<producto.getNombre()<<"   STOCK: "<<producto.getStock() << endl;
+			
+		}
+	}
 }

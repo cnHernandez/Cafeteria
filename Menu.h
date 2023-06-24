@@ -9,5 +9,6 @@ public:
 	void menu_Clientes();
 	void menu_Vendedores();
 	void menu_Informes();
+	void menu_backup();
 };
 

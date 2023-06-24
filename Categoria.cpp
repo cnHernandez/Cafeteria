@@ -40,7 +40,8 @@ void Categoria::set_id(int nuevo_id)
 }
 void Categoria::cargar() {
     cout << "Ingrese nombre de la nueva categoria: ";
-    cin >> _nombre;
+    cin.ignore();
+    cin.getline(_nombre, 50);
     for (int i = 0; i < strlen(_nombre); i++)
     {
         if (isdigit(_nombre[i])) {
@@ -51,6 +52,7 @@ void Categoria::cargar() {
             cin.getline(_nombre, 30);
         }
     }
+    setNombre(_nombre);
 }
 void Categoria::mostrar()
 {

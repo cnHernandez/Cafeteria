@@ -26,8 +26,7 @@ void Menu::menu_Principal()
     while (menu_activo)
     {
         system("cls");
-        cout << "-*-*-Bienvenido al sistema de gestion-*-*-" << endl << endl;
-
+        cout << "-*-*-Bienvenido al sistema de gestion-*-*-" << endl << endl;       
         cout << "Menu Principal" << endl;
         cout << "----------------" << endl;
         cout << " 1- Productos " << endl;
@@ -35,12 +34,14 @@ void Menu::menu_Principal()
         cout << " 3- Ventas " << endl;
         cout << " 4- Clientes " << endl;
         cout << " 5- Vendedores " << endl;
-        cout << " 6- Informes " << endl;
+        cout << " 6- Stock " << endl;
+        cout << " 7- Backup " << endl;
+        cout << " 8- Informes " << endl;
         cout << "----------------" << endl;
         cout << " 0- SALIR" << endl;
 
         cin >> op;
-        while (op < 0 || op>6)
+        while (op < 0 || op>8)
         {
             rlutil::setColor(rlutil::RED);
             cout << "opcion incorrecta, vuelva a ingresar una opcion: ";
@@ -81,8 +82,21 @@ void Menu::menu_Principal()
         break;
         case 6:
         {
+            cout<<"Stock de productos"<<endl;
+        cout<<"-------------------"<<endl;
+        archivo_producto archivo;
+        archivo.stock_de_productos();
+        system("pause");
+
+        }break;
+        case 7:
+        {
+            menu_backup();
+        }break;
+        case 8:
+        {
             menu_Informes();
-        }
+        }break;
         }
     }
 }
@@ -94,8 +108,9 @@ void Menu::menu_Productos()
     {
         system("cls");
         cout << "----Productos----" << endl;
+        cout << "-----------------" << endl;
         cout << " 1- Listar" << endl;
-        cout << " 2- Agregar" << endl;
+        cout << " 2- Agregar" << endl;      
         cout << " 3- Modificar" << endl;
         cout << " 4- Eliminar" << endl;
         cout << "-----------------" << endl;
@@ -174,7 +189,7 @@ void Menu::menu_Productos()
                         }
                         else if (desicion == 'n' || desicion == 'N')
                         {
-                            exit(-1);
+                            return;
                         }
                     }
                     else
@@ -196,6 +211,7 @@ void Menu::menu_Productos()
                         rlutil::setColor(rlutil::RED);
                         cout << "No se encuentran guardados Categorias Activas" << endl << endl;
                         rlutil::setColor(rlutil::WHITE);
+
                     }
                     else
                     {
@@ -244,6 +260,7 @@ void Menu::menu_Productos()
                 cout << "Agregar Productos" << endl;
                 cout << "----------------------------" << endl;
                 cout << "1- Agregar producto nuevo" << endl;
+                cout << "(ACLARACION: Para agregar productos primero debe generar la categoria a la cual pertenece.) " << endl;
                 cout << "2- Agregar stock de producto" << endl;
                 cout << "----------------------------" << endl;
                 cout << "0- Volver" << endl;
@@ -434,6 +451,7 @@ void Menu::menu_Categorias()
             system("cls");
             cout << "Lista de categorias" << endl << endl;
             Archivo_Categoria archivo;
+            Categoria categoria;
             int cant = archivo.cantidad_categorias();
             int cantActiva = archivo.get_cantidad_Activa(cant);
             if (cantActiva == 0)
@@ -442,6 +460,23 @@ void Menu::menu_Categorias()
                 cout << "No se encuentran guardadas categorias Activas" << endl << endl;
                 rlutil::setColor(rlutil::WHITE);
                 system("pause");
+                char desicion;
+                cout << "¿Desea cargar una categoria nueva? (S/N): ";
+                cin >> desicion;
+                if (desicion == 's' || desicion == 'S')
+                {
+                    categoria.cargar();
+                    archivo.guardar(categoria);
+                    system("cls");
+                    cout << "-----------------------------------" << endl;
+                    categoria.mostrar();
+                    cout << "-----------------------------------" << endl;
+                    cout << "Se cargo exitosamente..." << endl;
+                }
+                else if (desicion == 'n' || desicion == 'N')
+                {
+                    return;
+                }
 
             }
             else
@@ -523,15 +558,15 @@ void Menu::menu_Ventas()
         cout << "---Ventas----" << endl;
         cout << " 1- Listar" << endl;
         cout << " 2- Agregar" << endl;
+        cout << "(ACLARACION: Para generar una venta, primero debe haber cargado cliente, vendedor y producto)" << endl;
         cout << " 3- Modificar" << endl;
         cout << " 4- Eliminar" << endl;
-        cout << " 5- Hacer copia de Seguridad" << endl;
-        cout << " 6- Restaurar copia de Seguridad" << endl;
+
         cout << "-----------------" << endl;
         cout << " 0- SALIR" << endl;
         cout << "-----------------" << endl;
         cin >> op;
-        while (op < 0 || op>6)
+        while (op < 0 || op>4)
         {
             rlutil::setColor(rlutil::RED);
             cout << "opcion incorrecta, vuelva a ingresar una opcion" << endl;
@@ -651,7 +686,7 @@ void Menu::menu_Ventas()
                         cout << endl << endl;
                     }
                 }
-                break;              
+                break;
                 }
             }
         }
@@ -659,18 +694,54 @@ void Menu::menu_Ventas()
         case 2:
         {
             system("cls");
-            cout << "Agregar venta" << endl;
-            Archivo_Venta av;
-            Venta venta;
+            archivo_producto ap;
+            int cant = ap.cantidad_de_registros();
+            Archivo_Vendedor av;
+            int cantV = av.Cantidad_vendedores();
+            Archivo_Cliente ac;
+            int cantC = ac.cantidad_clientes();
+            Archivo_Categoria acat;
+            int cantCat = acat.cantidad_categorias();
 
-            venta.cargar();
-            system("cls");
-            cout << "Se cargo la venta exitosamente..." << endl;
-            system("pause");
-            system("cls");
-            venta.mostrar();
-            system("pause");
-            av.guardar(venta);
+            if (cant == 0)
+            {
+                cout << "No hay productos cargados" << endl;
+                system("pause");
+            }
+
+            if (cantV == 0)
+            {
+                cout << "No hay vendedores cargados" << endl;
+                system("pause");
+            }
+
+            if (cantC == 0)
+            {
+                cout << "No hay clientes cargados" << endl;
+                system("pause");
+            }
+
+            if (cantCat == 0)
+            {
+                cout << "No hay categorias cargadas" << endl;
+                system("pause");
+            }
+            if (cant != 0 && cantV != 0 && cantC != 0 && cantCat != 0) {
+
+                cout << "Agregar venta" << endl;
+                Archivo_Venta aventas;
+                Venta venta;
+
+                venta.cargar();
+                system("cls");
+                cout << "Se cargo la venta exitosamente..." << endl;
+                system("pause");
+                system("cls");
+                venta.mostrar();
+                system("pause");
+                aventas.guardar(venta);
+            }
+            else { return; }
         }
         break;
         case 3:
@@ -723,30 +794,10 @@ void Menu::menu_Ventas()
             }
         }
         break;
-        case 5:
-        {
-            system("cls");
-            cout << "Hacer copia de seguridad" << endl;
-            Archivo_bkp Backup;
-            Backup.HacerCopiaDeSeguridad();
-            cout << "Se realizo la copia de seguridad exitosamente..." << endl;
-            system("pause");
-        }
-        break;
-        case 6:
-        {
-            system("cls");
-            cout << "Restaurar copia de seguridad" << endl;
-            Archivo_bkp Backup;
-            Backup.RestaurarCopiaDeSeguridad();
-            cout << "Se restauro la copia de seguridad exitosamente..." << endl;
-            system("pause");
-        }
-        break;
+
         }
     }
 }
-
 
 void Menu::menu_Clientes()
 {
@@ -1025,62 +1076,122 @@ void Menu::menu_Informes()
     int op;
     bool menu_activo = true;
     system("cls");
-    cout << "****INFORMES****" << endl ;
-    cout << "-----------------------------------" << endl;
-    cout << "1- Recaudacion anual por vendedor" << endl;
-    cout << "2- Recaudacion anual por Productos" << endl;
-    cout << "3- Recaudacion anual por Categorias" << endl;
-    cout << "4- Ganancia neta mensual por anio" << endl;
-    cout << "-----------------------------------" << endl;
-    cout << "0- SALIR" << endl;
-
-    cin >> op;
-    while (op < 0 || op>5)
+    while (menu_activo)
     {
-        rlutil::setColor(rlutil::RED);
-        cout << "opcion incorrecta, vuelva a ingresar una opcion: ";
-        rlutil::setColor(rlutil::WHITE);
+        cout << "****INFORMES****" << endl;
+        cout << "-----------------------------------" << endl;
+        cout << "1- Recaudacion anual por vendedor" << endl;
+        cout << "2- Recaudacion anual por Productos" << endl;
+        cout << "3- Recaudacion anual por Categorias" << endl;
+        cout << "4- Ganancia neta mensual por anio" << endl;
+        cout << "-----------------------------------" << endl;
+        cout << "0- SALIR" << endl;
+
         cin >> op;
-    }
-    switch (op)
-    {
-    case 0:
-    {
-        menu_activo = false;
-    }
-    break;
-    case 1:
-    {
-        Archivo_Venta archivo;
-        system("cls");
-        cout << "RECAUDACION ANUAL POR VENDEDOR: " << endl;
-        archivo.recaudacion_x_vendedor();
-    }
-    break;
-    case 2:
-    {
-        Archivo_Venta archivo;
-        system("cls");
-        cout << "RECAUDACION ANUAL POR PRODUCTO: " << endl;
-        archivo.recaudacion_x_producto();
-    }
-    break;
-    case 3:
-    {
-        Archivo_Venta archivo;
-        system("cls");
-        cout << "RECAUDACION ANUAL POR CATEGORIA: " << endl;
-        archivo.recaudacion_x_categoria();
-    }
-    break;
-    case 4:
-    {
-        Archivo_Venta archivo;
-        system("cls");
-        cout << "GANANCIA MENSUAL POR ANIO: " << endl;
-        archivo.ganancia_x_mes_Anual();
-    }
-    break;
+        while (op < 0 || op>5)
+        {
+            rlutil::setColor(rlutil::RED);
+            cout << "opcion incorrecta, vuelva a ingresar una opcion: ";
+            rlutil::setColor(rlutil::WHITE);
+            cin >> op;
+        }
+        switch (op)
+        {
+        case 0:
+        {
+            menu_activo = false;
+        }
+        break;
+        case 1:
+        {
+            Archivo_Venta archivo;
+            system("cls");
+            cout << "RECAUDACION ANUAL POR VENDEDOR: " << endl;
+            archivo.recaudacion_x_vendedor();
+            system("cls");
+        }
+        break;
+        case 2:
+        {
+            Archivo_Venta archivo;
+            system("cls");
+            cout << "RECAUDACION ANUAL POR PRODUCTO: " << endl;
+            archivo.recaudacion_x_producto();
+            system("cls");
+        }
+        break;
+        case 3:
+        {
+            Archivo_Venta archivo;
+            system("cls");
+            cout << "RECAUDACION ANUAL POR CATEGORIA: " << endl;
+            archivo.recaudacion_x_categoria();
+            system("cls");
+        }
+        break;
+        case 4:
+        {
+            Archivo_Venta archivo;
+            system("cls");
+            cout << "GANANCIA MENSUAL POR ANIO: " << endl;
+            archivo.ganancia_x_mes_Anual();
+            system("cls");
+        }
+        break;
 
+        }
     }
 }
+
+void Menu::menu_backup()
+{
+    int op;
+    bool menu_activo = true;
+    system("cls");
+    while (menu_activo)
+    {
+        system("cls");
+        cout << "****BACKUP****" << endl;
+        cout << " 1- Hacer copia de Seguridad" << endl;
+        cout << " 2- Restaurar copia de Seguridad" << endl;
+        cout << "-----------------" << endl;
+        cout << " 0- SALIR" << endl;
+        cin >> op;
+        while (op < 0 || op>2)
+        {
+            rlutil::setColor(rlutil::RED);
+            cout << "opcion incorrecta, vuelva a ingresar una opcion: ";
+            rlutil::setColor(rlutil::WHITE);
+            cin >> op;
+        }
+        switch (op)
+        {
+        case 0:
+        {
+            menu_activo = false;
+        }
+        break;
+        case 1:
+        {
+            system("cls");
+            cout << "Hacer copia de seguridad" << endl;
+            Archivo_bkp Backup;
+            Backup.HacerCopiaDeSeguridad();
+            cout << "Se realizo la copia de seguridad exitosamente..." << endl;
+            system("pause");
+        }
+        break;
+        case 2:
+        {
+            system("cls");
+            cout << "Restaurar copia de seguridad" << endl;
+            Archivo_bkp Backup;
+            Backup.RestaurarCopiaDeSeguridad();
+            cout << "Se restauro la copia de seguridad exitosamente..." << endl;
+            system("pause");
+        }
+        break;
+        }
+    }
+}
+
