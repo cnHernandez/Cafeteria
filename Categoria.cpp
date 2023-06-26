@@ -44,10 +44,10 @@ void Categoria::cargar() {
     cin.getline(_nombre, 50);
     for (int i = 0; i < strlen(_nombre); i++)
     {
-        if (isdigit(_nombre[i])) {
+        while (isdigit(_nombre[i])) {
             rlutil::setColor(rlutil::RED);
             cout << "El nombre no puede contener numeros" << endl;
-            rlutil::setColor(rlutil::WHITE);
+            rlutil::setColor(rlutil::BLACK);
             cout << "Ingrese el nombre: ";
             cin.getline(_nombre, 30);
         }

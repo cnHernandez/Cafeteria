@@ -9,6 +9,7 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include "rlutil.h"
 
 using namespace std;
 
@@ -141,7 +142,6 @@ int Archivo_Venta::cantidad_ventas()
 void Archivo_Venta::listar_x_cliente()
 {
 	int cant = cantidad_ventas();
-	
 	Archivo_Cliente Clientes;
 
 	int cantClientes = Clientes.cantidad_clientes();
@@ -158,52 +158,40 @@ void Archivo_Venta::listar_x_cliente()
 	int idCliente;
 	cout << "ingrese el ID# del cliente a listar: " << endl;
 	cin >> idCliente;
-	while (idCliente <= 0 || idCliente > cant)
+
+	while (!Clientes.ExisteCliente(idCliente))
 	{
+		rlutil::setColor(rlutil::RED);
 		cout << "ID# de cliente invalido: " << endl;
-		cout << "ingrese el ID# del cliente a listar: " << endl;
+		rlutil::setColor(rlutil::BLACK);
+		cout << "ingrese el ID# del cliente a listar: ";
 		cin >> idCliente;
 	}
 	cliente=Clientes.leer_clientes(idCliente - 1);
-	while(cliente.getEstado()!= true)
-	{
-		cout << "ID# de cliente invalido: " << endl;
-		cout << "ingrese el ID# del cliente a listar: " << endl;
-		cin >> idCliente;
-		cliente = Clientes.leer_clientes(idCliente - 1);
 
-	}
 	system("cls");
 	for (int i = 0; i < cantClientes; i++)
 	{
 		cliente = Clientes.leer_clientes(i);
 		if (idCliente == cliente.getId_Cliente())
 		{
-			cout << "Productos con ID# de Cliente: " << idCliente << "  " << "NOMBRE: " << cliente.getNombre() << endl;
+			cout << "Compras de " << cliente.getNombre() << endl;
 		}
 	}
-	cout << "Productos con ID# de Cliente: " << idCliente << endl << endl;
-	while (idCliente<0 || idCliente>cantClientes)
-	{
-		cout << "ID# de cliente no posee compras " << endl;
-		cout << "ingrese otro ID# del cliente a listar: " << endl;
-		cin >> idCliente;
-		cliente = Clientes.leer_clientes(idCliente - 1);
-	}
-	for (int j = 0; j < cantClientes; j++)
-	{
-
+	bool tuvoVentas = false;
 		for (int i = 0; i < cant; i++)
 		{
-
 			if (idCliente == ventas[i].getIdCliente() && ventas[i].getEstado() && ventas[i].getIdCliente())
 			{
 				ventas[i].mostrar();
+				tuvoVentas = true;
 			}
-
 		}
-	}
-	cout << endl;
+		if (!tuvoVentas) {
+			rlutil::setColor(rlutil::RED);
+			cout << "No tuvo ventas aun..." << endl;
+			rlutil::setColor(rlutil::BLACK);
+		}
 
 	delete[] ventas;
 }
@@ -233,7 +221,9 @@ void Archivo_Venta::listar_x_fecha()
 		cin >> op;
 		while (op < 0 || op>3)
 		{
+			rlutil::setColor(rlutil::RED);
 			cout << "opcion incorrecta, vuelva a ingresar una opcion" << endl;
+			rlutil::setColor(rlutil::BLACK);
 			cin >> op;
 		}
 		switch (op)
@@ -249,18 +239,27 @@ void Archivo_Venta::listar_x_fecha()
 			cin >> mes;
 			while (mes < 1 || mes > 12)
 			{
+				rlutil::setColor(rlutil::RED);
 				cout << "Mes invalido" << endl;
+				rlutil::setColor(rlutil::BLACK);
 				cout << "ingrese el Mes a listar: ";
 				cin >> mes;
 			}
-			cout << "Ventas con mes: " << mes << endl;
+			bool tuvo = false;
 			system("cls");
+			cout << "Ventas con mes: " << mes << endl;
 			for (int i = 0; i < cant; i++)
 			{
 				if (mes == ventas[i].getFecha().getMes() && ventas[i].getEstado())
 				{
 					ventas[i].mostrar();
+					tuvo = true;
 				}
+			}
+			if (!tuvo) {
+				rlutil::setColor(rlutil::RED);
+				cout << "NO HUBO VENTAS PARA DICHO MES" << endl;
+				rlutil::setColor(rlutil::BLACK);
 			}
 			system("pause");
 			cout << endl;
@@ -272,18 +271,27 @@ void Archivo_Venta::listar_x_fecha()
 			cin >> anio;
 			while (anio < 2016)
 			{
+				rlutil::setColor(rlutil::RED);
 				cout << "Anio invalido" << endl;
+				rlutil::setColor(rlutil::BLACK);
 				cout << "ingrese el Anio a listar: ";
 				cin >> anio;
 			}
 			system("cls");
-			cout << "          VENTAS CON ANIO " << anio << endl << endl;
+			cout << "          VENTAS DEL ANIO " << anio << endl << endl;
+			bool tuvo = false;
 			for (int i = 0; i < cant; i++)
 			{
 				if (anio == ventas[i].getFecha().getAnio() && ventas[i].getEstado())
 				{
 					ventas[i].mostrar();
+					tuvo = true;
 				}
+			}
+			if (!tuvo) {
+				rlutil::setColor(rlutil::RED);
+				cout << "NO HUBO VENTAS PARA DICHO ANIO" << endl;
+				rlutil::setColor(rlutil::BLACK);
 			}
 			system("pause");
 
@@ -296,7 +304,9 @@ void Archivo_Venta::listar_x_fecha()
 			cin >> anio;
 			while (anio < 2016)
 			{
+				rlutil::setColor(rlutil::RED);
 				cout << "Anio invalido" << endl;
+				rlutil::setColor(rlutil::BLACK);
 			    cout << "ingrese el Anio a listar: ";
 				cin >> anio;
 			}
@@ -421,7 +431,10 @@ void Archivo_Venta::recaudacion_x_vendedor()
 	}
 	if (cant == 0)
 	{
+		system("cls");
 		cout << "No existen Ventas cargadas" << endl;
+		system("pause");
+		return;
 	}
 	else {
 		obtener_venta(ventas, cant);
@@ -434,7 +447,9 @@ void Archivo_Venta::recaudacion_x_vendedor()
 	}
 	if (cantVendedor == 0)
 	{
+		system("cls");
 		cout << "No existen Vendedores cargados" << endl;
+		return;
 		system("pause");
 	}
 	else
@@ -444,11 +459,20 @@ void Archivo_Venta::recaudacion_x_vendedor()
 		cout << "ingrese el anio a listar" << endl;
 		int anio;
 		cin >> anio;
-		while (anio < 2016)
+		if (anio < 2016 || anio > 2023)
 		{
+			rlutil::setColor(rlutil::RED);
 			cout << "Anio invalido" << endl;
+			rlutil::setColor(rlutil::BLACK);
 			cout << "ingrese el Anio a listar: ";
 			cin >> anio;
+			if (anio < 2016 || anio > 2023) {
+				rlutil::setColor(rlutil::RED);
+				cout << "ANIO INVALIDO" << endl;
+				rlutil::setColor(rlutil::BLACK);
+				system("pause");
+				return;
+			}
 		}
 		cout << endl;
 		archivo.Listar_Vendedor(cantVendedor);
@@ -457,7 +481,9 @@ void Archivo_Venta::recaudacion_x_vendedor()
 		cin >> id;
 		while (id < 0 || id > cantVendedor)
 		{
+			rlutil::setColor(rlutil::RED);
 			cout << "ID invalido" << endl;
+			rlutil::setColor(rlutil::BLACK);
 			cout << "ingrese el ID del Vendedor: ";
 			cin >> id;
 		}
@@ -509,13 +535,17 @@ void Archivo_Venta::recaudacion_x_producto()
 	int cant = cantidad_ventas();
 	Venta* ventas = new Venta[cant];
 	if (ventas == nullptr) {
+		system("cls");
 		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
+		system("pause");
 		return;
 	}
 	if (cant == 0)
 	{
+		system("cls");
 		cout << "No se encuentran ventas cargadas" << endl;
 		system("pause");
+		return;
 	}
 	else {
 		obtener_venta(ventas, cant);
@@ -524,20 +554,26 @@ void Archivo_Venta::recaudacion_x_producto()
 	int cantProd = archiProd.cantidad_de_registros();
 	Producto* productos = new Producto[cantProd];
 	if (productos == nullptr) {
+		system("cls");
 		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
+		system("pause");
 		return;
 	}
 	if (cantProd == 0)
 	{
+		system("cls");
 		cout << "No se encuentran productos cargados" << endl;
 		system("pause");
+		return;
 	}
 	else {
 		archiProd.obtener_productos(productos, cantProd);
 		int cantCat = archiCat.cantidad_categorias();
 		Categoria* categorias = new Categoria[cantCat];
 		if (categorias == nullptr) {
+			system("cls");
 			cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
+			system("pause");
 			return;
 		}
 		archiCat.obtener_categorias(categorias, cantCat);
@@ -545,11 +581,20 @@ void Archivo_Venta::recaudacion_x_producto()
 
 		cout << "ingrese el anio a listar" << endl;
 		cin >> anio;
-		while (anio < 2016)
+		if (anio < 2016 || anio > 2023)
 		{
+			rlutil::setColor(rlutil::RED);
 			cout << "Anio invalido" << endl;
+			rlutil::setColor(rlutil::BLACK);
 			cout << "ingrese el Anio a listar: ";
 			cin >> anio;
+			if (anio < 2016 || anio > 2023) {
+				rlutil::setColor(rlutil::RED);
+				cout << "ANIO INVALIDO" << endl;
+				rlutil::setColor(rlutil::BLACK);
+				system("pause");
+				return;
+			}
 		}
 		system("cls");
 		int poscat;
@@ -583,7 +628,7 @@ void Archivo_Venta::recaudacion_x_producto()
 						}
 					}	
 				}
-			if (nombreProd[i] == productos[i].getNombre())
+			if (nombreProd[i] == productos[i].getNombre() && productos[i].getEstado())
 			{
 				cout << setw(28) << setiosflags(ios::left) << productos[i].getNombre() << setw(22) << setiosflags(ios::left) << nombre<< "$" << total << endl;
 				cout << endl;
@@ -607,13 +652,17 @@ void Archivo_Venta::recaudacion_x_categoria()
 	int cant = cantidad_ventas();
 	Producto* productos = new Producto[cantProd];
 	if (productos == nullptr) {
+		system("cls");
 		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
+		system("pause");
 		return;
 	}
 	if (cantProd == 0)
 	{
+		system("cls");
 		cout << "No se encuentran productos cargados" << endl;
-		exit(-1);
+		system("pause");
+		return;
 	}
 	else {
 		archivoProd.obtener_productos(productos, cantProd);
@@ -626,7 +675,8 @@ void Archivo_Venta::recaudacion_x_categoria()
 	if (cant == 0)
 	{
 		cout << "No se encuentran ventas cargadas" << endl;
-		exit(-1);
+		system("pause");
+		return;
 	}
 	else {
 		obtener_venta(ventas, cant);
@@ -640,7 +690,10 @@ void Archivo_Venta::recaudacion_x_categoria()
 	}
 	if (cant == 0)
 	{
+		rlutil::setColor(rlutil::RED);
 		cout << "No se encuentran categorias cargadas" << endl;
+		rlutil::setColor(rlutil::BLACK);
+		return;
 		system("pause");
 	}
 	else {
@@ -648,11 +701,20 @@ void Archivo_Venta::recaudacion_x_categoria()
 		int anio;
 		cout << "ingrese el anio a listar" << endl;
 		cin >> anio;
-		while (anio < 2016)
+		if (anio < 2016 || anio > 2023)
 		{
+			rlutil::setColor(rlutil::RED);
 			cout << "Anio invalido" << endl;
+			rlutil::setColor(rlutil::BLACK);
 			cout << "ingrese el Anio a listar: ";
 			cin >> anio;
+			if (anio < 2016 || anio > 2023) {
+				rlutil::setColor(rlutil::RED);
+				cout << "ANIO INVALIDO" << endl;
+				rlutil::setColor(rlutil::BLACK);
+				system("pause");
+				return;
+			}
 		}
 		system("cls");
 
@@ -685,7 +747,9 @@ void Archivo_Venta::recaudacion_x_categoria()
 
 		for (int i = 0; i < cantCat; i++) {
 
-			cout << setw(28) << setiosflags(ios::left) <<categorias[i].getNombre() << "$" << total[i] << endl;
+			if (categorias[i].getEstado()) {
+				cout << setw(28) << setiosflags(ios::left) << categorias[i].getNombre() << "$" << total[i] << endl;
+			}
 
 		}
 
@@ -714,7 +778,9 @@ void Archivo_Venta::BajaLogica()
 
 	while (op<0 || op>cant || !venta.getEstado())
 	{
+		rlutil::setColor(rlutil::RED);
 		cout << "ingrese una opcion correcta" << endl;
+		rlutil::setColor(rlutil::BLACK);
 		cin >> op;
 	}
 	venta = leer_ventas(op - 1);
@@ -751,7 +817,9 @@ int Archivo_Venta::Modificar_Venta()
 
 	while (op<0 || op>cant || !venta.getEstado())
 	{
+		rlutil::setColor(rlutil::RED);
 		cout << "ingrese una opcion correcta: ";
+		rlutil::setColor(rlutil::BLACK);
 		cin >> op;
 	}
 	if (op != 0)
@@ -799,19 +867,30 @@ void Archivo_Venta::ganancia_x_mes_Anual()
 	}
 	if (cant == 0)
 	{
+		system("cls");
 		cout << "No se encuentran ventas cargadas" << endl;
 		system("pause");
+		return;
 	}
 	else {
 		obtener_venta(ventas, cant);
 		int anio;
 		cout << "ingrese el anio a listar" << endl;
 		cin >> anio;
-		if (anio < 2016)
+		if (anio < 2016 || anio > 2023)
 		{
+			rlutil::setColor(rlutil::RED);
 			cout << "Anio invalido" << endl;
+			rlutil::setColor(rlutil::BLACK);
 			cout << "ingrese el Anio a listar: ";
 			cin >> anio;
+			if (anio < 2016 || anio > 2023) {
+				rlutil::setColor(rlutil::RED);
+				cout << "ANIO INVALIDO" << endl;
+				rlutil::setColor(rlutil::BLACK);
+				system("pause");
+				return;
+			}
 		}
 
 		float total = 0;

@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include "rlutil.h"
 
 using namespace std;
 
@@ -59,6 +60,7 @@ Cliente Archivo_Cliente::leer_clientes(int pos) {
 
 	if (p == nullptr) {
 		cout << "Error al abrir el archivo" << endl;
+		return clientes;
 	}
 
 	fseek(p, pos * sizeof(Cliente), SEEK_SET);
@@ -107,7 +109,9 @@ void Archivo_Cliente::modificar_cliente() {
 
 	while (op<0 || op>cant || cliente.getEstado() == false)
 	{
+		rlutil::setColor(rlutil::RED);
 		cout << "ingrese una opcion correcta: ";
+		rlutil::setColor(rlutil::BLACK);
 		cin >> op;
 	}
 	if (op != 0)
@@ -152,14 +156,16 @@ void Archivo_Cliente::baja_Logica(){
 	Cliente cliente;
 	int cant = cantidad_clientes();
 	listar_clientes(cant);
-	cout << std::endl;
+	cout << endl;
 	cout << "Ingrese de ID del cliente que desea eliminar: ";
 	cin >> op;
 
 	cliente = leer_clientes(op - 1);
 	while (op<0 || !ExisteCliente(op) || !cliente.getEstado())
 	{
+		rlutil::setColor(rlutil::RED);
 		cout << "ingrese una opcion correcta: ";
+		rlutil::setColor(rlutil::BLACK);
 		cin >> op;
 		cliente = leer_clientes(op - 1);
 	}

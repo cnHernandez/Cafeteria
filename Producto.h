@@ -9,7 +9,7 @@ class Producto
 private:
     int id_producto;
     int id_categoria;
-    char _nombre[50];
+    char _nombre[30];
     bool estado;
     float precio;
     int stock;

@@ -81,7 +81,7 @@ void archivo_producto::listar(int cantidad)
         cat=acat.leer_de_disco(producto.getId_Categoria()-1);
         if(cat.getEstado())
         {
-        cout<<"------------------------------------------------"<<endl;
+        cout << "------------------------------------------------" << endl;
         producto.Mostrar();
         }
         }
@@ -229,23 +229,14 @@ void archivo_producto::listaXcategoria()
     int idcat;
     cout << "ingrese el ID# de la Categoria a listar: " ;
     cin >> idcat;
-   
-    while (idcat <= 0 || idcat > cant)
+
+    while (!Categorias.Existe(idcat))
     {
 		cout << "ID# de Categoria invalido: " << endl;
 		cout << "ingrese el ID# de la Categoria a listar: " ;
 		cin >> idcat;
 	}
     Cat = Categorias.leer_de_disco(idcat - 1);
-    while (Cat.getEstado() != true)
-    {
-        cout << "ID# de Categoria invalido: " << endl;
-        cout << "ingrese el ID# de la Categoria a listar: " ;
-        cin >> idcat;
-        Cat = Categorias.leer_de_disco(idcat - 1);
-
-    }
-    
     system("cls");
 
     cout << "Productos con ID# de Categoria: " << idcat << endl << endl;
@@ -428,8 +419,7 @@ Producto producto;
 		producto = leer_de_disco(i);
 		if (producto.getEstado())
 		{
-			cout << "PRODUCTO :"<<producto.getNombre()<<"   STOCK: "<<producto.getStock() << endl;
-			
+			cout << "PRODUCTO: "<<producto.getNombre()<<"   STOCK: "<<producto.getStock() << endl;		
 		}
 	}
 }

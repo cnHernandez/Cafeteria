@@ -100,55 +100,156 @@ bool Producto::Cargar()
     if (arch.cantidad_categorias() > 0) {
         CargarCategoria();
         cout << "Ingrese el nombre del Producto: ";
-        cin.ignore();
-        cin.getline(_nombre , 50);
-        for (int i = 0; i < strlen(_nombre); i++)
-        {
-            if (isdigit(_nombre[i])) {
-               rlutil::setColor(rlutil::RED);
+        cin.getline(_nombre , 30);
+        bool contieneNumeros = false;
+        while (!contieneNumeros) {
+            bool soloLetras = true;
+            for (int i = 0; i < strlen(_nombre); i++) {
+                if (isdigit(_nombre[i])) {
+                    soloLetras = false;
+                    break;
+                }
+            }
+
+            if (!soloLetras) {
+                rlutil::setColor(rlutil::RED);
                 cout << "El nombre no puede contener numeros" << endl;
-                rlutil::setColor(rlutil::WHITE);
+                rlutil::setColor(rlutil::BLACK);
                 cout << "Ingrese el nombre: ";
                 cin.getline(_nombre, 30);
             }
+            else {
+                contieneNumeros = true;
+            }
         }
         setNombre(_nombre);
-        cout << "Ingrese el precio de compra del Producto: ";
-        cin >> precio_compra;
 
-        if (precio_compra < 0 || precio_compra > 100000)
-        {
-            rlutil::setColor(rlutil::RED);
-            cout << "ingrese un precio razonable" << endl;
-            rlutil::setColor(rlutil::WHITE);
-            cout << "Ingrese el precio de compra del Producto: ";
-            cin >> precio;
+        string input;
+        bool esNumero = false;
+        bool cumpleCondicion = false;
+        bool esDecimal = false;
+        cout << "Ingrese el precio de compra del Producto: ";
+        getline(cin, input);
+        while (!esNumero || !cumpleCondicion || !esDecimal) {
+            bool todosDigitos = true;
+            for (char c : input) {
+                if (!isdigit(c)) {
+                    if (c == '.') {
+                        esDecimal = true;
+                    }
+                    else {
+                        todosDigitos = false;
+                        break;
+                    }
+                }
+            }
+
+            if (!todosDigitos) {
+                rlutil::setColor(rlutil::RED);
+                cout << "El precio de compra debe ser un valor numerico. Ingrese nuevamente: " << endl;
+                rlutil::setColor(rlutil::BLACK);
+                getline(cin, input);
+                continue;
+            }
+
+            float precioC = stof(input);
+            if (precioC > 0 && precioC < 100000) {
+                esNumero = true;
+                cumpleCondicion = true;
+                esDecimal = true;
+            }
+            else {
+                rlutil::setColor(rlutil::RED);
+                cout << "El precio de compra debe ser mayor a 0 y menor a 100,000. Ingrese nuevamente: " << endl;
+                rlutil::setColor(rlutil::BLACK);
+                getline(cin, input);
+            }
         }
-  
+
+        precio_compra = stof(input);
         setPrecioCompra(precio_compra);
        
+        string input2;
+        esNumero = false;
+        cumpleCondicion = false;
+        esDecimal = false;
         cout << "Ingrese el precio de venta del Producto: ";
-        cin >> precio;
-      
-        if (precio < 0 || precio > 100000)
-        {
-            rlutil::setColor(rlutil::RED);
-            cout<<"ingrese un precio razonable"<<endl;
-            rlutil::setColor(rlutil::WHITE);
-            cout << "Ingrese el precio de venta del Producto: ";
-            cin >> precio;
+        getline(cin, input2);
+        while (!esNumero || !cumpleCondicion || !esDecimal) {
+            bool todosDigitos = true;
+            for (char c : input2) {
+                if (!isdigit(c)) {
+                    if (c == '.') {
+                        esDecimal = true;
+                    }
+                    else {
+                        todosDigitos = false;
+                        break;
+                    }
+                }
+            }
+
+            if (!todosDigitos) {
+                rlutil::setColor(rlutil::RED);
+                cout << "El precio de venta debe ser un valor numerico, Ingrese nuevamente: ";
+                rlutil::setColor(rlutil::BLACK);
+                getline(cin, input2);
+                continue;
+            }
+
+            float precioV = stof(input2);
+            if (precioV > 0 && precioV < 100000) {
+                esNumero = true;
+                cumpleCondicion = true;
+                esDecimal = true;
+            }
+            else {
+                rlutil::setColor(rlutil::RED);
+                cout << "el precio de venta debe ser mayor a 0 y menor a 100.000, Ingrese nuevamente: ";
+                rlutil::setColor(rlutil::BLACK);
+                getline(cin, input2);
+            }
         }
+        precio = stof(input2);
         setPrecio(precio);
+
+        string input3;
         cout << "ingrese la cantidad a Stockear: ";
-        cin >> stock;
-        if (stock < 0)
-        {
-            rlutil::setColor(rlutil::RED);
-            cout<<"ingrese un stock razonable"<<endl;
-            rlutil::setColor(rlutil::WHITE);
-            cout << "ingrese la cantidad a Stockear: " << endl;
-            cin >> stock;
+        getline(cin, input3);
+       
+        esNumero = false;
+        cumpleCondicion = false;
+
+        while (!esNumero || !cumpleCondicion) {
+            bool todosDigitos = true;
+            for (char c : input3) {
+                if (!isdigit(c)) {
+                    todosDigitos = false;
+                    break;
+                }
+            }
+
+            if (!todosDigitos) {
+                rlutil::setColor(rlutil::RED);
+                cout << "El stock debe ser un valor numerico, Ingrese nuevamente: ";
+                rlutil::setColor(rlutil::BLACK);
+                getline(cin, input3);
+                continue;
+            }
+
+            int num = stoi(input3);
+            if (num > 0 && num < 100000) {
+                esNumero = true;
+                cumpleCondicion = true;
+            }
+            else {
+                rlutil::setColor(rlutil::RED);
+                cout << "El stock debe ser mayor a 0 y menor a 100.000, Ingrese nuevamente: ";
+                rlutil::setColor(rlutil::BLACK);
+                getline(cin, input3);
+            }
         }
+        stock = stoi(input3);
         setStock(stock);
         return true;
     }
@@ -156,7 +257,7 @@ bool Producto::Cargar()
         rlutil::setColor(rlutil::RED);
         cout << "Primero deben haber Categorias activas" << endl;
         system("pause");
-        rlutil::setColor(rlutil::WHITE);
+        rlutil::setColor(rlutil::BLACK);
         char desicion;
         Menu menu;
         cout << "¿Desea generar una categoria nueva? (S/N): ";
@@ -178,22 +279,50 @@ void Producto::CargarCategoria()
 {
     int op;
     Archivo_Categoria ArchivoC;
+    int cant = ArchivoC.cantidad_categorias();
     ArchivoC.listar_categorias(ArchivoC.cantidad_categorias());
     cout << endl;
-    cout << "Ingrese de ID de la categoria a la que pertenece el producto: ";
-    cin >> op;
 
-    while (ArchivoC.Existe(op) == false)
-    {
-        rlutil::setColor(rlutil::RED);
-        cout << "ingrese una opcion correcta" << endl;
-        rlutil::setColor(rlutil::WHITE);
-        cin >> op;
+
+    string input;
+    cout << "Ingrese el ID de la categoria a la que pertenece el producto: ";
+    cin.ignore();
+    getline(cin, input);
+
+    bool esNumero = false;
+    bool cumpleCondicion = false;
+
+    while (!esNumero || !cumpleCondicion) {
+        bool todosDigitos = true;
+        for (char c : input) {
+            if (!isdigit(c)) {
+                todosDigitos = false;
+                break;
+            }
+        }
+
+        if (!todosDigitos) {
+            rlutil::setColor(rlutil::RED);
+            cout << "El ID debe ser un valor numerico. Ingrese nuevamente: ";
+            rlutil::setColor(rlutil::BLACK);
+            getline(cin, input);
+            continue;
+        }
+
+        int num = stoi(input);
+        if (num > 0 && num <= cant) {
+            esNumero = true;
+            cumpleCondicion = true;
+        }
+        else {
+            rlutil::setColor(rlutil::RED);
+            cout << "El ID debe ser mayor a 0 y menor o igual a la cantidad de categorias. Ingrese nuevamente: ";
+            rlutil::setColor(rlutil::BLACK);
+            getline(cin, input);
+        }
     }
-    if (op != 0)
-    {
-        setId_Categoria(op);
-    }
+    op = stoi(input);
+    setId_Categoria(op);
 
 }
 
