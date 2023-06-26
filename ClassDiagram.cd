@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Archivo_bkp">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAABAAAgAAAAhAAAIAAAYAAAAAAADAAA=</HashCode>
+      <FileName>Archivo_bkp.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Archivo_Categoria">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAgAlAAEAAACAIAAAABAIAQABAAAAAAAEECAQ=</HashCode>
+      <FileName>Archivo_Categoria.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Archivo_Cliente">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAQEAkAAAAAQAAAAAAAAAAAAAAAAAAAACAACAU=</HashCode>
+      <FileName>Archivo_Cliente.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="archivo_producto">
+    <Position X="2.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAgAgMQABAAAAAABAAgAAAAIAAACgAAAEACAQ=</HashCode>
+      <FileName>Archivo_producto.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Archivo_Vendedor">
+    <Position X="6.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgACYAQAACAAAABACAAAAAAAAAAAAAQAAAABAAAAAg=</HashCode>
+      <FileName>Archivo_Vendedor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Archivo_Venta">
+    <Position X="8" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAEAAAIABQAECAIgAUAAAIAAAAAAgAAQWQU=</HashCode>
+      <FileName>Archivo_Venta.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Categoria">
+    <Position X="6.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACEAAAAAAAAAkAAAAhAQMAAAAAAAIgAAAAAIAQAA=</HashCode>
+      <FileName>Categoria.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cliente">
+    <Position X="4.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAERAAAAEAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Cliente.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DetalleVenta">
+    <Position X="1" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQACAAAEAECQAAAIAAAAgAQIAABAEAEAABAAAgMBEAA=</HashCode>
+      <FileName>DetalleVenta.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fecha">
+    <Position X="4.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ADAAAAAAAAAABAEEIAEABAdAgAAAgAAAAIAAAAAAEAA=</HashCode>
+      <FileName>Fecha.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Menu">
+    <Position X="1" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAGAAAAAAAAAAUCACAAAAAAAAACAAIAA=</HashCode>
+      <FileName>Menu.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persona">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgABAhAAAAgEAQAAAAAwAAIAAgAAIAIgAAAAkIEggA=</HashCode>
+      <FileName>Persona.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Producto">
+    <Position X="9.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAACAAEAESAAIAMQAAIgAQIAABAEIAIgBAAAgMBEAA=</HashCode>
+      <FileName>Producto.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vendedor">
+    <Position X="4.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAEAAABEAAAAQAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Vendedor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Venta">
+    <Position X="11.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>A0BYiEMAIQAQgJAGQCAABAQAAAABMAEMgEAAAgAJEoQ=</HashCode>
+      <FileName>Venta.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
