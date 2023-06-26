@@ -7,7 +7,7 @@ class Persona
 {
 protected:
 	char _nombre[30];
-	char _apellido [50];
+	char _apellido [30];
 	int _edad;
 	char _direccion[50];
 	char _telefono[10];

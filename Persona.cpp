@@ -3,7 +3,6 @@
 #include <cstring>
 #include "rlutil.h"
 
-using namespace std;
 
 void Persona::setNombre(string nombre)
 {
@@ -70,56 +69,135 @@ void Persona::CargarPersona()
 	cout << "Ingrese el nombre: ";
 	cin.ignore();
 	cin.getline(_nombre, 30);
-	for (int i = 0; i < strlen(_nombre); i++)
-	{
-		if (isdigit(_nombre[i])) {
+	bool contieneNumeros = false;
+	while (!contieneNumeros) {
+		bool soloLetras = true;
+		for (int i = 0; i < strlen(_nombre); i++) {
+			if (isdigit(_nombre[i])) {
+				soloLetras = false;
+				break;
+			}
+		}
+
+		if (!soloLetras) {
 			rlutil::setColor(rlutil::RED);
 			cout << "El nombre no puede contener numeros" << endl;
-rlutil::setColor(rlutil::WHITE);
+			rlutil::setColor(rlutil::BLACK);
 			cout << "Ingrese el nombre: ";
 			cin.getline(_nombre, 30);
 		}
-	}
-	cout << "Ingrese el apellido: ";
-	cin.getline(_apellido, 50);
-	for (int i = 0; i < strlen(_apellido); i++)
-	{
-		if (isdigit(_apellido[i])) {
-			rlutil::setColor(rlutil::RED);
-			cout << "El apellido no puede contener numeros" << endl;
-rlutil::setColor(rlutil::WHITE);
-			cout << "Ingrese el apellido: ";
-			cin.getline(_apellido, 50);
+		else {
+			contieneNumeros = true;
 		}
 	}
+
+	cout << "Ingrese el apellido: ";
+	cin.getline(_apellido, 30);
+	contieneNumeros = false;
+	while (!contieneNumeros) {
+		bool soloLetras = true;
+		for (int i = 0; i < strlen(_apellido); i++) {
+			if (isdigit(_apellido[i])) {
+				soloLetras = false;
+				break;
+			}
+		}
+
+		if (!soloLetras) {
+			rlutil::setColor(rlutil::RED);
+			cout << "El apellido no puede contener numeros" << endl;
+			rlutil::setColor(rlutil::BLACK);
+			cout << "Ingrese el apellido: ";
+			cin.getline(_apellido, 30);
+		}
+		else {
+			contieneNumeros = true;
+		}
+	}
+
+	string input;
 	cout << "Ingrese edad: ";
-	cin >> _edad;
-	if (!isdigit(_edad))
-	{
-		rlutil::setColor(rlutil::RED);
-		cout << "La edad debe ser un numero" << endl;
+	getline(cin, input);
+
+	bool esNumero = false;
+	bool cumpleCondicion = false;
+
+	while (!esNumero || !cumpleCondicion) {
+		bool todosDigitos = true;
+		for (char c : input) {
+			if (!isdigit(c)) {
+				todosDigitos = false;
+				break;
+			}
+		}
+
+		if (!todosDigitos) {
+			rlutil::setColor(rlutil::RED);
+			cout << "La edad debe ser un valor numerico. Ingrese nuevamente: ";
+			rlutil::setColor(rlutil::BLACK);
+			getline(cin, input);
+			continue;
+		}
+
+		int edad = stoi(input);
+		if (edad > 5 && edad < 100) {
+			esNumero = true;
+			cumpleCondicion = true;
+		}
+		else {
+			rlutil::setColor(rlutil::RED);
+			cout << "La edad debe ser mayor a 5 y menor a 100. Ingrese nuevamente: ";
+			rlutil::setColor(rlutil::BLACK);
+			getline(cin, input);
+		}
 	}
-	if (_edad < 15 || _edad > 100)
-	{
-		rlutil::setColor(rlutil::RED);
-		cout << "La edad debe ser mayor a 12 y menor a 100" << endl;
-rlutil::setColor(rlutil::WHITE);
-		cout << "Ingrese edad: ";
-		cin >> _edad;
-	}
-	cin.ignore();
+	_edad = stoi(input);
+	
 	cout << "Ingrese direccion: ";
 	cin.getline(_direccion, 50);
+	contieneNumeros = false;
+	while (!contieneNumeros) {
+		bool soloLetras = true;
+		for (int i = 0; i < strlen(_direccion); i++) {
+			if (isdigit(_direccion[i])) {
+				soloLetras = false;
+				break;
+			}
+		}
+
+		if (!soloLetras) {
+			rlutil::setColor(rlutil::RED);
+			cout << "La direccion no puede contener numeros" << endl;
+			rlutil::setColor(rlutil::BLACK);
+			cout << "Ingrese la direccion: ";
+			cin.getline(_direccion, 50);
+		}
+		else {
+			contieneNumeros = true;
+		}
+	}
+
 	cout << "Ingrese telefono: ";
 	cin.getline(_telefono, 10);
-	for (int i = 0; i < strlen(_telefono); i++)
-	{
-		if (!isdigit(_telefono[i])) {
-rlutil::setColor(rlutil::RED);
+	bool contieneLetras = false;
+	while (!contieneLetras) {
+		bool soloNumeros = true;
+		for (int i = 0; i < strlen(_telefono); i++) {
+			if (!isdigit(_telefono[i])) {
+				soloNumeros = false;
+				break;
+			}
+		}
+
+		if (!soloNumeros) {
+			rlutil::setColor(rlutil::RED);
 			cout << "El telefono no puede contener letras" << endl;
-rlutil::setColor(rlutil::WHITE);
-			cout << "Ingrese telefono: ";
+			rlutil::setColor(rlutil::BLACK);
+			cout << "Ingrese el telefono: ";
 			cin.getline(_telefono, 10);
+		}
+		else {
+			contieneLetras = true;
 		}
 	}
 }

@@ -42,7 +42,7 @@ void Archivo_Categoria::baja_Logica()
         {
 
             categoria.setEstado(false);
-            guardar_Categorias(categoria, op - 1);
+            guardar_Categorias(categoria, op-1);
         }
     }
 }
@@ -130,6 +130,7 @@ Categoria Archivo_Categoria::leer_categorias(int pos)
     if (pFile == nullptr)
     {
         cout << "No se pudo abrir el archivo" << endl;
+        return cat;
     }
 
     fseek(pFile, pos * sizeof(Categoria), SEEK_SET);
@@ -201,13 +202,7 @@ void Archivo_Categoria::listar_categorias(int cantidad)
         categoria = leer_de_disco(i);
         if (categoria.getEstado())
         {
-            Archivo_Categoria acat;
-            Categoria cat;
-            cat = acat.leer_de_disco(categoria.get_id());
-            if (cat.getEstado())
-            {
-                categoria.mostrar();
-            }
+          categoria.mostrar();
         }
     }
 }
@@ -236,9 +231,7 @@ void Archivo_Categoria::modificar_categorias()
             cat[i].mostrar();
             cout << endl;
             char nuevo_nombre[30];
-            cout << "ingresar nuevo nombre" << endl;
-            cin >> nuevo_nombre;
-            cat[i].setNombre(nuevo_nombre);
+            cat[i].cargar();
             system("pause");
             system("cls");
             cat[i].sobreescribir_categoria(c, i);
@@ -290,7 +283,7 @@ bool Archivo_Categoria::Existe(int op)
     for (int i = 0; i < cantidad_categorias(); i++)
     {
         cat = leer_de_disco(i);
-        if (cat.get_id() == op)
+        if (cat.get_id() == op && cat.getEstado())
         {
             return true;
         }

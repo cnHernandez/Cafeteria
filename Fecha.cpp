@@ -2,6 +2,7 @@
 #include <ctime>
 #include <iostream>
 #include <string>
+#include "rlutil.h"
 using namespace std;
 
 
@@ -120,31 +121,118 @@ string Fecha::toString(string formatoFecha) {
 
 void Fecha::Cargar()
 {
+    string input1;
+    bool esNumero = false;
+    bool cumpleCondicion = false;
     cout << "Dia: ";
-    cin >> _dia;
-  
-    if (_dia > 31 || _dia < 0 )
-    {
-        cout << "Ingrese una fecha valida" << endl;
-            cout << "Dia: ";
-            cin >> _dia;
+    cin.ignore();
+    getline(cin, input1);
+
+    while (!esNumero || !cumpleCondicion) {
+        bool todosDigitos = true;
+        for (char c : input1) {
+            if (!isdigit(c)) {
+                todosDigitos = false;
+                break;
+            }
+        }
+
+        if (!todosDigitos) {
+            rlutil::setColor(rlutil::RED);
+            cout << "El dia debe ser un valor numerico. Ingrese nuevamente: ";
+            rlutil::setColor(rlutil::BLACK);
+            getline(cin, input1);
+            continue;
+        }
+
+        int num = stoi(input1);
+        if (num > 0 && num <= 31) {
+            esNumero = true;
+            cumpleCondicion = true;
+        }
+        else {
+            rlutil::setColor(rlutil::RED);
+            cout << "El dia debe ser mayor a 0 y menor o igual a 31. Ingrese nuevamente: ";
+            rlutil::setColor(rlutil::BLACK);
+            getline(cin, input1);
+        }
     }
+
+    _dia = stoi(input1);
+
+    string input2;
+    esNumero = false;
+    cumpleCondicion = false;
     cout << "Mes: ";
-    cin >> _mes;
-  
-    if (_mes > 12 || _mes < 0 )
-    {
-		cout << "Ingrese una fecha valida " << endl;
-		cout << "Mes: ";
-		cin >> _mes;
-	}
-    cout << "Anio: ";
-    cin >> _anio;
+    getline(cin, input2);
+
+    while (!esNumero || !cumpleCondicion) {
+        bool todosDigitos = true;
+        for (char c : input2) {
+            if (!isdigit(c)) {
+                todosDigitos = false;
+                break;
+            }
+        }
+
+        if (!todosDigitos) {
+            rlutil::setColor(rlutil::RED);
+            cout << "El mes debe ser un valor numerico. Ingrese nuevamente: ";
+            rlutil::setColor(rlutil::BLACK);
+            getline(cin, input2);
+            continue;
+        }
+
+        int num2 = stoi(input2);
+        if (num2 > 0 && num2 <= 12) {
+            esNumero = true;
+            cumpleCondicion = true;
+        }
+        else {
+            rlutil::setColor(rlutil::RED);
+            cout << "El mes debe ser mayor a 0 y menor o igual a 12. Ingrese nuevamente: ";
+            rlutil::setColor(rlutil::BLACK);
+            getline(cin, input2);
+        }
+    }
+    _mes = stoi(input2);
     
-    if (_anio < 0 )
-    {
-		cout << "Ingrese una fecha valida " << endl;
-		cout << "Anio: ";
-		cin >> _anio;
-	}
+
+    string input3;
+    esNumero = false;
+    cumpleCondicion = false;
+    cout << "Anio: ";
+    getline(cin, input3);
+
+    while (!esNumero || !cumpleCondicion) {
+        bool todosDigitos = true;
+        for (char c : input3) {
+            if (!isdigit(c)) {
+                todosDigitos = false;
+                break;
+            }
+        }
+
+        if (!todosDigitos) {
+            rlutil::setColor(rlutil::RED);
+            cout << "El anio debe ser un valor numerico. Ingrese nuevamente: ";
+            rlutil::setColor(rlutil::BLACK);
+            getline(cin, input3);
+            continue;
+        }
+
+        int num3 = stoi(input3);
+        if (num3 > 0 && num3 <= 2023) {
+            esNumero = true;
+            cumpleCondicion = true;
+        }
+        else {
+            rlutil::setColor(rlutil::RED);
+            cout << "El anio debe ser mayor a 0 y menor o igual a 2023. Ingrese nuevamente: ";
+            rlutil::setColor(rlutil::BLACK);
+            getline(cin, input3);
+        }
+    }
+
+    _anio = stoi(input3);
 }

@@ -6,7 +6,7 @@ using namespace std;
 class Categoria
 {
 private:
-    char _nombre[50];
+    char _nombre[30];
     int id_categoria;
     bool estado;
 

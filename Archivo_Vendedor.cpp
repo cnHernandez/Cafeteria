@@ -31,6 +31,7 @@ void Archivo_Vendedor::Guardar(Vendedor ven) {
 	pFile = fopen("Vendedores.dat", "ab");
 	if (pFile == nullptr) {
 		cout << "No se pudo abrir el archivo" << endl;
+		return;
 	}
 	fwrite(&ven, sizeof(Vendedor), 1, pFile);
 	fclose(pFile);
@@ -63,6 +64,7 @@ Vendedor Archivo_Vendedor::Leer_vendedores(int pos) {
 
 	if (p == nullptr) {
 		cout << "Error al abrir el archivo" << endl;
+		return vendedor;
 	}
 
 	fseek(p, pos * sizeof(Vendedor), SEEK_SET);
@@ -155,7 +157,7 @@ void Archivo_Vendedor::Baja_Logica() {
 	Vendedor vendedor;
 	int cant = Cantidad_vendedores();
 	Listar_Vendedor(cant);
-	cout << std::endl;
+	cout << endl;
 	cout << "Ingrese de ID del vendedor que desea eliminar: ";
 	cin >> op;
 

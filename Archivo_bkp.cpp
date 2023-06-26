@@ -2,6 +2,7 @@
 #include "Venta.h"
 #include "Archivo_Venta.h"
 #include <iostream>
+#include "rlutil.h"
 
 using namespace std;
 
@@ -24,7 +25,9 @@ void Archivo_bkp::HacerCopiaDeSeguridad()
 	Venta* vec = new Venta[cantidadRegistros];
 
 	if (vec == nullptr) {
+		rlutil::setColor(rlutil::RED);
 		cout << "Falla al realizar backup" << endl;
+		rlutil::setColor(rlutil::BLACK);
 		return;
 	}
 
@@ -34,7 +37,9 @@ void Archivo_bkp::HacerCopiaDeSeguridad()
 		cout << "Backup realizado correctamente" << endl;
 	}
 	else {
+		rlutil::setColor(rlutil::RED);
 		cout << "Falla al realizar backup" << endl;
+		rlutil::setColor(rlutil::BLACK);
 	}
 
 	delete[]vec;
@@ -48,7 +53,9 @@ void Archivo_bkp::RestaurarCopiaDeSeguridad()
 	Venta * vec = new Venta [cantidadRegistros];
 
 	if (vec == nullptr) {
+		rlutil::setColor(rlutil::RED);
 		cout << "Falla al restaurar backup" << endl;
+		rlutil::setColor(rlutil::BLACK);
 		return;
 	}
 
@@ -58,7 +65,9 @@ void Archivo_bkp::RestaurarCopiaDeSeguridad()
 		cout << "Backup restaurado correctamente" << endl;
 	}
 	else {
+		rlutil::setColor(rlutil::RED);
 		cout << "Falla al restaurar backup" << endl;
+		rlutil::setColor(rlutil::BLACK);
 	}
 
 	delete[]vec;
