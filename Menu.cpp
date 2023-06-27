@@ -201,7 +201,7 @@ void Menu::menu_Productos()
                         }
                         else if (desicion == 'n' || desicion == 'N')
                         {
-                            return;
+                            menu_Productos();
                         }
                     }
                     else
@@ -315,7 +315,7 @@ void Menu::menu_Productos()
                         }
                         else if (desicion == 'n' || desicion == 'N')
                         {
-                            return;
+                            menu_Productos();
                         }
                         system("pause");
                     }
@@ -486,7 +486,7 @@ void Menu::menu_Categorias()
                 }
                 else if (desicion == 'n' || desicion == 'N')
                 {
-                    return;
+                    menu_Categorias();
                 }
 
             }
@@ -866,7 +866,7 @@ void Menu::menu_Clientes()
                 }
                 else if (desicion == 'n' || desicion == 'N')
                 {
-                    return;
+                    menu_Clientes();
                 }
                 else
                 {
@@ -1002,7 +1002,7 @@ void Menu::menu_Vendedores()
                 }
                 else if (desicion == 'n' || desicion == 'N')
                 {
-                    return;
+                    menu_Vendedores();
                 }
                 else
                 {
@@ -1211,19 +1211,22 @@ void Menu::menu_backup()
             Archivo_Venta ar;
             int cant = ar.cantidad_ventas();
             int cantA = ar.get_cantidad_Activa(cant);
-            if (cantA > 0) {
+            
                 cout << "Restaurar copia de seguridad" << endl;
                 Archivo_bkp Backup;
-                Backup.RestaurarCopiaDeSeguridad();
-                cout << "Se restauro la copia de seguridad exitosamente..." << endl;
+                if (Backup.getCantidadRegistros() > 0) {
+                    Backup.RestaurarCopiaDeSeguridad();
+                    cout << "Se restauro la copia de seguridad exitosamente..." << endl;
+                }
+                else {
+                    cout << "No hay registros para restaurar" << endl;
                 system("pause");
-            }
-            else {
-                cout << "NO HAY VENTAS PARA REALIZAR LA RESTAURACION" << endl;
+                }
+            
+            
             system("pause");
             }
         }
         break;
         }
     }
-}

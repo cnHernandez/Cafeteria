@@ -152,10 +152,10 @@ void Persona::CargarPersona()
 		}
 	}
 	_edad = stoi(input);
-	
+
 	cout << "Ingrese direccion: ";
 	cin.getline(_direccion, 50);
-	contieneNumeros = false;
+	/*contieneNumeros = false;
 	while (!contieneNumeros) {
 		bool soloLetras = true;
 		for (int i = 0; i < strlen(_direccion); i++) {
@@ -174,30 +174,39 @@ void Persona::CargarPersona()
 		}
 		else {
 			contieneNumeros = true;
-		}
-	}
+	}	}*/
+
 
 	cout << "Ingrese telefono: ";
-	cin.getline(_telefono, 10);
-	bool contieneLetras = false;
-	while (!contieneLetras) {
-		bool soloNumeros = true;
-		for (int i = 0; i < strlen(_telefono); i++) {
-			if (!isdigit(_telefono[i])) {
-				soloNumeros = false;
-				break;
-			}
+	cin.getline(_telefono, 30);
+	for (int i = 0; i < strlen(_telefono); i++) {
+		if (i > 10)
+		{
+			cout << "El telefono debe contener maximo 10 caracteres" << endl;
+			cout << "Ingrese telefono: ";
+			cin.getline(_telefono, 30);
 		}
+		bool contieneLetras = false;
+		while (!contieneLetras) {
+			bool soloNumeros = true;
+			for (int i = 0; i < strlen(_telefono); i++) {
 
-		if (!soloNumeros) {
-			rlutil::setColor(rlutil::RED);
-			cout << "El telefono no puede contener letras" << endl;
-			rlutil::setColor(rlutil::BLACK);
-			cout << "Ingrese el telefono: ";
-			cin.getline(_telefono, 10);
-		}
-		else {
-			contieneLetras = true;
+				if (!isdigit(_telefono[i])) {
+					soloNumeros = false;
+					break;
+				}
+			}
+
+			if (!soloNumeros) {
+				rlutil::setColor(rlutil::RED);
+				cout << "El telefono no puede contener letras" << endl;
+				rlutil::setColor(rlutil::BLACK);
+				cout << "Ingrese el telefono: ";
+				cin.getline(_telefono, 10);
+			}
+			else {
+				contieneLetras = true;
+			}
 		}
 	}
 }

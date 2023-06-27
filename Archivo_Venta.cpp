@@ -6,6 +6,7 @@
 #include "archivo_Vendedor.h"
 #include "Vendedor.h"
 #include "Cliente.h"
+#include "Menu.h"
 #include <iostream>
 #include <string>
 #include <iomanip>
@@ -71,7 +72,7 @@ Venta Archivo_Venta::leer_ventas(int pos)
 Venta Archivo_Venta::leer_ventaBK(Venta * vec, int pos)
 {
 	Venta ventas;
-		FILE* p = fopen("ventas.dat", "rb");
+		FILE* p = fopen("Ventas.dat", "rb");
 		if (p == NULL)
 		{
 			cout << "Error al abrir el archivo" << endl;;
@@ -84,7 +85,7 @@ Venta Archivo_Venta::leer_ventaBK(Venta * vec, int pos)
 
 bool Archivo_Venta::guardar_bkp(Venta* vec, int cantidad)
 {
-	FILE* p = fopen("ventas.dat", "ab");
+	FILE* p = fopen("Ventas.dat", "ab");
 	if (p == NULL)
 	{
 		return false;
@@ -459,7 +460,7 @@ void Archivo_Venta::recaudacion_x_vendedor()
 		cout << "ingrese el anio a listar" << endl;
 		int anio;
 		cin >> anio;
-		if (anio < 2016 || anio > 2023)
+		if (anio < 2020 || anio > 2023)
 		{
 			rlutil::setColor(rlutil::RED);
 			cout << "Anio invalido" << endl;
@@ -581,7 +582,7 @@ void Archivo_Venta::recaudacion_x_producto()
 
 		cout << "ingrese el anio a listar" << endl;
 		cin >> anio;
-		if (anio < 2016 || anio > 2023)
+		if (anio < 2020 || anio > 2023)
 		{
 			rlutil::setColor(rlutil::RED);
 			cout << "Anio invalido" << endl;
@@ -701,7 +702,7 @@ void Archivo_Venta::recaudacion_x_categoria()
 		int anio;
 		cout << "ingrese el anio a listar" << endl;
 		cin >> anio;
-		if (anio < 2016 || anio > 2023)
+		if (anio < 2020 || anio > 2023)
 		{
 			rlutil::setColor(rlutil::RED);
 			cout << "Anio invalido" << endl;
@@ -784,7 +785,7 @@ void Archivo_Venta::BajaLogica()
 		cin >> op;
 	}
 	venta = leer_ventas(op - 1);
-
+	Menu menu;
 	if(op != 0) {
 		char op2;
 		system("cls");
@@ -799,6 +800,10 @@ void Archivo_Venta::BajaLogica()
 		{
 			venta.setEstado(false);
 			guardar_modificado(venta, op - 1);
+		}
+		else if (op2 == 'n' || op2 == 'N')
+		{
+			menu.menu_Ventas();
 		}
 	}
 }
@@ -822,16 +827,21 @@ int Archivo_Venta::Modificar_Venta()
 		rlutil::setColor(rlutil::BLACK);
 		cin >> op;
 	}
+	Menu menu;
 	if (op != 0)
 	{
-		venta.cargar();
 		char op2;
 		cout << "esta seguro de que desea modificar la venta?" <<endl;
 		cout << "[S/N]: ";
 		cin >> op2;
 		if (op2 == 's' || op2 == 'S')
 		{
+		venta.cargar();
 			guardar_modificado(venta, op - 1);
+		}
+		else if (op2 == 'n' || op2 == 'N')
+		{
+			menu.menu_Ventas();
 		}
 	}
 	return op;
