@@ -72,12 +72,13 @@ void Archivo_Categoria::guardar(Categoria cat)
     if (pFile == nullptr)
     {
         cout << "Error para guardar la Categoria" << endl;
+        return;
     }
+    else {
+        fwrite(&cat, sizeof(Categoria), 1, pFile);
 
-    fwrite(&cat, sizeof(Categoria), 1, pFile);
-
-    fclose(pFile);
-
+        fclose(pFile);
+    }
 }
 
 Categoria Archivo_Categoria::leer_de_disco(int posicion)
@@ -122,7 +123,7 @@ int Archivo_Categoria::cantidad_categorias()
 
     return cantidad;
 }
-Categoria Archivo_Categoria::leer_categorias(int pos)
+/*Categoria Archivo_Categoria::leer_categorias(int pos)
 {
     Categoria cat;
     FILE* pFile;
@@ -143,7 +144,7 @@ Categoria Archivo_Categoria::leer_categorias(int pos)
     fclose(pFile);
     return cat;
 }
-
+*/
 
 FILE* Archivo_Categoria::abrirArchivo()
 {
@@ -168,7 +169,7 @@ void Archivo_Categoria::obtener_categorias(Categoria* cat, int cantidad)
 }
 
 
-bool Archivo_Categoria::guardarEnDisco(int pos) {
+/*bool Archivo_Categoria::guardarEnDisco(int pos) {
     FILE* p;
     p = fopen("categoria.dat", "rb+");
     if (p == NULL) {
@@ -180,8 +181,8 @@ bool Archivo_Categoria::guardarEnDisco(int pos) {
     fclose(p);
     return ok;
 }
-
-int Archivo_Categoria::buscarCategoria(int ID) {
+*/
+/*int Archivo_Categoria::buscarCategoria(int ID) {
     Categoria c;
     int i, cant = cantidad_categorias();
     for (i = 0; i < cant; i++) {
@@ -191,7 +192,7 @@ int Archivo_Categoria::buscarCategoria(int ID) {
         }
     }
     return -1;
-}
+}*/
 
 void Archivo_Categoria::listar_categorias(int cantidad)
 {

@@ -3,7 +3,7 @@
 class Archivo_Vendedor
 {
 public:
-	bool GuardarEnDisco(int);
+	//bool GuardarEnDisco(int);
 	void Guardar(Vendedor ven);
 	bool Guardar_Modificado(Vendedor, int);
 	int Cantidad_vendedores();

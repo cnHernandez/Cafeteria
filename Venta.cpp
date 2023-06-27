@@ -289,7 +289,7 @@ void Venta::cargar()
 	string input3;
 	esNumero = false;
 	cumpleCondicion = false;
-	cout << "Ingrese cantidad de productos: ";
+	cout << "Ingrese cantidad de productos diferentes que va a adquirir: ";
 	getline(cin, input3);
 
 	while (!esNumero || !cumpleCondicion) {
@@ -349,7 +349,11 @@ void Venta::cargar()
 			cout << "* Ingrese la cantidad que desea comprar: ";
 			cin >> cantidad;
 		}
-
+		if ((producto.getStock() - cantidad) < 10)
+		{
+			cout << "quedan menos de 10 unidades del producto seleccionado" << endl;
+			system("pause");
+		}
 		if (producto.getStock() == 0 || producto.getStock() < cantidad) {
 			system("cls");
 			rlutil::setColor(rlutil::RED);

@@ -16,7 +16,7 @@ public:
     void listaXcategoria();
     void listaXrango();
     bool Existe(int opcion);
-    void baja_Logica(int id);
+    //void baja_Logica(int id);
     void Stock(int id);
     int PosicionEnDisco(int id);
     void stock_de_productos();

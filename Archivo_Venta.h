@@ -6,7 +6,7 @@
 class Archivo_Venta
 {
 	public:
-		bool guardarEnDisco(int);
+		//bool guardarEnDisco(int);
 		bool guardar_modificado(Venta, int);
 		void obtener_venta(Venta * prod, int cantidad);
 		void guardar(Venta venta);

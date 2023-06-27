@@ -12,7 +12,7 @@
 
 using namespace std;
 
-bool Archivo_Vendedor::GuardarEnDisco(int pos) {
+/*bool Archivo_Vendedor::GuardarEnDisco(int pos) {
 	FILE* p;
 	p = fopen("Vendedores.dat", "rb+");
 	if (p == NULL) {
@@ -24,7 +24,7 @@ bool Archivo_Vendedor::GuardarEnDisco(int pos) {
 	fclose(p);
 	return ok;
 }
-
+*/
 void Archivo_Vendedor::Guardar(Vendedor ven) {
 
 	FILE* pFile;

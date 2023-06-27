@@ -10,7 +10,7 @@
 
 using namespace std;
 
-bool Archivo_Cliente::guardarEnDisco(int pos) {
+/*bool Archivo_Cliente::guardarEnDisco(int pos) {
     FILE* p;
     p = fopen("Clientes.dat", "rb+");
     if (p == NULL) {
@@ -22,16 +22,18 @@ bool Archivo_Cliente::guardarEnDisco(int pos) {
     fclose(p);
     return ok;
 }
-
+*/
 void Archivo_Cliente::guardar(Cliente cli) {
 	
 	FILE* pFile;
 	pFile = fopen("Clientes.dat", "ab");
 	if (pFile == nullptr) {
 		cout << "No se pudo abrir el archivo" << endl;
+		return;
 	}
-	fwrite(&cli, sizeof(Cliente), 1, pFile);
-	fclose(pFile);
+		fwrite(&cli, sizeof(Cliente), 1, pFile);
+		fclose(pFile);
+	
 }
 
 int Archivo_Cliente::cantidad_clientes() {

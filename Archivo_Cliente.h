@@ -4,7 +4,7 @@
 class Archivo_Cliente
 {
 public:
-	bool guardarEnDisco(int);
+	//bool guardarEnDisco(int);
 	void guardar(Cliente cli);
 	bool Guardar_Modificado(Cliente, int);
 	int cantidad_clientes();

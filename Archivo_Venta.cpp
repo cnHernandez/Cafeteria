@@ -14,7 +14,7 @@
 
 using namespace std;
 
-bool Archivo_Venta::guardarEnDisco(int cantidad_ventas)
+/*bool Archivo_Venta::guardarEnDisco(int cantidad_ventas)
 {
 	bool guardo;
 	FILE *p;
@@ -27,7 +27,7 @@ bool Archivo_Venta::guardarEnDisco(int cantidad_ventas)
 	guardo = fwrite(this, sizeof(Archivo_Venta), cantidad_ventas, p);
 	fclose(p);
 	return guardo;
-}
+}*/
 void Archivo_Venta::obtener_venta(Venta* venta, int cant)
 {
 	FILE* p;

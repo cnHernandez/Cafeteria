@@ -16,9 +16,12 @@ void archivo_producto::guardar(Producto producto)
     if (p == nullptr)
     {
        cout << "Error para guardar el Producto" << endl;
+       return;
     }
-    fwrite(&producto, sizeof(Producto), 1, p);
-    fclose(p);
+    else {
+        fwrite(&producto, sizeof(Producto), 1, p);
+        fclose(p);
+    }
 }
 bool archivo_producto::guardar(Producto producto, int posicion)
 {
@@ -147,7 +150,7 @@ void archivo_producto::baja_Logica()
     }
 }
 
-void archivo_producto::baja_Logica(int id)
+/*void archivo_producto::baja_Logica(int id)
 {
 
     Producto Producto;
@@ -164,7 +167,7 @@ void archivo_producto::baja_Logica(int id)
         i++;
     }
 }
-
+*/
 void archivo_producto::modificar()
 {
     int op;
@@ -206,6 +209,7 @@ void archivo_producto::obtener_productos(Producto* prod, int cantidad)
     if (pFile == nullptr)
     {
         cout << "Error al abrir el archivo" << endl;
+        return ;
     }
 
     fread(prod, sizeof(Producto), cantidad, pFile);
@@ -259,6 +263,7 @@ void archivo_producto::listaXcategoria()
         }
     }
         Menu menu;
+        Producto producto;
         char desicion;
         if (cont == 0)
         { 
@@ -268,10 +273,11 @@ void archivo_producto::listaXcategoria()
             system("cls");
             if (desicion == 'S' || desicion == 's')
             {
-                menu.menu_Productos();
+                producto.Cargar();
+                guardar(producto);
             }
             else if(desicion == 'N' || desicion == 'n'){
-                return;
+                menu.menu_Productos();
             }
 		}
     
@@ -355,14 +361,14 @@ void archivo_producto::Stock(int id)
     }
     if (id != 0)
     {
-        int encontrado = 0;
+        //int encontrado = 0;
         int posicion = 0;
 
         for (int i = 0; i < cant; i++) {
             producto = leer_de_disco(i);
 
             if (producto.getId_Producto() == id && producto.getEstado()) {
-                encontrado = 1;
+                //encontrado = 1;
                 posicion = i;
                 break;
             }
@@ -371,6 +377,7 @@ void archivo_producto::Stock(int id)
         cout << "INGRESE CANTIDAD DE STOCK: ";
         cin >> st;
         producto.AgregarStock(st);
+        Menu menu;
         char op2;
         cout << "esta seguro de que desea modificar al producto?" << endl;
         cout << "[S/N]: ";
@@ -378,6 +385,10 @@ void archivo_producto::Stock(int id)
         if (op2 == 's' || op2 == 'S')
         {
             guardar(producto, posicion);
+        }
+        if (op2 == 'n' || op2 == 'N')
+        {
+            menu.menu_Productos();
         }
         system("pause");
         system("cls");
