@@ -1,10 +1,5 @@
-#include "archivo_producto.h"
-#include "Producto.h"
+#include "archivo_Producto.h"
 #include "Archivo_Categoria.h"
-#include "Categoria.h"
-#include <iostream>
-#include <string>
-#include <fstream>
 
 using namespace std;
 
@@ -123,28 +118,7 @@ int Archivo_Categoria::cantidad_categorias()
 
     return cantidad;
 }
-/*Categoria Archivo_Categoria::leer_categorias(int pos)
-{
-    Categoria cat;
-    FILE* pFile;
-    pFile = fopen("categoria.dat", "rb");
-    if (pFile == nullptr)
-    {
-        cout << "No se pudo abrir el archivo" << endl;
-        return cat;
-    }
 
-    fseek(pFile, pos * sizeof(Categoria), SEEK_SET);
-    bool ok = fread(this, sizeof(Categoria), 1, pFile);
-    if (ok == false)
-    {
-        cout << "No se pudo leer el archivo" << endl;
-    }
-
-    fclose(pFile);
-    return cat;
-}
-*/
 
 FILE* Archivo_Categoria::abrirArchivo()
 {
@@ -168,31 +142,6 @@ void Archivo_Categoria::obtener_categorias(Categoria* cat, int cantidad)
     fclose(pFile);
 }
 
-
-/*bool Archivo_Categoria::guardarEnDisco(int pos) {
-    FILE* p;
-    p = fopen("categoria.dat", "rb+");
-    if (p == NULL) {
-        return false;
-    }
-    bool ok;
-    fseek(p, pos * sizeof(Categoria), SEEK_SET);
-    ok = fwrite(this, sizeof(Categoria), 1, p);
-    fclose(p);
-    return ok;
-}
-*/
-/*int Archivo_Categoria::buscarCategoria(int ID) {
-    Categoria c;
-    int i, cant = cantidad_categorias();
-    for (i = 0; i < cant; i++) {
-        c = leer_categorias(i);
-        if (ID == c.get_id()) {
-            return i;
-        }
-    }
-    return -1;
-}*/
 
 void Archivo_Categoria::listar_categorias(int cantidad)
 {

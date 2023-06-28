@@ -1,11 +1,6 @@
-
-#include "cstring"
 #include <iostream>
-#include <string>
-#include "Categoria.h"
+#include "cstring"
 #include "Archivo_Categoria.h"
-#include "Producto.h"
-#include "Archivo_Producto.h"
 #include "rlutil.h"
 
 using namespace std;
@@ -77,8 +72,8 @@ void Categoria::sobreescribir_categoria(Categoria cat, int pos)
     FILE* pFile;
     pFile = fopen("Categoria.dat", "rb+");
     if (pFile == nullptr) {
+        cout << "ERROR" << endl;
         return ;
-        //cout << "error al abrir el archivo" << endl;
     }
 
     fseek(pFile, pos * sizeof(Categoria), 0);

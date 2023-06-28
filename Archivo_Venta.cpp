@@ -1,33 +1,14 @@
+#include <iomanip>
 #include "Archivo_Venta.h"
-#include "Venta.h"
 #include "Archivo_Categoria.h"
 #include "Archivo_Producto.h"
 #include "Archivo_Cliente.h"
 #include "archivo_Vendedor.h"
-#include "Vendedor.h"
-#include "Cliente.h"
 #include "Menu.h"
-#include <iostream>
-#include <string>
-#include <iomanip>
 #include "rlutil.h"
 
 using namespace std;
 
-/*bool Archivo_Venta::guardarEnDisco(int cantidad_ventas)
-{
-	bool guardo;
-	FILE *p;
-	p = fopen("Ventas.dat", "wb");
-	if (p == NULL)
-	{
-		cout << "Error al abrir el archivo" << endl;
-		return false;
-	}
-	guardo = fwrite(this, sizeof(Archivo_Venta), cantidad_ventas, p);
-	fclose(p);
-	return guardo;
-}*/
 void Archivo_Venta::obtener_venta(Venta* venta, int cant)
 {
 	FILE* p;
@@ -190,7 +171,7 @@ void Archivo_Venta::listar_x_cliente()
 		}
 		if (!tuvoVentas) {
 			rlutil::setColor(rlutil::RED);
-			cout << "No tuvo ventas aun..." << endl;
+			cout << "No tuvo compras aun..." << endl;
 			rlutil::setColor(rlutil::BLACK);
 		}
 
@@ -270,7 +251,7 @@ void Archivo_Venta::listar_x_fecha()
 		{
 			cout << "ingrese el anio a listar" << endl;
 			cin >> anio;
-			while (anio < 2016)
+			while (anio < 2020 || anio > 2023)
 			{
 				rlutil::setColor(rlutil::RED);
 				cout << "Anio invalido" << endl;
@@ -303,7 +284,7 @@ void Archivo_Venta::listar_x_fecha()
 			system("cls");
 			cout << "ingrese el anio a listar" << endl;
 			cin >> anio;
-			while (anio < 2016)
+			while (anio < 2020 || anio > 2023)
 			{
 				rlutil::setColor(rlutil::RED);
 				cout << "Anio invalido" << endl;
@@ -450,8 +431,8 @@ void Archivo_Venta::recaudacion_x_vendedor()
 	{
 		system("cls");
 		cout << "No existen Vendedores cargados" << endl;
-		return;
 		system("pause");
+		return;
 	}
 	else
 	{
@@ -460,27 +441,20 @@ void Archivo_Venta::recaudacion_x_vendedor()
 		cout << "ingrese el anio a listar" << endl;
 		int anio;
 		cin >> anio;
-		if (anio < 2020 || anio > 2023)
+		while (anio < 2020 || anio > 2023)
 		{
 			rlutil::setColor(rlutil::RED);
 			cout << "Anio invalido" << endl;
 			rlutil::setColor(rlutil::BLACK);
 			cout << "ingrese el Anio a listar: ";
 			cin >> anio;
-			if (anio < 2016 || anio > 2023) {
-				rlutil::setColor(rlutil::RED);
-				cout << "ANIO INVALIDO" << endl;
-				rlutil::setColor(rlutil::BLACK);
-				system("pause");
-				return;
-			}
 		}
 		cout << endl;
 		archivo.Listar_Vendedor(cantVendedor);
 		cout << "ingrese el ID del Vendedor " << endl;
 		int id;
 		cin >> id;
-		while (id < 0 || id > cantVendedor)
+		while (!archivo.ExisteVendedor(id))
 		{
 			rlutil::setColor(rlutil::RED);
 			cout << "ID invalido" << endl;
@@ -582,20 +556,13 @@ void Archivo_Venta::recaudacion_x_producto()
 
 		cout << "ingrese el anio a listar" << endl;
 		cin >> anio;
-		if (anio < 2020 || anio > 2023)
+		while (anio < 2020 || anio > 2023)
 		{
 			rlutil::setColor(rlutil::RED);
 			cout << "Anio invalido" << endl;
 			rlutil::setColor(rlutil::BLACK);
 			cout << "ingrese el Anio a listar: ";
 			cin >> anio;
-			if (anio < 2016 || anio > 2023) {
-				rlutil::setColor(rlutil::RED);
-				cout << "ANIO INVALIDO" << endl;
-				rlutil::setColor(rlutil::BLACK);
-				system("pause");
-				return;
-			}
 		}
 		system("cls");
 		int poscat;
@@ -702,20 +669,13 @@ void Archivo_Venta::recaudacion_x_categoria()
 		int anio;
 		cout << "ingrese el anio a listar" << endl;
 		cin >> anio;
-		if (anio < 2020 || anio > 2023)
+		while (anio < 2020 || anio > 2023)
 		{
 			rlutil::setColor(rlutil::RED);
 			cout << "Anio invalido" << endl;
 			rlutil::setColor(rlutil::BLACK);
 			cout << "ingrese el Anio a listar: ";
 			cin >> anio;
-			if (anio < 2016 || anio > 2023) {
-				rlutil::setColor(rlutil::RED);
-				cout << "ANIO INVALIDO" << endl;
-				rlutil::setColor(rlutil::BLACK);
-				system("pause");
-				return;
-			}
 		}
 		system("cls");
 
@@ -887,20 +847,13 @@ void Archivo_Venta::ganancia_x_mes_Anual()
 		int anio;
 		cout << "ingrese el anio a listar" << endl;
 		cin >> anio;
-		if (anio < 2016 || anio > 2023)
+		while (anio < 2020 || anio > 2023)
 		{
 			rlutil::setColor(rlutil::RED);
 			cout << "Anio invalido" << endl;
 			rlutil::setColor(rlutil::BLACK);
 			cout << "ingrese el Anio a listar: ";
 			cin >> anio;
-			if (anio < 2016 || anio > 2023) {
-				rlutil::setColor(rlutil::RED);
-				cout << "ANIO INVALIDO" << endl;
-				rlutil::setColor(rlutil::BLACK);
-				system("pause");
-				return;
-			}
 		}
 
 		float total = 0;

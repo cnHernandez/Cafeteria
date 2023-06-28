@@ -1,6 +1,4 @@
 #include "Persona.h"
-#include <iostream>
-#include <cstring>
 #include "rlutil.h"
 
 
@@ -155,27 +153,6 @@ void Persona::CargarPersona()
 
 	cout << "Ingrese direccion: ";
 	cin.getline(_direccion, 50);
-	/*contieneNumeros = false;
-	while (!contieneNumeros) {
-		bool soloLetras = true;
-		for (int i = 0; i < strlen(_direccion); i++) {
-			if (isdigit(_direccion[i])) {
-				soloLetras = false;
-				break;
-			}
-		}
-
-		if (!soloLetras) {
-			rlutil::setColor(rlutil::RED);
-			cout << "La direccion no puede contener numeros" << endl;
-			rlutil::setColor(rlutil::BLACK);
-			cout << "Ingrese la direccion: ";
-			cin.getline(_direccion, 50);
-		}
-		else {
-			contieneNumeros = true;
-	}	}*/
-
 
 	cout << "Ingrese telefono: ";
 	cin.getline(_telefono, 30);

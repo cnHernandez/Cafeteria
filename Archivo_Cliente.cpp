@@ -1,28 +1,8 @@
 #include "Archivo_Cliente.h"
-#include "Cliente.h"
-#include "Fecha.h"
-#include "Producto.h"
-#include "Venta.h"
-#include <iostream>
-#include <string>
-#include <fstream>
 #include "rlutil.h"
 
 using namespace std;
 
-/*bool Archivo_Cliente::guardarEnDisco(int pos) {
-    FILE* p;
-    p = fopen("Clientes.dat", "rb+");
-    if (p == NULL) {
-        return false;
-    }
-    bool ok;
-    fseek(p, pos * sizeof(Cliente), SEEK_SET);
-    ok = fwrite(this, sizeof(Cliente), 1, p);
-    fclose(p);
-    return ok;
-}
-*/
 void Archivo_Cliente::guardar(Cliente cli) {
 	
 	FILE* pFile;

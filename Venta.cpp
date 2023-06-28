@@ -1,13 +1,6 @@
-#include "Venta.h"
-#include <iostream>
-#include "Cliente.h"
-#include "Producto.h"
 #include "Archivo_Cliente.h"
-#include "archivo_producto.h"
+#include "archivo_Producto.h"
 #include "Archivo_Venta.h"
-#include "Fecha.h"
-#include "Menu.h"
-#include "Vendedor.h"
 #include "Archivo_Vendedor.h"
 #include "rlutil.h"
 
@@ -229,8 +222,7 @@ void Venta::cargar()
 		else if (desicion == "N" || desicion == "n")
 		{
 			return;
-		}
-		else
+		}else
 		{
 			rlutil::setColor(rlutil::RED);
 			cout << "Opcion incorrecta" << endl;
@@ -391,10 +383,11 @@ void Venta::cargar()
 						exit(-1);
 					}
 				}
-			}
-			
-			else if (decision == "N" || decision == "n")
+			}else if (decision == "N" || decision == "n")
 			{
+				rlutil::setColor(rlutil::RED);
+				cout << "COMPRA CANCELADA POR FALTA DE STOCK O POR FALTA DE PRODUCTOS" << endl;
+				rlutil::setColor(rlutil::BLACK);
 				exit(-1);
 			}
 

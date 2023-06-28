@@ -1,7 +1,5 @@
 #include "Archivo_bkp.h"
-#include "Venta.h"
 #include "Archivo_Venta.h"
-#include <iostream>
 #include "rlutil.h"
 
 using namespace std;

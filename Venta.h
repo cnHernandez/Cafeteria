@@ -1,8 +1,5 @@
 #pragma once
-#include <iostream>
 #include <string>
-#include "Cliente.h"
-#include "Producto.h"
 #include "Fecha.h"
 #include "DetalleVenta.h"
 

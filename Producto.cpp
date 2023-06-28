@@ -1,8 +1,4 @@
-#include "Producto.h"
-#include <iostream>
-#include <cstring>
-#include <fstream>
-#include "archivo_producto.h"
+#include "Archivo_Producto.h"
 #include "Archivo_Categoria.h"
 #include "Menu.h"
 #include "rlutil.h"
@@ -256,6 +252,7 @@ bool Producto::Cargar()
     else {
         rlutil::setColor(rlutil::RED);
         cout << "Primero deben haber Categorias activas" << endl;
+        rlutil::setColor(rlutil::BLACK);
         system("pause");
         rlutil::setColor(rlutil::BLACK);
         char desicion;
@@ -265,6 +262,7 @@ bool Producto::Cargar()
         if (desicion == 'S' || desicion == 's') {
             
             menu.menu_Categorias();
+            return false;
         }
         else if (desicion == 'N' || desicion == 'n')
         {
@@ -288,42 +286,50 @@ void Producto::CargarCategoria()
     cout << "Ingrese el ID de la categoria a la que pertenece el producto: ";
     cin.ignore();
     getline(cin, input);
-
-    bool esNumero = false;
-    bool cumpleCondicion = false;
-
-    while (!esNumero || !cumpleCondicion) {
-        bool todosDigitos = true;
-        for (char c : input) {
-            if (!isdigit(c)) {
-                todosDigitos = false;
-                break;
-            }
-        }
-
-        if (!todosDigitos) {
-            rlutil::setColor(rlutil::RED);
-            cout << "El ID debe ser un valor numerico. Ingrese nuevamente: ";
-            rlutil::setColor(rlutil::BLACK);
-            getline(cin, input);
-            continue;
-        }
-
-        int num = stoi(input);
-        if (num > 0 && num <= cant) {
-            esNumero = true;
-            cumpleCondicion = true;
-        }
-        else {
-            rlutil::setColor(rlutil::RED);
-            cout << "El ID debe ser mayor a 0 y menor o igual a la cantidad de categorias. Ingrese nuevamente: ";
-            rlutil::setColor(rlutil::BLACK);
-            getline(cin, input);
-        }
-    }
     op = stoi(input);
-    setId_Categoria(op);
+    while (!ArchivoC.Existe(op)) {
+        rlutil::setColor(rlutil::RED);
+        cout << "No existe la categoria" << endl;
+        rlutil::setColor(rlutil::BLACK);
+        cout<<"Ingrese el ID de la categoria a la que pertenece el producto : ";
+        getline(cin, input);
+        op = stoi(input);
+    }
+        bool esNumero = false;
+        bool cumpleCondicion = false;
 
+        while (!esNumero || !cumpleCondicion) {
+            bool todosDigitos = true;
+            for (char c : input) {
+                if (!isdigit(c)) {
+                    todosDigitos = false;
+                    break;
+                }
+            }
+
+            if (!todosDigitos) {
+                rlutil::setColor(rlutil::RED);
+                cout << "El ID debe ser un valor numerico. Ingrese nuevamente: ";
+                rlutil::setColor(rlutil::BLACK);
+                getline(cin, input);
+                continue;
+            }
+
+            int num = stoi(input);
+            if (num > 0 && num <= cant) {
+                esNumero = true;
+                cumpleCondicion = true;
+            }
+            else {
+                rlutil::setColor(rlutil::RED);
+                cout << "El ID debe ser mayor a 0 y menor o igual a la cantidad de categorias. Ingrese nuevamente: ";
+                rlutil::setColor(rlutil::BLACK);
+                getline(cin, input);
+            }
+        
+        op = stoi(input);
+        setId_Categoria(op);
+    }
 }
 
 void Producto::Mostrar()

@@ -1,6 +1,6 @@
-#include "DetalleVenta.h"
-#include <iostream>
 #include <string>
+#include "DetalleVenta.h"
+
 
 using namespace std;
 

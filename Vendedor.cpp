@@ -1,6 +1,6 @@
-#include "Vendedor.h"
-#include "Archivo_Vendedor.h"
 #include <iostream>
+#include "Archivo_Vendedor.h"
+
 using namespace std;
 
 Vendedor::Vendedor()
