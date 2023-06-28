@@ -2,6 +2,7 @@
 #include "archivo_Producto.h"
 #include "Archivo_Venta.h"
 #include "Archivo_Vendedor.h"
+#include "Menu.h"
 #include "rlutil.h"
 
 using namespace std;
@@ -116,6 +117,7 @@ void Venta::cargar()
 	Archivo_Venta venta;
 	Archivo_Vendedor archivoVendedor;
 	Vendedor vend;
+	Menu menu;
 	int cantClientes = archivoCliente.cantidad_clientes();
 	int cantven = venta.cantidad_ventas();
 	int cantProd = archivoProducto.cantidad_de_registros();
@@ -376,15 +378,21 @@ void Venta::cargar()
 						rlutil::setColor(rlutil::RED);
 						cout << "COMPRA CANCELADA POR FALTA DE STOCK" << endl;
 						rlutil::setColor(rlutil::BLACK);
-						exit(-1);
+						system("pause");
+						//exit(-1);
+						menu.menu_Ventas();
 					}
 				}
+		
 			}else if (decision == "N" || decision == "n" && i == 0)
 			{
 				rlutil::setColor(rlutil::RED);
 				cout << "COMPRA CANCELADA POR FALTA DE STOCK O POR FALTA DE PRODUCTOS" << endl;
 				rlutil::setColor(rlutil::BLACK);
-				exit(-1);
+				system("pause");
+				//exit(-1);
+				menu.menu_Ventas();
+				
 			}
 			else { continue; }
 
