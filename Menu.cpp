@@ -1,27 +1,20 @@
-#include "Menu.h"
-#include <iostream>
-#include <string>
-#include <cstring>
-#include "Producto.h"
+#include <iomanip>
 #include "archivo_producto.h"
 #include "Archivo_Categoria.h"
-#include "Categoria.h"
-#include "Cliente.h"
 #include "Archivo_Cliente.h"
-#include "Venta.h"
 #include "Archivo_Venta.h"
 #include "Archivo_Vendedor.h"
-#include "Vendedor.h"
 #include "Archivo_bkp.h"
 #include "rlutil.h"
-#include <iomanip>
+#include "Menu.h"
 
 using namespace std;
+
 void Menu::menu_Principal()
 {
     rlutil::setBackgroundColor(rlutil::WHITE);
     rlutil::setColor(rlutil::BLACK);
-    int op, y = 0;
+    int op;
     bool menu_activo = true;
     while (menu_activo)
     {
@@ -182,7 +175,6 @@ void Menu::menu_Productos()
                     if (cantActiva == 0)
                     {
                         Producto producto;
-                        archivo_producto ar;
                         rlutil::setColor(rlutil::RED);
                         cout << "No se encuentran guardados Productos Activos" << endl << endl;
                         rlutil::setColor(rlutil::BLACK);
@@ -191,17 +183,22 @@ void Menu::menu_Productos()
                         cin >> desicion;
                         if (desicion == 's' || desicion == 'S')
                         {
-                            producto.Cargar();
-                            ar.guardar(producto);
-                            system("cls");
-                            cout << "-----------------------------------" << endl;
-                            producto.Mostrar();
-                            cout << "-----------------------------------" << endl;
-                            cout << "Se cargo exitosamente..." << endl;
+                            if (producto.Cargar()) {
+                                archivo.guardar(producto);
+                                system("cls");
+                                cout << "-----------------------------------" << endl;
+                                producto.Mostrar();
+                                cout << "-----------------------------------" << endl;
+                                cout << "Se cargo exitosamente..." << endl;
+                            }
+                            else { 
+                                Menu menu;
+                                menu_Productos();
+                            }
                         }
                         else if (desicion == 'n' || desicion == 'N')
                         {
-                            menu_Productos();
+                            return;
                         }
                     }
                     else
@@ -320,7 +317,6 @@ void Menu::menu_Productos()
                         system("pause");
                     }
                     else {
-                        cout << "Eliga categoria del producto" << endl;
                         Producto producto;
                         bool leyo = producto.Cargar();
                         if (leyo)
@@ -360,10 +356,8 @@ void Menu::menu_Productos()
                     else {
                         cout << "Ingrese ID del producto al que desea agregarle stock: ";
                         cin >> id;
-                        system("cls");
-                        if (archivo.Existe(id)) {
-                            archivo.Stock(id);
-                        }
+                        archivo.Stock(id);
+                        system("cls");                    
                     }
                 }
                 break;

@@ -1,10 +1,6 @@
-#include "Archivo_producto.h"
-#include "Producto.h"
+#include "Archivo_Producto.h"
 #include "Archivo_Categoria.h"
-#include "Categoria.h"
 #include "Menu.h"
-#include <iostream>
-#include <string>
 #include "rlutil.h"
 
 using namespace std;
@@ -150,24 +146,6 @@ void archivo_producto::baja_Logica()
     }
 }
 
-/*void archivo_producto::baja_Logica(int id)
-{
-
-    Producto Producto;
-    int i = 0;
-    while (i < cantidad_de_registros())
-    {
-        Producto = leer_de_disco(i);
-        if (Producto.getId_Producto() == id)
-        {
-            Producto.setEstado(false);
-            guardar(Producto, id - 1);
-            break;
-        }
-        i++;
-    }
-}
-*/
 void archivo_producto::modificar()
 {
     int op;
@@ -180,7 +158,9 @@ void archivo_producto::modificar()
 
     while (op<=0 || !Existe(op))
     {
+        rlutil::setColor(rlutil::RED);
         cout << "ingrese una opcion correcta: ";
+        rlutil::setColor(rlutil::BLACK);
         cin >> op;
     }
         producto = leer_de_disco(op - 1);
@@ -349,12 +329,11 @@ bool archivo_producto::guardarVec(Producto * prod, int cantidadRegistrosAEscribi
 void archivo_producto::Stock(int id)
 {
     Producto producto;
+    archivo_producto ar;
     int cant = cantidad_de_registros();
-    listar(cant);
-    system("cls");
     producto = leer_de_disco(id - 1);
 
-    while (id<0 || id > cant || producto.getEstado() == false)
+    while (!ar.Existe(id))
     {
         cout << "ingrese una opcion correcta: ";
         cin >> id;

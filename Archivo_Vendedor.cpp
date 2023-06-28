@@ -1,30 +1,9 @@
+#include <iostream>
 #include "Archivo_Vendedor.h"
 #include "Archivo_Cliente.h"
-#include "Cliente.h"
-#include "Fecha.h"
-#include "Producto.h"
-#include "Venta.h"
-#include <iostream>
-#include <string>
-#include <fstream>
-#include "Persona.h"
-
 
 using namespace std;
 
-/*bool Archivo_Vendedor::GuardarEnDisco(int pos) {
-	FILE* p;
-	p = fopen("Vendedores.dat", "rb+");
-	if (p == NULL) {
-		return false;
-	}
-	bool ok;
-	fseek(p, pos * sizeof(Vendedor), SEEK_SET);
-	ok = fwrite(this, sizeof(Vendedor), 1, p);
-	fclose(p);
-	return ok;
-}
-*/
 void Archivo_Vendedor::Guardar(Vendedor ven) {
 
 	FILE* pFile;

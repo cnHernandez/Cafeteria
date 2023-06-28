@@ -1,15 +1,14 @@
-#include "fecha.h"
-#include <ctime>
-#include <iostream>
 #include <string>
+#include "fecha.h"
 #include "rlutil.h"
+
 using namespace std;
 
 
 void Fecha::establecerFechaPorDefecto() {
     _dia = 1;
     _mes = 1;
-    _anio = 1900;
+    _anio = 2023;
 }
 
 bool Fecha::esBisiesto() {
@@ -222,13 +221,13 @@ void Fecha::Cargar()
         }
 
         int num3 = stoi(input3);
-        if (num3 > 0 && num3 <= 2023) {
+        if (num3 >= 2020 && num3 <= 2023) {
             esNumero = true;
             cumpleCondicion = true;
         }
         else {
             rlutil::setColor(rlutil::RED);
-            cout << "El anio debe ser mayor a 0 y menor o igual a 2023. Ingrese nuevamente: ";
+            cout << "El anio debe ser mayor o igual a 2020 y menor o igual a 2023. Ingrese nuevamente: ";
             rlutil::setColor(rlutil::BLACK);
             getline(cin, input3);
         }

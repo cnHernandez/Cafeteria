@@ -1,6 +1,5 @@
 #pragma once
 #include "Venta.h" 
-#include "Archivo_Venta.h"
 
 using namespace std;
 

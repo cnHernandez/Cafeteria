@@ -21,7 +21,7 @@
     <ClCompile Include="Producto.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="Archivo_producto.cpp">
+    <ClCompile Include="Archivo_Producto.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="Categoria.cpp">
@@ -68,7 +68,7 @@
     <ClInclude Include="Producto.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Archivo_producto.h">
+    <ClInclude Include="Archivo_Producto.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Categoria.h">
