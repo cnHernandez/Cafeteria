@@ -341,11 +341,7 @@ void Venta::cargar()
 			cout << "* Ingrese la cantidad que desea comprar: ";
 			cin >> cantidad;
 		}
-		if ((producto.getStock() - cantidad) < 10)
-		{
-			cout << "quedan menos de 10 unidades del producto seleccionado" << endl;
-			system("pause");
-		}
+		
 		if (producto.getStock() == 0 || producto.getStock() < cantidad) {
 			system("cls");
 			rlutil::setColor(rlutil::RED);
@@ -383,14 +379,22 @@ void Venta::cargar()
 						exit(-1);
 					}
 				}
-			}else if (decision == "N" || decision == "n")
+			}else if (decision == "N" || decision == "n" && i == 0)
 			{
 				rlutil::setColor(rlutil::RED);
 				cout << "COMPRA CANCELADA POR FALTA DE STOCK O POR FALTA DE PRODUCTOS" << endl;
 				rlutil::setColor(rlutil::BLACK);
 				exit(-1);
 			}
+			else { continue; }
 
+		}
+		else if ((producto.getStock() - cantidad) < 10)
+		{
+			cout << "*********************************************************" << endl;
+			cout << "**quedan menos de 10 unidades del producto seleccionado**" << endl;
+			cout << "*********************************************************" << endl;
+			system("pause");
 		}
 	
 		producto = archivoProducto.leer_de_disco(pos);
@@ -461,9 +465,11 @@ void Venta::cargar()
 		{
 			cout << "El envio cuesta $200" << endl;
 			total = total + 200;
+			system("pause");
 		}
 		else if (tipoEntrega == 1) {
 			cout << "Retiro en local, no hay costo de envio" << endl;
+			system("pause");
 		}
 
 		setGanancia(ganancia);
