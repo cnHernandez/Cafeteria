@@ -14,32 +14,25 @@ void Archivo_Categoria::baja_Logica()
     cout << "Ingrese de ID del categoria que desea eliminar: ";
     cin >> op;
 
-    while (op<0 || op>cant)
+    while (!cat.Existe(op))
     {
         cout << "ingrese una opcion correcta" << endl;
         cin >> op;
     }
     categoria = leer_de_disco(op - 1);
-    if (categoria.getEstado() == false)
-    {
-        cout << "ingrese una opcion correcta" << endl;
-        cin >> op;
-    }
-    else {
 
-        char op2;
-        system("cls");
-        categoria.mostrar();
-        cout << "esta seguro de que desea eliminar la categoria?" << endl;
-        cout << "[S/N]: ";
-        cin >> op2;
-        if (op2 == 's' || op2 == 'S')
-        {
-
-            categoria.setEstado(false);
-            guardar_Categorias(categoria, op-1);
-        }
-    }
+     char op2;
+     system("cls");
+     categoria.mostrar();
+     cout << "esta seguro de que desea eliminar la categoria?" << endl;
+     cout << "[S/N]: ";
+      cin >> op2;
+      if (op2 == 's' || op2 == 'S')
+      {
+        categoria.setEstado(false);
+        guardar_Categorias(categoria, op-1);
+      }
+    
 }
 
 bool Archivo_Categoria::guardar_Categorias(Categoria cat, int posicion)
@@ -120,22 +113,15 @@ int Archivo_Categoria::cantidad_categorias()
 }
 
 
-FILE* Archivo_Categoria::abrirArchivo()
+void Archivo_Categoria::obtener_categorias(Categoria* cat, int cantidad)
 {
-    FILE* pFile;
-    pFile = fopen("categoria.dat", "rb");
+    FILE* pFile = fopen("categoria.dat", "rb");
 
     if (pFile == NULL)
     {
         cout << "Error al abrir el archivo" << endl;
+        return;
     }
-    return pFile;
-}
-
-
-void Archivo_Categoria::obtener_categorias(Categoria* cat, int cantidad)
-{
-    FILE* pFile = abrirArchivo();
 
     fread(cat, sizeof(Categoria), cantidad, pFile);
 
@@ -158,39 +144,41 @@ void Archivo_Categoria::listar_categorias(int cantidad)
 }
 void Archivo_Categoria::modificar_categorias()
 {
-    Archivo_Categoria ac;
     Categoria c;
-    int cant_cat = ac.cantidad_categorias();
+    int cant_cat = cantidad_categorias();
     Categoria* cat = new Categoria[cant_cat];
     if (cat == nullptr) {
         cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
         return;
     }
    
-    ac.obtener_categorias(cat, cant_cat);
-    ac.listar_categorias(cant_cat);
+    obtener_categorias(cat, cant_cat);
+    listar_categorias(cant_cat);
     int cod;
-    cout << endl << "ingresar codigo a modificar: ";
+    cout << endl << "Ingresar codigo a modificar: ";
     cin >> cod;
+
+    while (!Existe(cod))
+    {
+        cout << "ingrese una opcion correcta" << endl;
+        cin >> cod;
+    }
+    c = leer_de_disco(cod-1);
     system("pause");
     system("cls");
-    for (int i = 0; i < cant_cat; i++)
-    {
-        if (cod == cat[i].get_id())
-        {
-            cat[i].mostrar();
-            cout << endl;
-            char nuevo_nombre[30];
-            cat[i].cargar();
-            system("pause");
-            system("cls");
-            cat[i].sobreescribir_categoria(c, i);
-            cout << "Categoria modificada..." << endl << endl;
-            cat[i].mostrar();
-            system("pause");
-            system("cls");
-        }
-    }
+          
+    c.mostrar();
+    cout << endl;
+    char nuevo_nombre[30];
+    cat[cod-1].cargar();
+    system("pause");
+    system("cls");
+    cat[cod-1].sobreescribir_categoria(c, cod-1);
+    cout << "Categoria modificada..." << endl << endl;
+    cat[cod-1].mostrar();
+    system("pause");
+    system("cls");
+        
 delete[] cat;
 }
 void Archivo_Categoria::agregar_categoria()

@@ -10,8 +10,7 @@ Producto::Producto()
     archivo_producto Archivo;
     id_producto = Archivo.cantidad_de_registros() + 1;
     estado = true;
-    stock = 0;
-  
+    stock = 0; 
 }
 
 void Producto::setNombre(string Nombre)

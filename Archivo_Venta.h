@@ -5,6 +5,7 @@ class Archivo_Venta
 {
 	public:
 		bool guardar_modificado(Venta, int);
+		bool Existe_Ventas(int);
 		void obtener_venta(Venta * prod, int cantidad);
 		void guardar(Venta venta);
 		int cantidad_ventas();
@@ -15,7 +16,6 @@ class Archivo_Venta
 		void listar_ventas(int);
 		void listar_x_cliente();
 		void listar_x_fecha();
-		void listar_x_producto();
 		void recaudacion_x_vendedor();
 		void recaudacion_x_producto();
 		void recaudacion_x_categoria();

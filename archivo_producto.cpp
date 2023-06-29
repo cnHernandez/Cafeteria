@@ -114,35 +114,31 @@ void archivo_producto::baja_Logica()
     cout << endl;
     cout << "Ingrese de ID del producto que desea eliminar: ";
     cin >> op;
-
-    while (op<0 || op>cant)
-    {
-        cout << "ingrese una opcion correcta" << endl;
-        cin >> op;
-    }
     producto = leer_de_disco(op - 1);
-    if (producto.getEstado() == false)
+    while (!Existe(op))
     {
         cout << "ingrese una opcion correcta" << endl;
         cin >> op;
+        producto = leer_de_disco(op - 1);
     }
-    else {
 
-        char op2;
-        system("cls");
-        cout << "----------------------------------------" << endl;
-        producto.Mostrar();
-        cout << "----------------------------------------" << endl << endl;
-        cout << endl;
-        cout << "esta seguro de que desea eliminar al producto?" << endl;
-        cout << "[S/N]: ";
-        cin >> op2;
-        if (op2 == 's' || op2 == 'S')
-        {
-
-            producto.setEstado(false);
-            guardar(producto, op - 1);
-        }
+    char op2;
+    system("cls");
+    cout << "----------------------------------------" << endl;
+    producto.Mostrar();
+    cout << "----------------------------------------" << endl << endl;
+    cout << endl;
+    cout << "esta seguro de que desea eliminar al producto?" << endl;
+    cout << "[S/N]: ";
+    cin >> op2;
+    if (op2 == 's' || op2 == 'S')
+    {
+        producto.setEstado(false);
+        guardar(producto, op - 1);
+        cout << "Se elimino el producto..." << endl;
+    }
+    else if(op2 == 'n' || op2 == 'N'){
+        cout << "No se elimino el producto..." << endl;
     }
 }
 
@@ -224,13 +220,6 @@ void archivo_producto::listaXcategoria()
     system("cls");
 
     cout << "Productos con ID# de Categoria: " << idcat << endl << endl;
-            while (idcat < 0 || idcat > CantCat)
-            {
-					cout << "No existe la categoria a listar " << endl;
-                    cout << "ingrese el ID# de la Categoria a listar: " ;
-                    cin >> idcat;
-                    Cat = Categorias.leer_de_disco(idcat - 1);
-			}
     int cont = 0;
     for (int i = 0; i < cant; i++)
     {
@@ -242,25 +231,6 @@ void archivo_producto::listaXcategoria()
                 cout << "------------------------------" << endl;    
         }
     }
-        Menu menu;
-        Producto producto;
-        char desicion;
-        if (cont == 0)
-        { 
-			cout << "No hay productos con ID# de Categoria: " << idcat << endl;
-            cout << "¿Desea cargar uno? (S/N)" << endl;
-            cin >> desicion;
-            system("cls");
-            if (desicion == 'S' || desicion == 's')
-            {
-                producto.Cargar();
-                guardar(producto);
-            }
-            else if(desicion == 'N' || desicion == 'n'){
-                menu.menu_Productos();
-            }
-		}
-    
 
     delete[] prod;
 }
@@ -292,7 +262,7 @@ void archivo_producto::listaXrango()
     cin>>precio1;
     cout << "a: ";
     cin>> precio2;
-    if (precio1 > precio2) {
+    while (precio1 > precio2) {
         cout << "Ingrese un rango correcto" << endl;
         cout << "Ingrese los rangos de precios: " << endl;
         cout << "de: ";
@@ -300,9 +270,9 @@ void archivo_producto::listaXrango()
         cout << "a: ";
         cin >> precio2;
     }
-    else {
-        cout << "Los productos cuyo precio ronda entre " << precio2 << " y " << precio1 << " son:" << endl << endl;
-    }
+    system("cls");
+    cout << "Los productos cuyo precio ronda entre " << precio1 << " y " << precio2 << " son:" << endl << endl;
+    
     for (int i = 0; i < cant; i++) {
         reg = leer_de_disco(i);
         if ((reg.getPrecio() >= precio1) && (reg.getPrecio() <= precio2) && (reg.getEstado()) )
@@ -340,21 +310,25 @@ void archivo_producto::Stock(int id)
     }
     if (id != 0)
     {
-        //int encontrado = 0;
         int posicion = 0;
 
         for (int i = 0; i < cant; i++) {
             producto = leer_de_disco(i);
 
             if (producto.getId_Producto() == id && producto.getEstado()) {
-                //encontrado = 1;
                 posicion = i;
                 break;
             }
         }
+        producto = leer_de_disco(posicion);
+
         int st;
         cout << "INGRESE CANTIDAD DE STOCK: ";
         cin >> st;
+        while (st <= 0 || st > producto.getStock()) {
+            cout << "INGRESE CANTIDAD DE STOCK VALIDA: ";
+            cin >> st;
+        }
         producto.AgregarStock(st);
         Menu menu;
         char op2;
@@ -403,7 +377,7 @@ int archivo_producto::PosicionEnDisco(int id)
 void archivo_producto::stock_de_productos()
 {
     int cant = cantidad_de_registros();
-Producto producto;
+    Producto producto;
 	for (int i = 0; i < cant; i++)
 	{
 		producto = leer_de_disco(i);
@@ -412,4 +386,20 @@ Producto producto;
 			cout << "PRODUCTO: "<<producto.getNombre()<<"   STOCK: "<<producto.getStock() << endl;		
 		}
 	}
+}
+
+int archivo_producto::Stock_total()
+{
+    int cant = cantidad_de_registros();
+    Producto producto;
+    int total = 0;
+    for (int i = 0; i < cant; i++)
+    {
+       producto = leer_de_disco(i);
+         if (producto.getEstado())
+         {
+            total += producto.getStock();
+         }
+    }
+    return total;
 }

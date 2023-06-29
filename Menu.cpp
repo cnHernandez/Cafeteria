@@ -213,14 +213,16 @@ void Menu::menu_Productos()
                     system("cls");
                     cout << "Lista por categoria" << endl;
                     archivo_producto archivo;
+                    Archivo_Categoria archivoCat;
                     int cant = archivo.cantidad_de_registros();
                     int cantActiva = archivo.get_cantidad_Activa(cant);
-                    if (cantActiva == 0)
+                    int cantC = archivoCat.cantidad_categorias();
+                    int cantActivaCat = archivoCat.get_cantidad_Activa(cantC);
+                    if (cantActiva == 0 || cantActivaCat == 0)
                     {
                         rlutil::setColor(rlutil::RED);
-                        cout << "No se encuentran guardados Categorias Activas" << endl << endl;
+                        cout << "No se encuentran guardados Categorias o productos activos" << endl << endl;
                         rlutil::setColor(rlutil::BLACK);
-
                     }
                     else
                     {
@@ -317,9 +319,8 @@ void Menu::menu_Productos()
                         system("pause");
                     }
                     else {
-                        Producto producto;
-                        bool leyo = producto.Cargar();
-                        if (leyo)
+                        Producto producto;  
+                        if (producto.Cargar())
                         {
                             archivo_producto archivo;
                             archivo.guardar(producto);
@@ -701,6 +702,7 @@ void Menu::menu_Ventas()
             system("cls");
             archivo_producto ap;
             int cant = ap.cantidad_de_registros();
+            int stock = ap.Stock_total();
             Archivo_Vendedor av;
             int cantV = av.Cantidad_vendedores();
             Archivo_Cliente ac;
@@ -708,35 +710,42 @@ void Menu::menu_Ventas()
             Archivo_Categoria acat;
             int cantCat = acat.cantidad_categorias();
 
-            if (cant == 0)
+            if (cant == 0 || stock <= 0)
             {
-                cout << "No hay productos cargados" << endl;
+                rlutil::setColor(rlutil::RED);
+                cout << "No hay productos cargados o falta stock" << endl;
+                rlutil::setColor(rlutil::BLACK);
                 system("pause");
                 return;
             }
 
             if (cantV == 0)
             {
+                rlutil::setColor(rlutil::RED);
                 cout << "No hay vendedores cargados" << endl;
+                rlutil::setColor(rlutil::BLACK);
                 system("pause");
                 return;
             }
 
             if (cantC == 0)
             {
+                rlutil::setColor(rlutil::RED);
                 cout << "No hay clientes cargados" << endl;
+                rlutil::setColor(rlutil::BLACK);
                 system("pause");
                 return;
             }
 
             if (cantCat == 0)
             {
+                rlutil::setColor(rlutil::RED);
                 cout << "No hay categorias cargadas" << endl;
+                rlutil::setColor(rlutil::BLACK);
                 system("pause");
                 return;
             }
-            if (cant != 0 && cantV != 0 && cantC != 0 && cantCat != 0) {
-
+            if (cant != 0 && cantV != 0 && cantC != 0 && cantCat != 0 && stock > 0) {
                 cout << "Agregar venta" << endl;
                 Archivo_Venta aventas;
                 Venta venta;
@@ -756,17 +765,55 @@ void Menu::menu_Ventas()
         case 3:
         {
             system("cls");
+            archivo_producto ap;
+            int cant = ap.cantidad_de_registros();
+            int stock = ap.Stock_total();
+            Archivo_Vendedor av;
+            int cantV = av.Cantidad_vendedores();
+            Archivo_Cliente ac;
+            int cantC = ac.cantidad_clientes();
+            Archivo_Categoria acat;
+            int cantCat = acat.cantidad_categorias();
             Archivo_Venta archivo;
-            int cant = archivo.cantidad_ventas();
+            int cantVen = archivo.cantidad_ventas();
             int cantActiva = archivo.get_cantidad_Activa(cant);
+            
             if (cantActiva == 0)
             {
                 rlutil::setColor(rlutil::RED);
                 cout << "No se encuentran guardadas ventas activas" << endl << endl;
                 rlutil::setColor(rlutil::BLACK);
                 system("pause");
-            }
-            else {
+                return;
+            }else if (cant == 0 || stock <= 0)
+            {
+                rlutil::setColor(rlutil::RED);
+                cout << "No hay productos cargados o falta stock" << endl;
+                rlutil::setColor(rlutil::BLACK);
+                system("pause");
+                return;
+            }else if (cantV == 0)
+            {
+                rlutil::setColor(rlutil::RED);
+                cout << "No hay vendedores cargados" << endl;
+                rlutil::setColor(rlutil::BLACK);
+                system("pause");
+                return;
+            }else if (cantC == 0)
+            {
+                rlutil::setColor(rlutil::RED);
+                cout << "No hay clientes cargados" << endl;
+                rlutil::setColor(rlutil::BLACK);
+                system("pause");
+                return;
+            }else if (cantCat == 0)
+            {
+                rlutil::setColor(rlutil::RED);
+                cout << "No hay categorias cargadas" << endl;
+                rlutil::setColor(rlutil::BLACK);
+                system("pause");
+                return;
+            }else if (cantActiva != 0 && cantV != 0 && cantC != 0 && cantCat != 0 && stock > 0) {
                 system("cls");
                 cout << "Modificar venta" << endl;
                 int pro = archivo.Modificar_Venta();
@@ -798,8 +845,6 @@ void Menu::menu_Ventas()
             else {
                 venta.BajaLogica();
                 system("cls");
-                cout << "Se elimino la venta correctamente..." << endl;
-                system("pause");
             }
         }
         break;
