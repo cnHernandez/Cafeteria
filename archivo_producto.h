@@ -5,7 +5,7 @@ class archivo_producto
 public:
     void guardar(Producto producto);
     bool guardar(Producto producto, int posicion);
-    bool guardarVec(Producto producto [], int cant);
+    bool guardarVec(Producto * producto, int cant);
     int cantidad_de_registros();
     Producto leer_de_disco(int posicion);
     void listar(int cantidad);

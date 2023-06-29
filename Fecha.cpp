@@ -194,8 +194,9 @@ void Fecha::Cargar()
             getline(cin, input2);
         }
     }
+
     _mes = stoi(input2);
-    
+
 
     string input3;
     esNumero = false;
@@ -234,4 +235,97 @@ void Fecha::Cargar()
     }
 
     _anio = stoi(input3);
+    string imput4;
+
+    if (esBisiesto() && _mes == 2)
+    {
+        if (_dia > 29)
+        {
+            rlutil::setColor(rlutil::RED);
+            string input4;
+            esNumero = false;
+            cumpleCondicion = false;
+
+            cout << "El anio es bisiesto, el mes es febrero y el dia debe ser menor o igual a 29. Ingrese nuevamente: ";
+            rlutil::setColor(rlutil::BLACK);
+            getline(cin, input4);
+            while (!esNumero || !cumpleCondicion) {
+                bool todosDigitos = true;
+                for (char c : input4) {
+                    if (!isdigit(c)) {
+                        todosDigitos = false;
+                        break;
+                    }
+                }
+
+                if (!todosDigitos) {
+                    rlutil::setColor(rlutil::RED);
+                    cout << "El dia debe ser un valor numerico. Ingrese nuevamente: ";
+                    rlutil::setColor(rlutil::BLACK);
+                    getline(cin, input4);
+                    continue;
+                }
+
+                int num = stoi(input4);
+                if (num > 0 && num <= 29) {
+                    esNumero = true;
+                    cumpleCondicion = true;
+                }
+                else {
+                    rlutil::setColor(rlutil::RED);
+                    cout << "El dia debe ser mayor a 0 y menor o igual a 29. Ingrese nuevamente: ";
+                    rlutil::setColor(rlutil::BLACK);
+                    getline(cin, input4);
+                }
+            }
+
+            _dia = stoi(input4);
+        }
+    }
+
+    else if (!esBisiesto() && _mes == 2) {
+        if (_dia > 28)
+        {
+            string input5;
+            esNumero = false;
+            cumpleCondicion = false;
+            rlutil::setColor(rlutil::RED);
+            cout << "El anio no es bisiesto, el mes es febrero y el dia debe ser menor o igual a 28. Ingrese nuevamente: ";
+            rlutil::setColor(rlutil::BLACK);
+            getline(cin, input5);
+            while (!esNumero || !cumpleCondicion) {
+                bool todosDigitos = true;
+                for (char c : input5) {
+                    if (!isdigit(c)) {
+                        todosDigitos = false;
+                        break;
+                    }
+                }
+
+                if (!todosDigitos) {
+                    rlutil::setColor(rlutil::RED);
+                    cout << "El dia debe ser un valor numerico. Ingrese nuevamente: ";
+                    rlutil::setColor(rlutil::BLACK);
+                    getline(cin, input5);
+                    continue;
+                }
+
+                int num = stoi(input5);
+                if (num > 0 && num <= 28) {
+                    esNumero = true;
+                    cumpleCondicion = true;
+                }
+                else {
+                    rlutil::setColor(rlutil::RED);
+                    cout << "El dia debe ser mayor a 0 y menor o igual a 28. Ingrese nuevamente: ";
+                    rlutil::setColor(rlutil::BLACK);
+                    getline(cin, input5);
+                }
+            }
+
+            _dia = stoi(input5);
+
+        }
+    }
+
 }

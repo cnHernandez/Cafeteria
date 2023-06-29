@@ -31,6 +31,11 @@ void Archivo_Categoria::baja_Logica()
       {
         categoria.setEstado(false);
         guardar_Categorias(categoria, op-1);
+        cout << "Se elimino la categoria exitosamente..." << endl;
+      }
+      else {
+          system("cls");
+          cout << "No se elimino la categoria..." << endl;
       }
     
 }
@@ -77,6 +82,7 @@ Categoria Archivo_Categoria::leer_de_disco(int posicion)
 
     if (p == nullptr) {
         cout << "Error al abrir el archivo" <<endl;
+        return categoria;
     }
 
     fseek(p, posicion * sizeof(Categoria), SEEK_SET);
@@ -84,12 +90,6 @@ Categoria Archivo_Categoria::leer_de_disco(int posicion)
     fclose(p);
 
     return categoria;
-}
-
-
-int Archivo_Categoria::generar_categoria()
-{
-    return cantidad_categorias() + 1;
 }
 
 int Archivo_Categoria::cantidad_categorias()

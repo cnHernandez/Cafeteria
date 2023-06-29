@@ -27,7 +27,6 @@ public:
     float getPrecioCompra();
     int getStock();
     void AgregarStock(int can);
-    void RestarStock(int cantidad);
     string getNombre();
     int getId_Categoria();
     float getPrecio();

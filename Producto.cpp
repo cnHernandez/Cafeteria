@@ -84,11 +84,6 @@ void Producto::AgregarStock(int can)
 	stock += can;
 }
 
-void Producto::RestarStock(int cantidad)
-{
-	stock -= cantidad;
-}
-
 bool Producto::Cargar()
 {
     Archivo_Categoria arch;
@@ -336,9 +331,9 @@ void Producto::Mostrar()
     cout << "-Nombre del Producto: " << getNombre() << endl;
     cout << "#ID del Producto: " << getId_Producto() << endl;
     cout << "#ID de la Categoria: " << getId_Categoria()<< endl;
-    cout << "-Precio de Venta del Producto: " << getPrecio() << endl;
-    cout << "-Precio de Compra del Producto: " << getPrecioCompra() << endl;
-    cout << "-Stock del Producto: " << getStock() << endl;
+    cout << "-Precio de Venta del Producto:  $" << getPrecio() << endl;
+    cout << "-Precio de Compra del Producto:  $" << getPrecioCompra() << endl;
+    cout << "-Stock del Producto: " << getStock() <<" un" << endl;
 }
 
 

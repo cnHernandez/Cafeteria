@@ -435,7 +435,7 @@ void Venta::mostrar()
 		cout << "ENTREGA A DOMICILIO $200" << endl;
 	}else if (getEntrega() == 1)
 	{
-		cout << "RETIRA DEL LOCAL $0" <<endl;
+		cout << "RETIRA DEL LOCAL (sin costo)" <<endl;
 	}
 	cout << "Total a Pagar por el cliente: $" << getTotal() << endl;
 	cout << "Ganancia total de la cafeteria: $" << getGanancia() << endl;

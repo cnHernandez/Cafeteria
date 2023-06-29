@@ -196,12 +196,11 @@ void Archivo_Venta::listar_x_fecha()
 		cout << "---Fecha de Ventas----" << endl << endl;
 		cout << " 1- Mes" << endl;
 		cout << " 2- Anio" << endl;
-		cout << " 3- Recaudacion anual" << endl;
 		cout << "-----------------" << endl;
 		cout << " 0- SALIR" << endl;
 		cout << "-----------------" << endl;
 		cin >> op;
-		while (op < 0 || op>3)
+		while (op < 0 || op>2)
 		{
 			rlutil::setColor(rlutil::RED);
 			cout << "opcion incorrecta, vuelva a ingresar una opcion" << endl;
@@ -279,55 +278,6 @@ void Archivo_Venta::listar_x_fecha()
 
 		}
 		break;
-		case 3:
-		{
-			system("cls");
-			cout << "ingrese el anio a listar" << endl;
-			cin >> anio;
-			while (anio < 2020 || anio > 2023)
-			{
-				rlutil::setColor(rlutil::RED);
-				cout << "Anio invalido" << endl;
-				rlutil::setColor(rlutil::BLACK);
-			    cout << "ingrese el Anio a listar: ";
-				cin >> anio;
-			}
-			float total = 0;
-			for (int i = 0; i < cant; i++)
-			{
-				if (anio == ventas[i].getFecha().getAnio() && ventas[i].getEstado())
-				{
-					total += ventas[i].getGanancia();
-				}
-			}
-			string mes[12] = { "Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"
-			};
-			
-			float ventasMensuales[12] = {};
-			for (int i = 0; i < cant; i++)
-			{
-				if (anio == ventas[i].getFecha().getAnio() && ventas[i].getEstado())
-				{
-					ventasMensuales[ventas[i].getFecha().getMes() - 1] += ventas[i].getGanancia();	
-				}
-			}
-			system("cls");
-			cout << "	RECAUDACION ANUAL: " << anio << endl;
-			cout << "---------------------------------------" << endl;
-			for (int i = 0; i < 12; i++)
-			{
-				if (mes[i].size() < 7) {
-					cout << mes[i] << "\t\t\t" << "$" << ventasMensuales[i] << endl;
-				}
-				else {
-					cout << mes[i] << "  \t\t" << "$" << ventasMensuales[i] << endl;
-				}
-			}
-			cout << "----------------------------------------" << endl;
-			cout << "       RECAUDACION TOTAL: $" << total << endl << endl;
-			system("pause");
-		}break;
-
 		}
 	}
 delete[] ventas;

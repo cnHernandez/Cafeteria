@@ -541,7 +541,6 @@ void Menu::menu_Categorias()
             else {
                 archivo.baja_Logica();
                 cout << endl;
-                cout << "Se elimino la categoria exitosamente..." << endl;
                 system("pause");
                 system("cls");
             }

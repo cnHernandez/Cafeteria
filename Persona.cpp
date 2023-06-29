@@ -2,6 +2,11 @@
 #include "rlutil.h"
 
 
+Persona::Persona()
+{
+	_estado = true;
+}
+
 void Persona::setNombre(string nombre)
 {
 	strcpy(this->_nombre, nombre.c_str());
@@ -155,14 +160,9 @@ void Persona::CargarPersona()
 	cin.getline(_direccion, 50);
 
 	cout << "Ingrese telefono: ";
-	cin.getline(_telefono, 30);
-	for (int i = 0; i < strlen(_telefono); i++) {
-		if (i > 10)
-		{
-			cout << "El telefono debe contener maximo 10 caracteres" << endl;
-			cout << "Ingrese telefono: ";
-			cin.getline(_telefono, 30);
-		}
+	cin.getline(_telefono, 20);
+	
+		
 		bool contieneLetras = false;
 		while (!contieneLetras) {
 			bool soloNumeros = true;
@@ -174,19 +174,19 @@ void Persona::CargarPersona()
 				}
 			}
 
-			if (!soloNumeros) {
+			if (!soloNumeros || strlen(_telefono) < 7 || strlen(_telefono) > 10) {
 				rlutil::setColor(rlutil::RED);
-				cout << "El telefono no puede contener letras" << endl;
+				cout << "El telefono no puede contener letras y debe contener minimo 7 y maximo 10 numeros" << endl;
 				rlutil::setColor(rlutil::BLACK);
 				cout << "Ingrese el telefono: ";
-				cin.getline(_telefono, 10);
+				cin.getline(_telefono, 20);
 			}
 			else {
 				contieneLetras = true;
 			}
 		}
 	}
-}
+
 
 void Persona::MostrarPersona()
 {

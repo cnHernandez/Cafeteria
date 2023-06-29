@@ -5,7 +5,6 @@ class Archivo_Categoria
 
 public:
 	void guardar(Categoria cat);
-	int generar_categoria();
 	int cantidad_categorias();
 	void obtener_categorias(Categoria* cat, int cantidad);
 	int get_cantidad_Activa(int cantidad);

@@ -9,10 +9,11 @@ protected:
 	char _apellido [30];
 	int _edad;
 	char _direccion[50];
-	char _telefono[10];
+	char _telefono[20];
 	bool _estado;
 
 public:	
+Persona();
 	void setNombre(string );
 	void setApellido(string);
 	void setEdad(int);
