@@ -7,7 +7,6 @@ public:
 	void guardar(Categoria cat);
 	int generar_categoria();
 	int cantidad_categorias();
-	FILE* abrirArchivo();
 	void obtener_categorias(Categoria* cat, int cantidad);
 	int get_cantidad_Activa(int cantidad);
 	Categoria leer_de_disco(int posicion);

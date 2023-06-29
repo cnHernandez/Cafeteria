@@ -333,59 +333,6 @@ void Archivo_Venta::listar_x_fecha()
 delete[] ventas;
 }
 
-void Archivo_Venta::listar_x_producto()
-{
-	int cant = cantidad_ventas();
-	Venta* ventas = new Venta[cant];
-	if (ventas == nullptr) {
-		cout << "ERROR CON LA MEMORIA DINAMICA" << endl;
-		return;
-	}
-	obtener_venta(ventas, cant);
-	archivo_producto productos;
-	int cantProductos = productos.cantidad_de_registros();
-	productos.listar(cantProductos);
-	Producto producto;
-	int idProducto;
-
-	cout << "ingrese el ID# del producto a listar: " << endl;
-	cin >> idProducto;
-	while (idProducto <= 0 || idProducto > cant)
-	{
-		cout << "ID# de producto invalido: " << endl;
-		cout << "ingrese el ID# del producto a listar: " << endl;
-		cin >> idProducto;
-	}
-	producto = productos.leer_de_disco(idProducto - 1);
-	while (producto.getEstado() != true)
-	{
-		cout << "ID# de producto invalido: " << endl;
-		cout << "ingrese el ID# del producto a listar: " << endl;
-		cin >> idProducto;
-		producto = productos.leer_de_disco(idProducto - 1);
-	}
-	system("cls");
-	cout << "Ventas con ID# de Producto: " << idProducto << endl << endl;
-	while (idProducto < 0 || idProducto > cantProductos)
-	{
-		cout << "ID# de producto no posee compras " << endl;
-		cout << "ingrese otro ID# del producto a listar: " << endl;
-		cin >> idProducto;
-		producto = productos.leer_de_disco(idProducto - 1);
-	}
-	for (int i = 0; i < cant; i++)
-	{
-		if (idProducto == ventas[i].getProducto() && ventas[i].getEstado())
-		{
-			cout << "-----------------" << endl;
-			ventas[i].mostrar();
-		}
-	}
-	cout << endl;
-	delete[] ventas;
-}
-
-
 bool Archivo_Venta::guardar_modificado(Venta venta, int pos)
 {
 	FILE* p;
@@ -399,6 +346,21 @@ bool Archivo_Venta::guardar_modificado(Venta venta, int pos)
 	fclose(p);
 
 	return true;
+}
+
+bool Archivo_Venta::Existe_Ventas(int id)
+{
+	Venta venta;
+	int cantidad = cantidad_ventas();
+	for (int i = 0; i < cantidad; i++)
+	{
+		venta = leer_ventas(i);
+		if (venta.getId() == id && venta.getEstado())
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 void Archivo_Venta::recaudacion_x_vendedor()
@@ -735,9 +697,8 @@ void Archivo_Venta::BajaLogica()
 
 	cout << "Ingrese de ID de la venta que desea eliminar: ";
 	cin >> op;
-	venta = leer_ventas(op - 1);
 
-	while (op<0 || op>cant || !venta.getEstado())
+	while (!Existe_Ventas(op))
 	{
 		rlutil::setColor(rlutil::RED);
 		cout << "ingrese una opcion correcta" << endl;
@@ -745,27 +706,30 @@ void Archivo_Venta::BajaLogica()
 		cin >> op;
 	}
 	venta = leer_ventas(op - 1);
-	Menu menu;
-	if(op != 0) {
-		char op2;
-		system("cls");
-		cout << "----------------------------------------" << endl;
-		venta.mostrar();
-		cout << "----------------------------------------" << endl << endl;
-		cout << endl;
-		cout << "esta seguro de que desea eliminar la venta?" <<endl;
-		cout << "[S/N]: ";
-		cin >> op2;
-		if (op2 == 's' || op2 == 'S')
-		{
-			venta.setEstado(false);
-			guardar_modificado(venta, op - 1);
-		}
-		else if (op2 == 'n' || op2 == 'N')
-		{
-			menu.menu_Ventas();
-		}
+	
+	char op2;
+	system("cls");
+	cout << "----------------------------------------" << endl;
+	venta.mostrar();
+	cout << "----------------------------------------" << endl << endl;
+	cout << endl;
+	cout << "esta seguro de que desea eliminar la venta?" <<endl;
+	cout << "[S/N]: ";
+	cin >> op2;
+	if (op2 == 's' || op2 == 'S')
+	{
+		venta.setEstado(false);
+		guardar_modificado(venta, op - 1);
+		cout << "Se elimino la venta correctamente..." << endl;
+		system("pause");
 	}
+	else if (op2 == 'n' || op2 == 'N')
+	{
+		cout << "No se elimino la venta..." << endl;
+		system("pause");
+		return;
+	}
+	
 }
 
 
@@ -777,33 +741,31 @@ int Archivo_Venta::Modificar_Venta()
 	listar_ventas(cant);
 	cout << "Ingrese de ID de la venta que desea modificar: ";
 	cin >> op;
-	system("cls");
-	venta = leer_ventas(op - 1);
 
-	while (op<0 || op>cant || !venta.getEstado())
+	while (!Existe_Ventas(op))
 	{
 		rlutil::setColor(rlutil::RED);
 		cout << "ingrese una opcion correcta: ";
 		rlutil::setColor(rlutil::BLACK);
 		cin >> op;
 	}
-	Menu menu;
-	if (op != 0)
+	venta = leer_ventas(op - 1);
+
+	char op2;
+	cout << "esta seguro de que desea modificar la venta?" <<endl;
+	cout << "[S/N]: ";
+	cin >> op2;
+	if (op2 == 's' || op2 == 'S')
 	{
-		char op2;
-		cout << "esta seguro de que desea modificar la venta?" <<endl;
-		cout << "[S/N]: ";
-		cin >> op2;
-		if (op2 == 's' || op2 == 'S')
-		{
+		system("cls");
 		venta.cargar();
-			guardar_modificado(venta, op - 1);
-		}
-		else if (op2 == 'n' || op2 == 'N')
-		{
-			menu.menu_Ventas();
-		}
+		guardar_modificado(venta, op - 1);
 	}
+	else if (op2 == 'n' || op2 == 'N')
+	{
+		cout << "No se modifico la venta..." << endl;
+	}
+	
 	return op;
 }
 

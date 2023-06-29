@@ -19,6 +19,7 @@ public:
     void Stock(int id);
     int PosicionEnDisco(int id);
     void stock_de_productos();
+    int Stock_total();
     
 };
 

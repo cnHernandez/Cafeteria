@@ -9,7 +9,7 @@ using namespace std;
 Categoria::Categoria()
 {
     Archivo_Categoria Archivo;
-    id_categoria = Archivo.generar_categoria();
+    id_categoria = Archivo.cantidad_categorias() + 1;
     estado = true;
 }
 

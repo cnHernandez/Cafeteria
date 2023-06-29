@@ -89,15 +89,14 @@ void Archivo_Cliente::modificar_cliente() {
 
 	cliente = leer_clientes(op - 1);
 
-	while (op<0 || op>cant || cliente.getEstado() == false)
+	while (!ExisteCliente(op))
 	{
 		rlutil::setColor(rlutil::RED);
 		cout << "ingrese una opcion correcta: ";
 		rlutil::setColor(rlutil::BLACK);
 		cin >> op;
 	}
-	if (op != 0)
-	{
+	
 		cliente = leer_clientes(op - 1);
 		cliente.Cargar();
 
@@ -115,7 +114,7 @@ void Archivo_Cliente::modificar_cliente() {
 			system("cls");
 			cout << "No se pudo modificar..." << endl;
 		}
-	}
+	
 }
 
 bool Archivo_Cliente::Guardar_Modificado(Cliente cliente, int pos)
@@ -143,7 +142,7 @@ void Archivo_Cliente::baja_Logica(){
 	cin >> op;
 
 	cliente = leer_clientes(op - 1);
-	while (op<0 || !ExisteCliente(op) || !cliente.getEstado())
+	while (!ExisteCliente(op))
 	{
 		rlutil::setColor(rlutil::RED);
 		cout << "ingrese una opcion correcta: ";
